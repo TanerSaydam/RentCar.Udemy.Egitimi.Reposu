@@ -2,12 +2,14 @@ import { ChangeDetectionStrategy, Component, ElementRef, HostListener, inject, O
 import { NavigationModel, navigations } from '../../navigation';
 import { NgClass } from '@angular/common';
 import { RouterLink, RouterOutlet } from '@angular/router';
+import Breadcrumb from './breadcrumb/breadcrumb';
 
 @Component({
   imports: [
     NgClass,
     RouterLink,
-    RouterOutlet
+    RouterOutlet,
+    Breadcrumb
   ],
   templateUrl: './layouts.html',
   encapsulation: ViewEncapsulation.None,
