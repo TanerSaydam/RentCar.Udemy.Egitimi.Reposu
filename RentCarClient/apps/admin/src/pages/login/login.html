@@ -14,16 +14,22 @@
                     <p>Admin paneline erişim için giriş yapın</p>
                 </div>
 
-                <form class="login-form">
+                <form #form="ngForm" autocomplete="off" class="login-form" (ngSubmit)="login(form)">
                     <!-- Email Input -->
                     <div class="form-group">
-                        <label for="adminEmail" class="form-label">E-posta Adresi</label>
+                        <label for="adminEmail" class="form-label">E-posta Adresi ya da Kullanıcı Adı</label>
                         <div class="input-group">
                             <span class="input-group-text">
                                 <i class="bi bi-person"></i>
                             </span>
-                            <input type="email" class="form-control" id="adminEmail" placeholder="admin@rentcar.com"
-                                required>
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="adminEmail"
+                              name="emailOrUserName"
+                              ngModel
+                              placeholder="admin@rentcar.com"
+                              required>
                         </div>
                     </div>
 
@@ -34,8 +40,14 @@
                             <span class="input-group-text">
                                 <i class="bi bi-lock"></i>
                             </span>
-                            <input type="password" class="form-control" id="adminPassword" placeholder="Şifrenizi girin"
-                                required>
+                            <input
+                              type="password"
+                              class="form-control"
+                              id="adminPassword"
+                              name="password"
+                              ngModel
+                              placeholder="******"
+                              required>
                             <button type="button" class="input-group-text password-toggle" data-target="adminPassword">
                                 <i class="bi bi-eye"></i>
                             </button>
@@ -44,14 +56,11 @@
 
                     <!-- Login Options -->
                     <div class="login-options">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="rememberMe">
-                            <label class="form-check-label" for="rememberMe">
-                                Beni hatırla
-                            </label>
-                        </div>
-                        <a href="#" class="forgot-password" data-bs-toggle="modal"
-                            data-bs-target="#forgotPasswordModal">
+                        <a
+                          href="#"
+                          class="forgot-password"
+                          data-bs-toggle="modal"
+                          data-bs-target="#forgotPasswordModal">
                             Şifremi unuttum
                         </a>
                     </div>
