@@ -14,7 +14,7 @@
                     <p>Admin paneline erişim için giriş yapın</p>
                 </div>
 
-                <form #form="ngForm" autocomplete="off" class="login-form" (ngSubmit)="login(form)">
+                <form #form="ngForm" formValidate autocomplete="off" class="login-form" (ngSubmit)="login(form)">
                     <!-- Email Input -->
                     <div class="form-group">
                         <label for="adminEmail" class="form-label">E-posta Adresi ya da Kullanıcı Adı</label>
