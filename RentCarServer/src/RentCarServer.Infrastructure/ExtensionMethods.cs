@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using RentCarServer.Domain.Abstractions;
 
 namespace RentCarServer.Infrastructure;
 public static class ExtensionMethods
