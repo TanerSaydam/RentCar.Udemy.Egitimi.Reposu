@@ -199,7 +199,7 @@
                         <i class="bi bi-key text-primary me-2"></i>
                         Şifre Sıfırlama
                     </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <button #modalCloseBtn type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <div class="reset-form">
@@ -208,27 +208,24 @@
                             <h6>E-posta Adresinizi Girin</h6>
                             <p class="text-muted">Şifre sıfırlama bağlantısını e-posta adresinize göndereceğiz</p>
                         </div>
-                        <form>
-                            <div class="form-group">
-                                <label class="form-label">Admin E-posta Adresi</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">
-                                        <i class="bi bi-envelope"></i>
-                                    </span>
-                                    <input type="email" class="form-control" placeholder="admin@rentcar.com" required>
-                                </div>
+                        <div class="form-group">
+                            <label class="form-label">Admin E-posta Adresi</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-envelope"></i>
+                                </span>
+                                <input type="email" [(ngModel)]="email" class="form-control" placeholder="admin@rentcar.com" required>
                             </div>
-                            <div class="security-note">
-                                <i class="bi bi-info-circle text-info"></i>
-                                <small>Güvenlik nedeniyle sadece kayıtlı admin e-posta adreslerine sıfırlama bağlantısı
-                                    gönderilir.</small>
-                            </div>
-                        </form>
+                        </div>
+                        <div class="security-note">
+                            <i class="bi bi-info-circle text-info"></i>
+                            <small>Güvenlik nedeniyle sadece kayıtlı admin e-posta adreslerine sıfırlama bağlantısı gönderilir.</small>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
-                    <button type="button" class="btn btn-primary">
+                    <button type="button" class="btn btn-primary" (click)="forgotPassword()">
                         <i class="bi bi-send me-1"></i>Sıfırlama Bağlantısı Gönder
                     </button>
                 </div>
