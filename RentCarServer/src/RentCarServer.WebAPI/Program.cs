@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.OData;
 using Microsoft.AspNetCore.RateLimiting;
 using RentCarServer.Application;
 using RentCarServer.Infrastructure;
+using RentCarServer.WebAPI.Modules;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -43,7 +44,8 @@ app.UseCors(x => x
 .SetPreflightMaxAge(TimeSpan.FromMinutes(10)));
 app.UseAuthentication();
 app.UseAuthorization();
-app.MapControllers().RequireRateLimiting("fixed");
 
+app.MapControllers().RequireRateLimiting("fixed");
+app.MapAuth();
 //await app.CreateFirstUser();
 app.Run();
