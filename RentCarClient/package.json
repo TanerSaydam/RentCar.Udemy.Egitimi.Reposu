@@ -11,6 +11,7 @@
     "@angular/forms": "~20.0.0",
     "@angular/platform-browser": "~20.0.0",
     "@angular/router": "~20.0.0",
+    "flexi-toast": "^20.0.2",
     "jwt-decode": "^4.0.0",
     "rxjs": "~7.8.0"
   },
