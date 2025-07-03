@@ -1,0 +1,222 @@
+<div class="login-part">
+    <!-- Admin Login -->
+    <div class="admin-login-wrapper">
+        <div class="admin-login-container">
+            <!-- Left Side - Login Form -->
+            <div class="admin-login-form">
+                <div class="login-header">
+                    <div class="admin-brand">
+                        <i class="bi bi-car-front-fill"></i>
+                        <h1>RentCar</h1>
+                        <span class="admin-label">Admin Panel</span>
+                    </div>
+                    <h2>Hoş Geldiniz</h2>
+                    <p>Admin paneline erişim için giriş yapın</p>
+                </div>
+
+                <form class="login-form">
+                    <!-- Email Input -->
+                    <div class="form-group">
+                        <label for="adminEmail" class="form-label">E-posta Adresi</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="bi bi-person"></i>
+                            </span>
+                            <input type="email" class="form-control" id="adminEmail" placeholder="admin@rentcar.com"
+                                required>
+                        </div>
+                    </div>
+
+                    <!-- Password Input -->
+                    <div class="form-group">
+                        <label for="adminPassword" class="form-label">Şifre</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="bi bi-lock"></i>
+                            </span>
+                            <input type="password" class="form-control" id="adminPassword" placeholder="Şifrenizi girin"
+                                required>
+                            <button type="button" class="input-group-text password-toggle" data-target="adminPassword">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Login Options -->
+                    <div class="login-options">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">
+                                Beni hatırla
+                            </label>
+                        </div>
+                        <a href="#" class="forgot-password" data-bs-toggle="modal"
+                            data-bs-target="#forgotPasswordModal">
+                            Şifremi unuttum
+                        </a>
+                    </div>
+
+                    <!-- Login Button -->
+                    <button type="submit" class="btn btn-admin-primary w-100">
+                        <i class="bi bi-shield-lock me-2"></i>
+                        Admin Girişi
+                    </button>
+
+                    <!-- Two Factor -->
+                    <div class="two-factor-section d-none">
+                        <div class="two-factor-header">
+                            <i class="bi bi-shield-check text-success"></i>
+                            <h6>İki Faktörlü Doğrulama</h6>
+                            <p>Telefonunuza gönderilen 6 haneli kodu girin</p>
+                        </div>
+                        <div class="verification-code">
+                            <input type="text" class="code-input" maxlength="1">
+                            <input type="text" class="code-input" maxlength="1">
+                            <input type="text" class="code-input" maxlength="1">
+                            <input type="text" class="code-input" maxlength="1">
+                            <input type="text" class="code-input" maxlength="1">
+                            <input type="text" class="code-input" maxlength="1">
+                        </div>
+                        <div class="verification-actions">
+                            <button type="button" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-left me-1"></i>Geri
+                            </button>
+                            <button type="button" class="btn btn-admin-primary">
+                                <i class="bi bi-check-circle me-1"></i>Doğrula
+                            </button>
+                        </div>
+                        <div class="resend-section">
+                            <p>Kod gelmedi mi?</p>
+                            <button type="button" class="btn btn-link">
+                                Yeniden gönder <span class="countdown">(30s)</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Footer Links -->
+                <div class="login-footer">
+                    <div class="footer-links">
+                        <a href="#">Yardım</a>
+                        <a href="#">Gizlilik</a>
+                        <a href="#">İletişim</a>
+                    </div>
+                    <p class="copyright">© 2025 RentCar. Tüm hakları saklıdır.</p>
+                </div>
+            </div>
+
+            <!-- Right Side - Info -->
+            <div class="admin-login-info">
+                <div class="info-content">
+                    <div class="info-header">
+                        <div class="security-badge">
+                            <i class="bi bi-shield-lock-fill"></i>
+                        </div>
+                        <h3>Güvenli Admin Erişimi</h3>
+                        <p>Gelişmiş güvenlik protokolleri ile korunan admin paneli</p>
+                    </div>
+
+                    <div class="security-features">
+                        <div class="feature-item">
+                            <i class="bi bi-check-circle-fill"></i>
+                            <div class="feature-content">
+                                <h6>256-bit SSL Şifreleme</h6>
+                                <p>Tüm veriler en yüksek güvenlik standartlarıyla korunur</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <i class="bi bi-check-circle-fill"></i>
+                            <div class="feature-content">
+                                <h6>İki Faktörlü Doğrulama</h6>
+                                <p>Ek güvenlik katmanı ile hesap koruması</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <i class="bi bi-check-circle-fill"></i>
+                            <div class="feature-content">
+                                <h6>Oturum İzleme</h6>
+                                <p>Tüm giriş aktiviteleri kaydedilir ve izlenir</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <i class="bi bi-check-circle-fill"></i>
+                            <div class="feature-content">
+                                <h6>Otomatik Güvenlik Güncellemeleri</h6>
+                                <p>Sistem güvenliği sürekli güncel tutulur</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="support-info">
+                        <h6>Teknik Destek</h6>
+                        <p>Giriş sorunları için IT departmanı ile iletişime geçin</p>
+                        <div class="support-contacts">
+                            <a href="tel:+903521234567" class="support-contact">
+                                <i class="bi bi-telephone"></i>
+                                +90 352 123 45 67
+                            </a>
+                            <a href="mailto:it-support@rentcar.com" class="support-contact">
+                                <i class="bi bi-envelope"></i>
+                                it-supportrentcar.com
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-footer">
+                    <div class="version-info">
+                        <span>Admin Panel v2.1.0</span>
+                        <span>Son Güncelleme: 01.07.2025</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="forgotPasswordModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="forgotPasswordModalLabel">
+                        <i class="bi bi-key text-primary me-2"></i>
+                        Şifre Sıfırlama
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="reset-form">
+                        <div class="reset-header">
+                            <i class="bi bi-envelope-check text-primary"></i>
+                            <h6>E-posta Adresinizi Girin</h6>
+                            <p class="text-muted">Şifre sıfırlama bağlantısını e-posta adresinize göndereceğiz</p>
+                        </div>
+                        <form>
+                            <div class="form-group">
+                                <label class="form-label">Admin E-posta Adresi</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-envelope"></i>
+                                    </span>
+                                    <input type="email" class="form-control" placeholder="admin@rentcar.com" required>
+                                </div>
+                            </div>
+                            <div class="security-note">
+                                <i class="bi bi-info-circle text-info"></i>
+                                <small>Güvenlik nedeniyle sadece kayıtlı admin e-posta adreslerine sıfırlama bağlantısı
+                                    gönderilir.</small>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                    <button type="button" class="btn btn-primary">
+                        <i class="bi bi-send me-1"></i>Sıfırlama Bağlantısı Gönder
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
