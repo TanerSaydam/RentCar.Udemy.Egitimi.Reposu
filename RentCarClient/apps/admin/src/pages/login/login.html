@@ -66,9 +66,16 @@
                     </div>
 
                     <!-- Login Button -->
-                    <button type="submit" class="btn btn-admin-primary w-100">
-                        <i class="bi bi-shield-lock me-2"></i>
-                        Admin Girişi
+                    <button type="submit" class="btn btn-admin-primary w-100" [disabled]="loading()">
+                        @if(loading()){
+                            <span
+                              class="spinner-border spinner-border-sm"
+                              role="status"
+                              aria-hidden="true"></span>
+                        }@else {
+                            <i class="bi bi-shield-lock me-2"></i>
+                            Giriş Yap
+                        }
                     </button>
 
                     <!-- Two Factor -->
