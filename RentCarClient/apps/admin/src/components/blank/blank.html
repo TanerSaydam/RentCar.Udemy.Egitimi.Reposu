@@ -1,0 +1,78 @@
+<title>RentCar | {{pageTitle()}}</title>
+
+<div class="content-area">
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="page-title">
+            <h1><i class="bi text-primary me-2" [ngClass]="pageIcon()"></i>{{pageTitle()}}</h1>
+            <p class="page-subtitle">{{pageDescription()}}</p>
+        </div>
+        <div class="page-actions">
+            @if(showStatus()){
+                <div class="status-badge">
+                    @if(status()){
+                        <span class="badge bg-success">AKTİF</span>
+                    }@else {
+                        <span class="badge bg-danger">PASİF</span>
+                    }
+                </div>
+            }
+            @if(showBackBtn()){
+                <a class="btn btn-outline-secondary" (click)="back()">
+                    <i class="bi bi-arrow-left me-1"></i>Geri
+                </a>
+            }
+            @if(showEditBtn()){
+                <div class="btn-group">
+                    <button [routerLink]="editBtnUrl()" type="button" class="btn btn-primary">
+                        <i class="bi bi-pencil me-1"></i>Düzenle
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+
+    <ng-content></ng-content>
+
+    @if(showAduit()){
+        <!-- Kayıt Bilgileri Footer -->
+        <div class="record-info-footer">
+            <div class="row g-3">
+                @if(audit()?.updatedAt){
+                    <div class="col-md-6">
+                        <div class="record-info-card">
+                            <div class="record-info-icon">
+                                <i class="bi bi-pencil text-warning"></i>
+                            </div>
+                            <div class="record-info-content">
+                                <label class="record-info-label">Son Güncelleme</label>
+                                <div class="record-info-details">
+                                    <span class="record-info-user">{{audit()!.updatedFullName}}</span>
+                                    <span class="record-info-date">
+                                        {{audit()!.updatedAt | date:'dd MMM yyyy HH:mm:ss'}}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="col-md-6">
+                    <div class="record-info-card">
+                        <div class="record-info-icon">
+                            <i class="bi bi-plus-circle text-success"></i>
+                        </div>
+                        <div class="record-info-content">
+                            <label class="record-info-label">Oluşturulma</label>
+                            <div class="record-info-details">
+                                <span class="record-info-user">{{audit()!.createdFullName}}</span>
+                                <span class="record-info-date">
+                                    {{audit()!.createdAt | date:'dd MMM yyyy HH:mm:ss'}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
