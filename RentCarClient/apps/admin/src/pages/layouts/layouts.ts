@@ -1,13 +1,21 @@
-import { ChangeDetectionStrategy, Component, ElementRef, HostListener, inject, OnDestroy, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, HostListener, inject, OnDestroy, OnInit, Renderer2, signal, ViewEncapsulation } from '@angular/core';
+import { NavigationModel, navigations } from '../../navigation';
+import { NgClass } from '@angular/common';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
-  imports: [],
+  imports: [
+    NgClass,
+    RouterLink,
+    RouterOutlet
+  ],
   templateUrl: './layouts.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class Layouts implements OnInit, OnDestroy {
   private resizeTimer: any;
+  readonly navigations = signal<NavigationModel[]>(navigations);
 
   readonly #elementRef = inject(ElementRef);
   readonly #renderer = inject(Renderer2);
