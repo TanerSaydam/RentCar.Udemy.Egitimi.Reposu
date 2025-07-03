@@ -20,6 +20,13 @@ builder.Services.AddRateLimiter(cfr =>
         opt.Window = TimeSpan.FromSeconds(1);
         opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
     });
+    cfr.AddFixedWindowLimiter("login-fixed", opt =>
+    {
+        opt.PermitLimit = 5;
+        opt.QueueLimit = 1;
+        opt.Window = TimeSpan.FromMinutes(1);
+        opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+    });
 });
 builder.Services
             .AddControllers()
@@ -44,10 +51,12 @@ app.UseCors(x => x
 .AllowAnyOrigin()
 .AllowAnyMethod()
 .SetPreflightMaxAge(TimeSpan.FromMinutes(10)));
-app.UseExceptionHandler();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseRateLimiter();
+app.UseExceptionHandler();
 
 app.MapControllers()
     .RequireRateLimiting("fixed")
