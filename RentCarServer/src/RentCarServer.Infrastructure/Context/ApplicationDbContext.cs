@@ -12,6 +12,7 @@ internal sealed class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
         modelBuilder.ApplyGlobalFilters();
         base.OnModelCreating(modelBuilder);
     }
