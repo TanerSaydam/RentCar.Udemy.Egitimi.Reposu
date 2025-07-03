@@ -27,5 +27,23 @@ public static class AuthModule
             })
             .Produces<Result<string>>()
             .RequireRateLimiting("forgot-password-fixed");
+
+        app.MapPost("/reset-password",
+           async (ResetPasswordCommand request, ISender sender, CancellationToken cancellationToken) =>
+           {
+               var res = await sender.Send(request, cancellationToken);
+               return res.IsSuccessful ? Results.Ok(res) : Results.InternalServerError(res);
+           })
+           .Produces<Result<string>>()
+           .RequireRateLimiting("reset-password-fixed");
+
+        app.MapGet("/check-forgot-password-code/{forgotPasswordCode}",
+           async (Guid forgotPasswordCode, ISender sender, CancellationToken cancellationToken) =>
+           {
+               var res = await sender.Send(new CheckForgotPasswordCodeCommand(forgotPasswordCode), cancellationToken);
+               return res.IsSuccessful ? Results.Ok(res) : Results.InternalServerError(res);
+           })
+           .Produces<Result<string>>()
+           .RequireRateLimiting("check-forgot-password-code-fixed");
     }
 }
