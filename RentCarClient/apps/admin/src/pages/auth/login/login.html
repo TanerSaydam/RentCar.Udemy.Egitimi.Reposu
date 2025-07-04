@@ -14,109 +14,122 @@
                     <p>Admin paneline erişim için giriş yapın</p>
                 </div>
 
-                <form #form="ngForm" formValidate autocomplete="off" class="login-form" (ngSubmit)="login(form)">
-                    <!-- Email Input -->
-                    <div class="form-group">
-                        <label for="adminEmail" class="form-label">E-posta Adresi ya da Kullanıcı Adı</label>
-                        <div class="input-group">
-                            <span class="input-group-text">
-                                <i class="bi bi-person"></i>
-                            </span>
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="adminEmail"
-                              name="emailOrUserName"
-                              ngModel
-                              placeholder="admin@rentcar.com"
-                              required>
+                @if(!showTFAForm()){
+                    <form #form="ngForm" formValidate autocomplete="off" class="login-form" (ngSubmit)="login(form)">
+                        <!-- Email Input -->
+                        <div class="form-group">
+                            <label for="adminEmail" class="form-label">E-posta Adresi ya da Kullanıcı Adı</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-person"></i>
+                                </span>
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  id="adminEmail"
+                                  name="emailOrUserName"
+                                  [(ngModel)]="emailOrUserName"
+                                  placeholder="admin@rentcar.com"
+                                  required>
+                            </div>
                         </div>
-                    </div>
+    
+                        <!-- Password Input -->
+                        <div class="form-group">
+                            <label for="adminPassword" class="form-label">Şifre</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-lock"></i>
+                                </span>
+                                <input
+                                  type="password"
+                                  class="form-control"
+                                  id="adminPassword"
+                                  name="password"
+                                  ngModel
+                                  placeholder="******"
+                                  #passwordEl
+                                  required>
+                                <button
+                                  type="button"
+                                  class="input-group-text password-toggle"
+                                  (click)="togglepasswordEl()">
+                                    @if(passwordEl.type === "password"){
+                                        <i class="bi bi-eye"></i>
+                                    }@else {
+                                        <i class="bi bi-eye-slash"></i>
+                                    }
+                                </button>
+                            </div>
+                        </div>
+    
+                        <!-- Login Options -->
+                        <div class="login-options">
+                            <a
+                              href="#"
+                              class="forgot-password"
+                              data-bs-toggle="modal"
+                              data-bs-target="#forgotPasswordModal">
+                                Şifremi unuttum
+                            </a>
+                        </div>
+    
+                        <!-- Login Button -->
+                        <button type="submit" class="btn btn-admin-primary w-100" [disabled]="loading()">
+                            @if(loading()){
+                                <span
+                                  class="spinner-border spinner-border-sm"
+                                  role="status"
+                                  aria-hidden="true"></span>
+                            }@else {
+                                <i class="bi bi-shield-lock me-2"></i>
+                                Giriş Yap
+                            }
+                        </button>
+                    </form>
+                }@else {
+                    <form
+                      #form="ngForm"
+                      formValidate
+                      autocomplete="off"
+                      class="login-form"
+                      (ngSubmit)="loginWithTFA(form)">
+                        <!-- Confirm Code -->
+                        <div class="form-group">
+                            <div class="d-flex justify-content-between">
+                                <label for="tfaConfirmCode" class="form-label">Mailinize gönderilen TFA kodunu girin</label>
+                                <div>
+                                    <b>{{time().min}} : {{time().sec.toString().length === 1 ? "0" + time().sec.toString() : time().sec }}</b>
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-lock"></i>
+                                </span>
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  id="tfaConfirmCode"
+                                  name="tfaConfirmCode"
+                                  [(ngModel)]="tfaConfirmCode"
+                                  required>
+                            </div>
+                        </div>
+                        <!-- Login Button -->
+                        <button type="submit" class="btn btn-admin-primary w-100" [disabled]="loading()">
+                            @if(loading()){
+                                <span
+                                  class="spinner-border spinner-border-sm"
+                                  role="status"
+                                  aria-hidden="true"></span>
+                            }@else {
+                                <i class="bi bi-shield-lock me-2"></i>
+                                Giriş Yap
+                            }
+                        </button>
+                    </form>
+                }
 
-                    <!-- Password Input -->
-                    <div class="form-group">
-                        <label for="adminPassword" class="form-label">Şifre</label>
-                        <div class="input-group">
-                            <span class="input-group-text">
-                                <i class="bi bi-lock"></i>
-                            </span>
-                            <input
-                              type="password"
-                              class="form-control"
-                              id="adminPassword"
-                              name="password"
-                              ngModel
-                              placeholder="******"
-                              #passwordEl
-                              required>
-                            <button
-                              type="button"
-                              class="input-group-text password-toggle"
-                              (click)="togglepasswordEl()">
-                                @if(passwordEl.type === "password"){
-                                    <i class="bi bi-eye"></i>
-                                }@else {
-                                    <i class="bi bi-eye-slash"></i>
-                                }
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Login Options -->
-                    <div class="login-options">
-                        <a
-                          href="#"
-                          class="forgot-password"
-                          data-bs-toggle="modal"
-                          data-bs-target="#forgotPasswordModal">
-                            Şifremi unuttum
-                        </a>
-                    </div>
-
-                    <!-- Login Button -->
-                    <button type="submit" class="btn btn-admin-primary w-100" [disabled]="loading()">
-                        @if(loading()){
-                            <span
-                              class="spinner-border spinner-border-sm"
-                              role="status"
-                              aria-hidden="true"></span>
-                        }@else {
-                            <i class="bi bi-shield-lock me-2"></i>
-                            Giriş Yap
-                        }
-                    </button>
-
-                    <!-- Two Factor -->
-                    <div class="two-factor-section d-none">
-                        <div class="two-factor-header">
-                            <i class="bi bi-shield-check text-success"></i>
-                            <h6>İki Faktörlü Doğrulama</h6>
-                            <p>Telefonunuza gönderilen 6 haneli kodu girin</p>
-                        </div>
-                        <div class="verification-code">
-                            <input type="text" class="code-input" maxlength="1">
-                            <input type="text" class="code-input" maxlength="1">
-                            <input type="text" class="code-input" maxlength="1">
-                            <input type="text" class="code-input" maxlength="1">
-                            <input type="text" class="code-input" maxlength="1">
-                            <input type="text" class="code-input" maxlength="1">
-                        </div>
-                        <div class="verification-actions">
-                            <button type="button" class="btn btn-outline-secondary">
-                                <i class="bi bi-arrow-left me-1"></i>Geri
-                            </button>
-                            <button type="button" class="btn btn-admin-primary">
-                                <i class="bi bi-check-circle me-1"></i>Doğrula
-                            </button>
-                        </div>
-                        <div class="resend-section">
-                            <p>Kod gelmedi mi?</p>
-                            <button type="button" class="btn btn-link">
-                                Yeniden gönder <span class="countdown">(30s)</span>
-                            </button>
-                        </div>
-                    </div>
-                </form>
 
                 <!-- Footer Links -->
                 <div class="login-footer">
