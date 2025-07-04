@@ -6,6 +6,7 @@ public abstract class Entity
         Id = new IdentityId(Guid.CreateVersion7());
         IsActive = true;
     }
+
     public IdentityId Id { get; private set; }
     public bool IsActive { get; private set; }
     public DateTimeOffset CreatedAt { get; private set; }

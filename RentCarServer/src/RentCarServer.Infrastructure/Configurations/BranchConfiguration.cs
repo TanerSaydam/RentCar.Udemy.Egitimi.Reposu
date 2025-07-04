@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using RentCarServer.Domain.Branchs;
+using RentCarServer.Domain.Branches;
 
 namespace RentCarServer.Infrastructure.Configurations;
 internal sealed class BranchConfiguration : IEntityTypeConfiguration<Branch>

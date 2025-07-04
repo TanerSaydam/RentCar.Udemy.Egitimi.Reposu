@@ -1,14 +1,16 @@
 ﻿using FluentValidation;
 using GenericRepository;
+using RentCarServer.Domain.Branches;
 using RentCarServer.Domain.Branchs;
 using RentCarServer.Domain.Branchs.ValueObjects;
 using TS.MediatR;
 using TS.Result;
 
-namespace RentCarServer.Application.Branchs;
+namespace RentCarServer.Application.Branches;
 public sealed record BranchCreateCommand(
     string Name,
-    Address Address) : IRequest<Result<string>>;
+    Address Address,
+    bool IsActive) : IRequest<Result<string>>;
 
 public sealed class BranchCreateCommandValidator : AbstractValidator<BranchCreateCommand>
 {
@@ -36,7 +38,7 @@ internal sealed class BranchCreateCommandHandler(
 
         Name name = new(request.Name);
         Address address = request.Address;
-        Branch branch = new(name, address);
+        Branch branch = new(name, address, request.IsActive);
         branchRepository.Add(branch);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
