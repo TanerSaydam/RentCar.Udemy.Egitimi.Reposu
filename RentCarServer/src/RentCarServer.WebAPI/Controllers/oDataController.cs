@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
+using RentCarServer.Application.Branches;
+using TS.MediatR;
 
 namespace RentCarServer.WebAPI.Controllers;
 [Route("api/[controller]")]
@@ -13,7 +15,10 @@ public class ODataController : ControllerBase
     {
         ODataConventionModelBuilder builder = new();
         builder.EnableLowerCamelCase();
-        //builder.EntitySet<UserResponse>("users");
+        builder.EntitySet<BranchGetAllQueryResponse>("branches");
         return builder.GetEdmModel();
     }
+
+    public Task<IQueryable<BranchGetAllQueryResponse>> Branches(ISender sender, CancellationToken cancellationToken = default)
+        => sender.Send(new BranchGetAllQuery(), cancellationToken);
 }
