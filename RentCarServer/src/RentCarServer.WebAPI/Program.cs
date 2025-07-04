@@ -57,7 +57,7 @@ builder.Services
                 .SetMaxTop(null)
             );
 builder.Services.AddCors();
-builder.Services.AddOpenApi();
+builder.Services.AddOpenApi("v1", options => { options.AddDocumentTransformer<BearerSecuritySchemeTransformer>(); });
 builder.Services.AddExceptionHandler<ExceptionHandler>().AddProblemDetails();
 builder.Services.AddResponseCompression(opt =>
 {
