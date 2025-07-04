@@ -18,6 +18,7 @@ public sealed class User : Entity
         SetPassword(password);
         SetFullName();
         SetIsForgotPasswordCompleted(new(true));
+        SetTFAStatus(new(false));
     }
 
     private User() { }
@@ -30,6 +31,11 @@ public sealed class User : Entity
     public ForgotPasswordCode? ForgotPasswordCode { get; private set; }
     public ForgotPasswordDate? ForgotPasswordDate { get; private set; }
     public IsForgotPasswordCompleted IsForgotPasswordCompleted { get; private set; } = default!;
+    public TFAStatus TFAStatus { get; private set; } = default!;
+    public TFACode? TFACode { get; private set; } = default!;
+    public TFAConfirmCode? TFAConfirmCode { get; private set; } = default!;
+    public TFAExpiresDate? TFAExpiresDate { get; private set; } = default!;
+    public TFAIsCompleted? TFAIsCompleted { get; private set; } = default!;
 
     #region Behaviors
     public bool VerifyPasswordHash(string password)
@@ -79,6 +85,21 @@ public sealed class User : Entity
     public void SetIsForgotPasswordCompleted(IsForgotPasswordCompleted isForgotPasswordCompleted)
     {
         IsForgotPasswordCompleted = isForgotPasswordCompleted;
+    }
+
+    public void SetTFAStatus(TFAStatus tfaStatus)
+    {
+        TFAStatus = tfaStatus;
+    }
+
+    public void CreateTFACode()
+    {
+        var code = Guid.CreateVersion7().ToString();
+        var confirmCode = Guid.CreateVersion7().ToString();
+        var expires = DateTimeOffset.Now.AddMinutes(5);
+        TFACode = new(code);
+        TFAExpiresDate = new(expires);
+        TFAIsCompleted = new(false);
     }
     #endregion
 }
