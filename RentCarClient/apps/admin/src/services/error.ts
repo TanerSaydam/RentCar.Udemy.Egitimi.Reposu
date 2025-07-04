@@ -24,6 +24,8 @@ export class ErrorService {
       this.#toast.showToast("Hata!",message, "error");
       this.#router.navigateByUrl("/login");
       localStorage.clear();
+    }else{
+      this.#toast.showToast("Hata!","Bir hata oluştu lütfen yöneticinize danışın","error");
     }
   }
 }
