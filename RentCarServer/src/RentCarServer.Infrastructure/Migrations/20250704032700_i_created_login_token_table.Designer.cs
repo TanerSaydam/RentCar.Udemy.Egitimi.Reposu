@@ -12,7 +12,7 @@ using RentCarServer.Infrastructure.Context;
 namespace RentCarServer.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250704023949_i_created_login_token_table")]
+    [Migration("20250704032700_i_created_login_token_table")]
     partial class i_created_login_token_table
     {
         /// <inheritdoc />
@@ -28,6 +28,9 @@ namespace RentCarServer.Infrastructure.Migrations
             modelBuilder.Entity("RentCarServer.Domain.LoginTokens.LoginToken", b =>
                 {
                     b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -71,22 +74,6 @@ namespace RentCarServer.Infrastructure.Migrations
 
             modelBuilder.Entity("RentCarServer.Domain.LoginTokens.LoginToken", b =>
                 {
-                    b.OwnsOne("RentCarServer.Domain.Abstractions.IdentityId", "UserId", b1 =>
-                        {
-                            b1.Property<Guid>("LoginTokenId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<Guid>("Value")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.HasKey("LoginTokenId");
-
-                            b1.ToTable("LoginTokens");
-
-                            b1.WithOwner()
-                                .HasForeignKey("LoginTokenId");
-                        });
-
                     b.OwnsOne("RentCarServer.Domain.LoginTokens.ValueObjects.ExpiresDate", "ExpiresDate", b1 =>
                         {
                             b1.Property<Guid>("LoginTokenId")
@@ -143,9 +130,6 @@ namespace RentCarServer.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Token")
-                        .IsRequired();
-
-                    b.Navigation("UserId")
                         .IsRequired();
                 });
 

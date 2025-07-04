@@ -27,6 +27,9 @@ namespace RentCarServer.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.ToTable("LoginTokens");
@@ -68,22 +71,6 @@ namespace RentCarServer.Infrastructure.Migrations
 
             modelBuilder.Entity("RentCarServer.Domain.LoginTokens.LoginToken", b =>
                 {
-                    b.OwnsOne("RentCarServer.Domain.Abstractions.IdentityId", "UserId", b1 =>
-                        {
-                            b1.Property<Guid>("LoginTokenId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<Guid>("Value")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.HasKey("LoginTokenId");
-
-                            b1.ToTable("LoginTokens");
-
-                            b1.WithOwner()
-                                .HasForeignKey("LoginTokenId");
-                        });
-
                     b.OwnsOne("RentCarServer.Domain.LoginTokens.ValueObjects.ExpiresDate", "ExpiresDate", b1 =>
                         {
                             b1.Property<Guid>("LoginTokenId")
@@ -140,9 +127,6 @@ namespace RentCarServer.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Token")
-                        .IsRequired();
-
-                    b.Navigation("UserId")
                         .IsRequired();
                 });
 

@@ -47,9 +47,17 @@
                               name="password"
                               ngModel
                               placeholder="******"
+                              #passwordEl
                               required>
-                            <button type="button" class="input-group-text password-toggle" data-target="adminPassword">
-                                <i class="bi bi-eye"></i>
+                            <button
+                              type="button"
+                              class="input-group-text password-toggle"
+                              (click)="togglepasswordEl()">
+                                @if(passwordEl.type === "password"){
+                                    <i class="bi bi-eye"></i>
+                                }@else {
+                                    <i class="bi bi-eye-slash"></i>
+                                }
                             </button>
                         </div>
                     </div>

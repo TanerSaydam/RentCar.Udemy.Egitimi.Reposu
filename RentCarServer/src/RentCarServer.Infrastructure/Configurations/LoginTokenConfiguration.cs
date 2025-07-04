@@ -9,7 +9,6 @@ internal sealed class LoginTokenConfiguration : IEntityTypeConfiguration<LoginTo
     {
         builder.HasKey(x => x.Id);
         builder.OwnsOne(p => p.Token);
-        builder.OwnsOne(p => p.UserId);
         builder.OwnsOne(p => p.IsActive);
         builder.OwnsOne(p => p.ExpiresDate);
     }

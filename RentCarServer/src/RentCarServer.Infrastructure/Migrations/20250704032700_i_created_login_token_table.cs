@@ -16,9 +16,9 @@ namespace RentCarServer.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IsActive_Value = table.Column<bool>(type: "bit", nullable: false),
                     Token_Value = table.Column<string>(type: "varchar(MAX)", nullable: false),
-                    UserId_Value = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsActive_Value = table.Column<bool>(type: "bit", nullable: false),
                     ExpiresDate_Value = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false)
                 },
                 constraints: table =>
