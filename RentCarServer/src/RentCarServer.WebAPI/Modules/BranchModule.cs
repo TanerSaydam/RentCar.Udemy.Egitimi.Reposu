@@ -1,5 +1,4 @@
 ﻿using RentCarServer.Application.Branches;
-using RentCarServer.Domain.Branches;
 using TS.MediatR;
 using TS.Result;
 
@@ -12,7 +11,8 @@ public static class BranchModule
         var app = builder
             .MapGroup("/branches")
             .RequireRateLimiting("fixed")
-            .RequireAuthorization();
+            .RequireAuthorization()
+            .WithTags("Branches");
 
         app.MapPost(string.Empty,
             async (BranchCreateCommand request, ISender sender, CancellationToken cancellationToken) =>
@@ -44,6 +44,6 @@ public static class BranchModule
                 var res = await sender.Send(new BranchGetQuery(id), cancellationToken);
                 return res.IsSuccessful ? Results.Ok(res) : Results.InternalServerError(res);
             })
-            .Produces<Result<Branch>>();
+            .Produces<Result<BranchDto>>();
     }
 }
