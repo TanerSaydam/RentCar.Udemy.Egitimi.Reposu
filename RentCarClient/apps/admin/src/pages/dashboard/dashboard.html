@@ -1,4 +1,5 @@
 <app-blank pageTitle="Dashboard" pageIcon="bi-speedometer2" pageDescription="Sistem genel durumu ve performans göstergeleri" [showBackBtn]="false">
+    <button (click)="makeRequest()">Make Request</button>
     <!-- Quick Stats Cards -->
     <div class="row g-4 mb-4">
         <div class="col-xl-3 col-md-6">
@@ -21,7 +22,7 @@
                 </div>
             </div>
         </div>
-    
+
         <div class="col-xl-3 col-md-6">
             <div class="admin-card dashboard-stat-card">
                 <div class="card-body">

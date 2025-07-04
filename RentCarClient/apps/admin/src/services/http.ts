@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { ErrorService } from './error';
 import { Result } from '../models/result.model';
+import { catchError, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,16 @@ export class HttpService {
 
   readonly #http = inject(HttpClient);
   readonly #error = inject(ErrorService);
+
+  getResource<T>(
+    endpoint: string){
+    return this.#http.get<Result<T>>(endpoint).pipe(
+      catchError((err: HttpErrorResponse) => {
+        this.#error.handle(err);
+        return of();
+      })
+    );
+  }
 
   get<T>(
     endpoint: string,

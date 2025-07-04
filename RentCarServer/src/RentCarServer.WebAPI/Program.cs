@@ -2,9 +2,9 @@ using System.Threading.RateLimiting;
 using Microsoft.AspNetCore.OData;
 using Microsoft.AspNetCore.RateLimiting;
 using RentCarServer.Application;
-using RentCarServer.Application.Services;
 using RentCarServer.Infrastructure;
 using RentCarServer.WebAPI;
+using RentCarServer.WebAPI.Middlewares;
 using RentCarServer.WebAPI.Modules;
 using Scalar.AspNetCore;
 
@@ -65,6 +65,8 @@ builder.Services.AddResponseCompression(opt =>
     opt.EnableForHttps = true;
 });
 
+builder.Services.AddTransient<CheckTokenMiddleware>();
+
 var app = builder.Build();
 app.MapOpenApi();
 app.MapScalarApiReference();
@@ -75,21 +77,17 @@ app.UseCors(x => x
 .AllowAnyMethod()
 .SetPreflightMaxAge(TimeSpan.FromMinutes(10)));
 app.UseResponseCompression();
+
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.UseRateLimiter();
 app.UseExceptionHandler();
-
+app.UseMiddleware<CheckTokenMiddleware>();
+app.UseRateLimiter();
 app.MapControllers()
     .RequireRateLimiting("fixed")
     .RequireAuthorization();
 app.MapAuth();
 
-app.MapGet("/", async (IMailService mailService) =>
-{
-    await mailService.SendAsync("tanersaydam@gmail.com", "Test", "<h1><b>Bu bir test mailidir</b></h1>", default);
-    return Results.Ok();
-});
+app.MapGet("/", () => "Hello World").RequireAuthorization();
 //await app.CreateFirstUser();
 app.Run();

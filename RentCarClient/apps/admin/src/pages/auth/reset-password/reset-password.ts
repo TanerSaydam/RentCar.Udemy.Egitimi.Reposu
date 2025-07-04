@@ -61,6 +61,7 @@ export default class ResetPassword {
   readonly strengthProgress = computed(() => {
     return (this.passwordStrength().level / 4) * 100;
   });
+  readonly logoutAllDevices = signal<boolean>(true);
 
   readonly newPasswordEl = viewChild<ElementRef<HTMLInputElement>>("newPasswordEl");
   readonly confirmPasswordEl = viewChild<ElementRef<HTMLInputElement>>('confirmPasswordEl');
@@ -91,8 +92,9 @@ export default class ResetPassword {
   onSubmit(): void {
     if (this.isFormValid()) {
       const data = {
-        forgotPasswordId: this.id(),
-        newPassword: this.password()
+        forgotPasswordCode: this.id(),
+        newPassword: this.password(),
+        logoutAllDevices: this.logoutAllDevices()
       }
 
       this.loading.set(true);
