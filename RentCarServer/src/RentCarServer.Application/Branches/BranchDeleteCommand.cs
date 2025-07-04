@@ -1,5 +1,5 @@
 ﻿using GenericRepository;
-using RentCarServer.Domain.Branchs;
+using RentCarServer.Domain.Branches;
 using TS.MediatR;
 using TS.Result;
 

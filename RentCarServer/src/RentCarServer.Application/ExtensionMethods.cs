@@ -23,11 +23,3 @@ internal static class ExtensionMethods
         return res;
     }
 }
-
-public sealed class EntityWithAuditDto<TEntity>
-    where TEntity : Entity
-{
-    public TEntity Entity { get; set; } = default!;
-    public User CreatedUser { get; set; } = default!;
-    public User? UpdatedUser { get; set; }
-}
