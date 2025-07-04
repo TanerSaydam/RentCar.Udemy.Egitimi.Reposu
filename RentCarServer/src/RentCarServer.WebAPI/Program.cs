@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.RateLimiting;
 using RentCarServer.Application;
 using RentCarServer.Infrastructure;
 using RentCarServer.WebAPI;
+using RentCarServer.WebAPI.Controllers;
 using RentCarServer.WebAPI.Middlewares;
 using RentCarServer.WebAPI.Modules;
 using Scalar.AspNetCore;
@@ -55,6 +56,7 @@ builder.Services
                 .Expand()
                 .OrderBy()
                 .SetMaxTop(null)
+                .AddRouteComponents("odata", MainODataController.GetEdmModel())
             );
 builder.Services.AddCors();
 builder.Services.AddOpenApi("v1", options => { options.AddDocumentTransformer<BearerSecuritySchemeTransformer>(); });
