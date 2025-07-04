@@ -20,6 +20,7 @@ internal sealed class BranchDeleteCommandHandler(
         }
 
         branch.Delete();
+        branchRepository.Update(branch);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return "Şube başarıyla silindi";

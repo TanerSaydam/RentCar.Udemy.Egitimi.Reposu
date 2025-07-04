@@ -43,7 +43,7 @@ internal sealed class BranchUpdateCommandHandler(
         branch.SetName(name);
         branch.SetAddress(address);
         branch.SetStatus(request.IsActive);
-
+        branchRepository.Update(branch);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return "Şube bilgisi başarıyla güncellendi";
