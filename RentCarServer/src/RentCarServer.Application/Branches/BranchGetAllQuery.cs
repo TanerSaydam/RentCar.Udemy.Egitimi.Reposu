@@ -27,7 +27,7 @@ internal sealed class BranchGetAllQueryHandler(
                 (x, user) => new
                 {
                     entity = x.entity,
-                    updatedUser = x.user
+                    updatedUser = user
                 })
             .Select(s => new BranchGetAllQueryResponse
             {
@@ -40,7 +40,7 @@ internal sealed class BranchGetAllQueryHandler(
                 UpdatedAt = s.entity.b.UpdatedAt,
                 UpdatedBy = s.entity.b.UpdatedBy,
                 CreatedFullName = s.entity.user.FullName.Value,
-                UpdatedFullName = !s.updatedUser.Any() ? null : s.updatedUser.First().FullName.Value
+                UpdatedFullName = s.updatedUser == null ? null : s.updatedUser.FullName.Value
             })
             .AsQueryable();
 
