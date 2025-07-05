@@ -1,6 +1,9 @@
 <title>RentCar | {{pageTitle()}}</title>
 
 <div class="content-area">
+    @if(loading()){
+        <loading />
+    }
     <!-- Page Header -->
     <div class="page-header">
         <div class="page-title">

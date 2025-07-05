@@ -1,9 +1,11 @@
 <div class="row">
     <div class="col-md-5 col-12">
-        <blank [pageTitle]="pageTitle()" [pageIcon]="pageIcon()" (changeStatusEvent)="changeStatus($event)" [status]="data().isActive">
-            @if(loading()){
-                <loading />
-            }
+        <blank
+          [pageTitle]="pageTitle()"
+          [pageIcon]="pageIcon()"
+          (changeStatusEvent)="changeStatus($event)"
+          [status]="data().isActive"
+          [loading]="loading()">
             <form #form="ngForm" formValidate class="admin-form" (ngSubmit)="save(form)">
                 <div class="admin-card">
                     <div class="card-header">
