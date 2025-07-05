@@ -33,7 +33,7 @@ internal sealed class RoleCreateCommandHandler(
         }
 
         Name name = new(request.Name);
-        Role role = new(name);
+        Role role = new(name, request.IsActive);
         roleRepository.Add(role);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 

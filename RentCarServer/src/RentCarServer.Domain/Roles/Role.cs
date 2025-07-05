@@ -6,9 +6,10 @@ public sealed class Role : Entity
 {
     private Role() { }
 
-    public Role(Name name)
+    public Role(Name name, bool isActive)
     {
         SetName(name);
+        SetStatus(IsActive);
     }
     public Name Name { get; private set; } = default!;
 
