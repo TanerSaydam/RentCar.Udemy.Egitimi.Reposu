@@ -18,6 +18,10 @@ export const appRoutes: Route[] = [
             {
                 path: '',
                 loadComponent: () => import('./pages/dashboard/dashboard')
+            },
+            {
+                path: 'branches',
+                loadChildren: () => import('./pages/branches/router')
             }
         ]
     }

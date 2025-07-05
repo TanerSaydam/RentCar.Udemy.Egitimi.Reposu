@@ -13,7 +13,7 @@ export interface BreadcrumbModel{
 export class BreadcrumbService {
   readonly data = signal<BreadcrumbModel[]>([]);
 
-  reset(){
+  reset(breadcrumbs: BreadcrumbModel[]){
     const dashboard: BreadcrumbModel = {
       title: 'Dashboard',
       url: '/',
@@ -21,6 +21,10 @@ export class BreadcrumbService {
     }
 
     this.data.set([{...dashboard}]);
+    this.data.update(prev => [...prev, ...breadcrumbs])
+
+    console.log(this.data());
+    
   }
 
   setDashboard(){

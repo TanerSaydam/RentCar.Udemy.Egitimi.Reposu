@@ -15,8 +15,12 @@
         <ul class="sidebar-menu">
             @for(nav of navigations(); track nav.title){
                 @if(!nav.haveSubNav){
-                    <li class="menu-item active">
-                        <a [routerLink]="nav.url" class="menu-link">
+                    <li
+                      [routerLink]="nav.url"
+                      routerLinkActive="active"
+                      [routerLinkActiveOptions]="{exact:true}"
+                      class="menu-item">
+                        <a class="menu-link">
                             <i class="bi" [ngClass]="nav.icon"></i>
                             <span class="menu-text">{{nav.title}}</span>
                         </a>

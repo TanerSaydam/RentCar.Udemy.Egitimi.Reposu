@@ -6831,3 +6831,9 @@ a{
         transform: scale(1.2);
     }
 }
+
+.flexi-button-primary {
+    color: wite !important;
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}

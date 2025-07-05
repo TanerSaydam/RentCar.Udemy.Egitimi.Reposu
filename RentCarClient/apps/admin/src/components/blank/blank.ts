@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { EntityModel } from '../../models/entity.model';
 
 @Component({
-  selector: 'app-blank',
+  selector: 'blank',
   imports: [
     NgClass,
     RouterLink,

@@ -9,12 +9,14 @@ import { HttpContextToken, provideHttpClient, withInterceptors } from '@angular/
 import { httpInterceptor } from './interceptors/http-interceptor';
 import { authInterceptor } from './interceptors/auth-interceptor';
 import { errorInterceptor } from './interceptors/error-interceptor';
+import { provideNgxMask } from 'ngx-mask';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(appRoutes),
+    provideNgxMask(),
     provideHttpClient(withInterceptors([
       httpInterceptor,
       authInterceptor,

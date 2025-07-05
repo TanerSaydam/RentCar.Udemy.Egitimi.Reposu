@@ -1,0 +1,49 @@
+<title>RentCar | Şubeler</title>
+<flexi-grid
+[data]="data()"
+[total]="total()"
+[dataBinding]="true"
+[loading]="loading()"
+language="tr"
+[showCaption]="true"
+captionTitle="Şube Listesi"
+(dataStateChange)="dataStateChange($event)"
+>
+    <ng-template flexiGridCaptionCommandTemplate>
+        <flexi-button btnColor="primary" btnIcon="add" title="Şube Ekle" flexiTooltip />
+    </ng-template>
+    <flexi-grid-column field="name" title="Şube Adı"/>
+    <flexi-grid-column field="address.city" title="Şehir"/>
+    <flexi-grid-column field="address.district" title="İlçe"/>
+    <flexi-grid-column field="address.fullAddress" title="Açık Adres"/>
+    <flexi-grid-column field="address.phoneNumber1" title="Telefon 1">
+        <ng-template flexiGridCellTemplate let-item>
+            <span>+90{{item.address.phoneNumber1 | mask:'(000) 000 0000'}}</span>
+        </ng-template>
+    </flexi-grid-column>
+    <flexi-grid-column field="address.phoneNumber2" title="Telefon 2"/>
+    <flexi-grid-column field="address.email" title="Mail Adresi"/>
+    <flexi-grid-column
+      field="isActive"
+      title="Aktif Mi?"
+      filterType="boolean"
+      [booleanData]="['Aktif', 'Aktif Değil']"
+      textAlign="center" />
+    <flexi-grid-column
+      field="createdAt"
+      title="Oluturulma Tarihi"
+      filterType="date-time"
+      format="dd MMM yyyy HH:mm:ss" />
+    <flexi-grid-column field="createdFullName" title="Oluşturan" />
+   <flexi-grid-column
+      field="updatedAt"
+      title="Güncelleme Tarihi"
+      filterType="date-time"
+      format="dd MMM yyyy HH:mm:ss" />
+    <flexi-grid-column field="updatedFullName" title="Güncelleyen" />
+
+    <ng-template flexiGridColumnCommandTemplate let-item>
+        <flexi-button btnColor="info" btnIcon="edit" title="Güncelle" btnSize="small" flexiTooltip/>
+        <flexi-button btnColor="danger" btnIcon="delete" title="Sil" btnSize="small" flexiTooltip/>
+    </ng-template>
+</flexi-grid>
