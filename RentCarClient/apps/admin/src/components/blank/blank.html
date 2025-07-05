@@ -17,6 +17,19 @@
                     }
                 </div>
             }
+            @if(showStatusCheckbox()){
+                <div class="form-check form-switch">
+                   <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="isActive"
+                      [checked]="status()"
+                      (change)="changeStatus($event)">
+                    <label class="form-check-label" for="isActive">
+                        <strong>Aktif Mi?</strong>
+                    </label>
+                </div>
+            }
             @if(showBackBtn()){
                 <a class="btn btn-outline-secondary" (click)="back()">
                     <i class="bi bi-arrow-left me-1"></i>Geri

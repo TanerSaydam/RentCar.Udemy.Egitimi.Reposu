@@ -13,3 +13,20 @@ export interface AddressModel{
     phoneNumber2:string;
     email:string;
 }
+
+export const initialBranch: BranchModel = {
+    id: '',
+    name: '',
+    address: {
+        city: '',
+        district: '',
+        fullAddress: '',
+        email: '',
+        phoneNumber1: '',
+        phoneNumber2: ''
+    },
+    isActive: true,
+    createdAt: '',
+    createdBy: '',
+    createdFullName: ''
+}

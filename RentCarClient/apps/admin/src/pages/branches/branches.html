@@ -22,13 +22,19 @@ captionTitle="Şube Listesi"
             <span>+90{{item.address.phoneNumber1 | mask:'(000) 000 0000'}}</span>
         </ng-template>
     </flexi-grid-column>
-    <flexi-grid-column field="address.phoneNumber2" title="Telefon 2"/>
+    <flexi-grid-column field="address.phoneNumber2" title="Telefon 1">
+        <ng-template flexiGridCellTemplate let-item>
+          @if(item.address.phoneNumber2){
+            <span>+90{{item.address.phoneNumber2 | mask:'(000) 000 0000'}}</span>
+          }
+        </ng-template>
+    </flexi-grid-column>
     <flexi-grid-column field="address.email" title="Mail Adresi"/>
     <flexi-grid-column
       field="isActive"
       title="Aktif Mi?"
       filterType="boolean"
-      [booleanData]="['Aktif', 'Aktif Değil']"
+      [booleanData]="['Aktif', 'Pasif']"
       textAlign="center" />
     <flexi-grid-column
       field="createdAt"
@@ -51,6 +57,12 @@ captionTitle="Şube Listesi"
           btnSize="small"
           flexiTooltip
           [routerLink]="['/branches/edit/',item.id]" />
-        <flexi-button btnColor="danger" btnIcon="delete" title="Sil" btnSize="small" flexiTooltip/>
+       <flexi-button
+          btnColor="danger"
+          btnIcon="delete"
+          title="Sil"
+          btnSize="small"
+          flexiTooltip
+          (click)="delete(item.id)" />
     </ng-template>
 </flexi-grid>

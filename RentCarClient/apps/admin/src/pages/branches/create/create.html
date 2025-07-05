@@ -1,10 +1,10 @@
 <div class="row">
     <div class="col-md-5 col-12">
-        <blank [pageTitle]="pageTitle()" [pageIcon]="pageIcon()">
+        <blank [pageTitle]="pageTitle()" [pageIcon]="pageIcon()" (changeStatusEvent)="changeStatus($event)" [status]="data().isActive">
             @if(loading()){
                 <loading />
             }
-            <form #form="ngForm" formValidate class="admin-form">
+            <form #form="ngForm" formValidate class="admin-form" (ngSubmit)="save(form)">
                 <div class="admin-card">
                     <div class="card-header">
                         <h6><i class="bi bi-info-circle text-primary me-2"></i>Temel Bilgiler</h6>
@@ -12,7 +12,13 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label>Şube Adı (*)</label>
-                            <input type="text" class="form-control" ngModel name="name" required>
+                           <input
+                              type="text"
+                              class="form-control"
+                              [(ngModel)]="data().name"
+                              name="name"
+                              required>
+                            <div class="invalid-feedback">Geçerli bir şube adı girin</div>
                         </div>
                     </div>
                 </div>
@@ -24,33 +30,71 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label>Şehir (*)</label>
-                            <input type="text" class="form-control" ngModel name="name" required>
+                           <input
+                              type="text"
+                              class="form-control"
+                              [(ngModel)]="data().address.city"
+                              name="city"
+                              required>
                         </div>
 
                         <div class="form-group mt-2">
                             <label>İlçe (*)</label>
-                            <input type="text" class="form-control" ngModel name="name" required>
+                           <input
+                              type="text"
+                              class="form-control"
+                              [(ngModel)]="data().address.district"
+                              name="district"
+                              required>
                         </div>
 
                         <div class="form-group mt-2">
                             <label>Açık Adres (*)</label>
-                            <textarea type="text" rows="5" class="form-control" ngModel name="fullAddress" required>
+                            <textarea
+                              type="text"
+                              rows="5"
+                              class="form-control"
+                              [(ngModel)]="data().address.fullAddress"
+                              name="fullAddress"
+                              required
+                              minlength="10"
+                              >
                             </textarea>
+                            <div class="invalid-feedback">Geçerli bir açık adres girin</div>
                         </div>
 
                         <div class="form-group mt-2">
                             <label>Telefon 1 (*)</label>
-                            <input type="text" class="form-control" ngModel name="phoneNumber1" required>
+                            <input
+                              type="text"
+                              class="form-control"
+                              [(ngModel)]="data().address.phoneNumber1"
+                              name="phoneNumber1"
+                              prefix="+90"
+                              mask="(000) 000 0000"
+                              required>
+                            <div class="invalid-feedback">Geçerli bir telefon numarası girin</div>
                         </div>
 
                         <div class="form-group mt-2">
                             <label>Telefon 2</label>
-                            <input type="text" class="form-control" ngModel name="phoneNumber2" required>
+                            <input
+                              type="text"
+                              class="form-control"
+                              [(ngModel)]="data().address.phoneNumber2"
+                              name="phoneNumber2"
+                              prefix="+90"
+                              mask="(000) 000 0000"
+                              >
                         </div>
 
                         <div class="form-group mt-2">
                             <label>Mail Adresi</label>
-                            <input type="email" class="form-control" ngModel name="email" required>
+                            <input
+                              type="email"
+                              class="form-control"
+                              [(ngModel)]="data().address.email"
+                              name="email">
                         </div>
                     </div>
                 </div>
