@@ -90,6 +90,7 @@ app.MapControllers()
     .RequireAuthorization();
 app.MapAuth();
 app.MapBranch();
+app.MapRole();
 
 app.MapGet("/", () => "Hello World").RequireAuthorization();
 //await app.CreateFirstUser();
