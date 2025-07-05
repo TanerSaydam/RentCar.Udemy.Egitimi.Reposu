@@ -1,0 +1,78 @@
+<title>RentCar | {{pageTitle()}}</title>
+<flexi-grid
+[data]="data()"
+[total]="total()"
+[dataBinding]="true"
+[loading]="loading()"
+language="tr"
+[showCaption]="true"
+captionTitle="Şube Listesi"
+[customColumns]="columns()"
+(dataStateChange)="dataStateChange($event)"
+[commandColumnWidth]="commandColumnWidth()"
+[showIndex]="showIndex()"
+>
+    <ng-template flexiGridCaptionCommandTemplate>
+        @if(commandTemplateRef() !== undefined){
+            <ng-container *ngTemplateOutlet="commandTemplateRef()!;"></ng-container>
+        }
+        <flexi-button
+          btnColor="primary"
+          btnIcon="add"
+          title="Ekle"
+          flexiTooltip
+          [routerLink]="this.addUrl()" />
+    </ng-template>
+
+    <ng-content />
+
+    @if(showAudit()){
+        <flexi-grid-column
+          field="isActive"
+          title="Aktif Mi?"
+          filterType="boolean"
+          [booleanData]="['Aktif', 'Pasif']"
+          textAlign="center" />
+        <flexi-grid-column
+          field="createdAt"
+          title="Oluturulma Tarihi"
+          filterType="date-time"
+          format="dd MMM yyyy HH:mm:ss" />
+        <flexi-grid-column field="createdFullName" title="Oluşturan" />
+       <flexi-grid-column
+          field="updatedAt"
+          title="Güncelleme Tarihi"
+          filterType="date-time"
+          format="dd MMM yyyy HH:mm:ss" />
+        <flexi-grid-column field="updatedFullName" title="Güncelleyen" />
+    }
+
+    <ng-template flexiGridColumnCommandTemplate let-item>
+        <flexi-button
+          btnColor="indigo"
+          btnIcon="zoom_in"
+          title="Detay"
+          btnSize="small"
+          flexiTooltip
+          [routerLink]="[this.detailUrl(),item.id]" />
+        <flexi-button
+          btnColor="info"
+          btnIcon="edit"
+          title="Güncelle"
+          btnSize="small"
+          flexiTooltip
+          [routerLink]="[this.editUrl(),item.id]" />
+       <flexi-button
+          btnColor="danger"
+          btnIcon="delete"
+          title="Sil"
+          btnSize="small"
+          flexiTooltip
+          (click)="delete(item.id)" />
+
+        @if(columnCommandTemplateRef() !== undefined){
+            <ng-container *ngTemplateOutlet="columnCommandTemplateRef()!; context:{ $implicit: item }">
+            </ng-container>
+        }
+    </ng-template>
+</flexi-grid>
