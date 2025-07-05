@@ -21,10 +21,7 @@ export class BreadcrumbService {
     }
 
     this.data.set([{...dashboard}]);
-    this.data.update(prev => [...prev, ...breadcrumbs])
-
-    console.log(this.data());
-    
+    this.data.update(prev => [...prev, ...breadcrumbs]);
   }
 
   setDashboard(){

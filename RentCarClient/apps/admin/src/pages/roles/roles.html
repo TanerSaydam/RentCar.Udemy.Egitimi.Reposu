@@ -9,4 +9,14 @@
  captionTitle="Rol Listesi"
 >
     <flexi-grid-column field="name" title="Rol Adı"/>
+
+    <ng-template #columnCommandTemplate let-item>
+        <flexi-button
+          btnColor="pink"
+          btnSize="small"
+          btnIcon="key"
+          title="İzinler"
+          flexiTooltip
+          [routerLink]="['/roles/permissions',item.id]" />
+    </ng-template>
 </grid>

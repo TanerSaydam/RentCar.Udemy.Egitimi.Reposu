@@ -1,0 +1,13 @@
+<title>RentCar | İzinler</title>
+<flexi-treeview
+[data]="data()"
+[loading]="loading()"
+treeviewTitle="İzinler"
+language="tr"
+[showDeleteButton]="false"
+[showEditButton]="false"
+[showCheckbox]="true"
+(onRefresh)="result.reload()"
+(onSelected)="onSelected($event)"
+>
+</flexi-treeview>

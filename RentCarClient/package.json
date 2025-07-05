@@ -13,6 +13,7 @@
     "@angular/router": "~20.0.0",
     "flexi-grid": "^20.0.0",
     "flexi-toast": "^20.0.2",
+    "flexi-treeview": "^20.0.1",
     "form-validate-angular": "^20.0.0",
     "jwt-decode": "^4.0.0",
     "ngx-mask": "^19.0.7",

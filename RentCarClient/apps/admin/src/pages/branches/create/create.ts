@@ -100,7 +100,5 @@ export default class Create {
       ...prev,
       isActive: status
     }));
-
-    console.log(this.data());
   }
 }
