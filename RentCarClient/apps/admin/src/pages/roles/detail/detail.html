@@ -23,4 +23,21 @@
             </div>
         </div>
     </div>
+
+    <div class="admin-card">
+        <div class="card-header">
+            <h6><i class="bi bi-key text-warning me-2"></i>izinler</h6>
+        </div>
+        <div class="card-body">
+            <div class="detail-grid">
+                @for(val of data().permissions; track val){
+                    <div class="detail-item">
+                        <span class="detail-value">
+                            {{val}}
+                        </span>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
 </blank>
