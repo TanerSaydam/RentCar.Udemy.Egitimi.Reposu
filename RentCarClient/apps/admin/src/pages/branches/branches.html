@@ -10,8 +10,9 @@ captionTitle="Şube Listesi"
 (dataStateChange)="dataStateChange($event)"
 >
     <ng-template flexiGridCaptionCommandTemplate>
-        <flexi-button btnColor="primary" btnIcon="add" title="Şube Ekle" flexiTooltip />
+        <flexi-button btnColor="primary" btnIcon="add" title="Şube Ekle" flexiTooltip routerLink="/branches/add" />
     </ng-template>
+
     <flexi-grid-column field="name" title="Şube Adı"/>
     <flexi-grid-column field="address.city" title="Şehir"/>
     <flexi-grid-column field="address.district" title="İlçe"/>
@@ -43,7 +44,13 @@ captionTitle="Şube Listesi"
     <flexi-grid-column field="updatedFullName" title="Güncelleyen" />
 
     <ng-template flexiGridColumnCommandTemplate let-item>
-        <flexi-button btnColor="info" btnIcon="edit" title="Güncelle" btnSize="small" flexiTooltip/>
+        <flexi-button
+          btnColor="info"
+          btnIcon="edit"
+          title="Güncelle"
+          btnSize="small"
+          flexiTooltip
+          [routerLink]="['/branches/edit/',item.id]" />
         <flexi-button btnColor="danger" btnIcon="delete" title="Sil" btnSize="small" flexiTooltip/>
     </ng-template>
 </flexi-grid>
