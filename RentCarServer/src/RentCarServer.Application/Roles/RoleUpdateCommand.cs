@@ -1,11 +1,13 @@
 ﻿using FluentValidation;
 using GenericRepository;
+using RentCarServer.Application.Behaviors;
 using RentCarServer.Domain.Branchs.ValueObjects;
 using RentCarServer.Domain.Roles;
 using TS.MediatR;
 using TS.Result;
 
 namespace RentCarServer.Application.Roles;
+[Permission("role:edit")]
 public sealed record RoleUpdateCommand(
     Guid Id,
     string Name,

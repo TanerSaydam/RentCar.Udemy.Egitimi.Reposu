@@ -1,11 +1,13 @@
 ﻿using FluentValidation;
 using GenericRepository;
+using RentCarServer.Application.Behaviors;
 using RentCarServer.Domain.Branches;
 using RentCarServer.Domain.Branchs.ValueObjects;
 using TS.MediatR;
 using TS.Result;
 
 namespace RentCarServer.Application.Branches;
+[Permission("branch:create")]
 public sealed record BranchCreateCommand(
     string Name,
     Address Address,

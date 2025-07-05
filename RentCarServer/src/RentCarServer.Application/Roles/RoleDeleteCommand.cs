@@ -1,9 +1,11 @@
 ﻿using GenericRepository;
+using RentCarServer.Application.Behaviors;
 using RentCarServer.Domain.Roles;
 using TS.MediatR;
 using TS.Result;
 
 namespace RentCarServer.Application.Roles;
+[Permission("role:delete")]
 public sealed record RoleDeleteCommand(
     Guid Id) : IRequest<Result<string>>;
 
