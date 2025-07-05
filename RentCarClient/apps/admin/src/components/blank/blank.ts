@@ -31,6 +31,7 @@ export default class Blank {
   readonly audit = input<EntityModel>();
   readonly showAduit = input<boolean>(false);
   readonly loading = input<boolean>(false);
+  readonly size = input<string>("col-md-12");
 
   readonly changeStatusEvent = output<boolean>();
 

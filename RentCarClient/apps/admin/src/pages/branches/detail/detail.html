@@ -1,75 +1,72 @@
-<div class="row">
-    <div class="col-md-5 col-12">
-        <blank
-          [pageTitle]="pageTitle()"
-          pageIcon="bi-zoom-in"
-          [showStatusCheckbox]="false"
-          [showStatus]="true"
-          [status]="data().isActive"
-          [showAduit]="true"
-          [audit]="data()"
-          [loading]="loading()">
-            <div class="admin-card">
-                <div class="card-header">
-                    <h6><i class="bi bi-info-circle text-primary me-2"></i>Temel Bilgiler</h6>
-                </div>
-                <div class="card-body">
-                    <div class="detail-grid">
-                        <div class="detail-item">
-                            <label class="detail-label">Şube Adı</label>
-                            <span class="detail-value">
-                                {{data().name}}
-                            </span>
-                        </div>
-                    </div>
+<blank
+  [pageTitle]="pageTitle()"
+  pageIcon="bi-zoom-in"
+  [showStatusCheckbox]="false"
+  [showStatus]="true"
+  [status]="data().isActive"
+  [showAduit]="true"
+  [audit]="data()"
+  [loading]="loading()"
+  size="col-md-5">
+    <div class="admin-card">
+        <div class="card-header">
+            <h6><i class="bi bi-info-circle text-primary me-2"></i>Temel Bilgiler</h6>
+        </div>
+        <div class="card-body">
+            <div class="detail-grid">
+                <div class="detail-item">
+                    <label class="detail-label">Şube Adı</label>
+                    <span class="detail-value">
+                        {{data().name}}
+                    </span>
                 </div>
             </div>
-
-            <div class="admin-card">
-                <div class="card-header">
-                    <h6><i class="bi bi-info-circle text-primary me-2"></i>Adres Bilgiler</h6>
-                </div>
-                <div class="card-body">
-                    <div class="detail-grid">
-                        <div class="detail-item">
-                            <label class="detail-label">Şehir</label>
-                            <span class="detail-value">
-                                {{data().address.city}}
-                            </span>
-                        </div>
-                        <div class="detail-item">
-                            <label class="detail-label">İlçe</label>
-                            <span class="detail-value">
-                                {{data().address.district}}
-                            </span>
-                        </div>
-                        <div class="detail-item">
-                            <label class="detail-label">Açık Adres</label>
-                            <span class="detail-value">
-                                {{data().address.fullAddress}}
-                            </span>
-                        </div>
-                        <div class="detail-item">
-                            <label class="detail-label">Telefon Numarası 1</label>
-                            <span class="detail-value">
-                                {{data().address.phoneNumber1}}
-                            </span>
-                        </div>
-                        <div class="detail-item">
-                            <label class="detail-label">Telefon Numarası 2</label>
-                            <span class="detail-value">
-                                {{data().address.phoneNumber1}}
-                            </span>
-                        </div>
-                        <div class="detail-item">
-                            <label class="detail-label">Mail Adresi</label>
-                            <span class="detail-value">
-                                {{data().address.email}}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </blank>
+        </div>
     </div>
-</div>
+
+    <div class="admin-card">
+        <div class="card-header">
+            <h6><i class="bi bi-info-circle text-primary me-2"></i>Adres Bilgiler</h6>
+        </div>
+        <div class="card-body">
+            <div class="detail-grid">
+                <div class="detail-item">
+                    <label class="detail-label">Şehir</label>
+                    <span class="detail-value">
+                        {{data().address.city}}
+                    </span>
+                </div>
+                <div class="detail-item">
+                    <label class="detail-label">İlçe</label>
+                    <span class="detail-value">
+                        {{data().address.district}}
+                    </span>
+                </div>
+                <div class="detail-item">
+                    <label class="detail-label">Açık Adres</label>
+                    <span class="detail-value">
+                        {{data().address.fullAddress}}
+                    </span>
+                </div>
+                <div class="detail-item">
+                    <label class="detail-label">Telefon Numarası 1</label>
+                    <span class="detail-value">
+                        {{data().address.phoneNumber1}}
+                    </span>
+                </div>
+                <div class="detail-item">
+                    <label class="detail-label">Telefon Numarası 2</label>
+                    <span class="detail-value">
+                        {{data().address.phoneNumber1}}
+                    </span>
+                </div>
+                <div class="detail-item">
+                    <label class="detail-label">Mail Adresi</label>
+                    <span class="detail-value">
+                        {{data().address.email}}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</blank>
