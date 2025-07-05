@@ -16,5 +16,10 @@ export const navigations: NavigationModel[] = [
         title: 'Şubeler',
         url: '/branches',
         icon: 'bi-buildings'
+    },
+    {
+        title: 'Roller',
+        url: '/roles',
+        icon: 'bi-clipboard2-check'
     }
 ]
