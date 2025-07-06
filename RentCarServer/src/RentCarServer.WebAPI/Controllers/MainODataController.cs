@@ -5,6 +5,7 @@ using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
 using RentCarServer.Application.Branches;
 using RentCarServer.Application.Categories;
+using RentCarServer.Application.ProtectionPackages;
 using RentCarServer.Application.Roles;
 using RentCarServer.Application.Users;
 using TS.MediatR;
@@ -23,6 +24,7 @@ public class MainODataController : ODataController
         builder.EntitySet<RoleDto>("roles");
         builder.EntitySet<UserDto>("users");
         builder.EntitySet<CategoryDto>("categories");
+        builder.EntitySet<ProtectionPackageDto>("protectionPackages");
         return builder.GetEdmModel();
     }
 
@@ -41,4 +43,8 @@ public class MainODataController : ODataController
     [HttpGet("categories")]
     public IQueryable<CategoryDto> Categories(ISender sender, CancellationToken cancellationToken = default)
         => sender.Send(new CategoryGetAllQuery(), cancellationToken).Result;
+
+    [HttpGet("protectionPackages")]
+    public IQueryable<ProtectionPackageDto> ProtectionPackages(ISender sender, CancellationToken cancellationToken = default)
+        => sender.Send(new ProtectionPackageGetAllQuery(), cancellationToken).Result;
 }
