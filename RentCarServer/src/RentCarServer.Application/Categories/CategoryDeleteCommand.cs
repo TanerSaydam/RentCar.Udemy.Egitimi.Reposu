@@ -1,10 +1,11 @@
 using GenericRepository;
+using RentCarServer.Application.Behaviors;
 using RentCarServer.Domain.Categories;
 using TS.MediatR;
 using TS.Result;
 
 namespace RentCarServer.Application.Categories;
-
+[Permission("category:delete")]
 public sealed record CategoryDeleteCommand(
     Guid Id) : IRequest<Result<string>>;
 

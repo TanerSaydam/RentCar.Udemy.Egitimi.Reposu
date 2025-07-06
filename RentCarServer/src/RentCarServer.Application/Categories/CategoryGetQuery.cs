@@ -1,10 +1,11 @@
 using Microsoft.EntityFrameworkCore;
+using RentCarServer.Application.Behaviors;
 using RentCarServer.Domain.Categories;
 using TS.MediatR;
 using TS.Result;
 
 namespace RentCarServer.Application.Categories;
-
+[Permission("category:view")]
 public sealed record CategoryGetQuery(
     Guid Id) : IRequest<Result<CategoryDto>>;
 

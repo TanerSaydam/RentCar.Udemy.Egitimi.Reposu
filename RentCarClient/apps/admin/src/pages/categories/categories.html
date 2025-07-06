@@ -1,0 +1,12 @@
+<grid
+ pageTitle="Kategoriler"
+ endpoint="/rent/odata/categories"
+ [addOptions]="{url: '/categories/add', permission: 'category:create' }"
+ [editOptions]="{url: '/categories/edit', permission: 'category:edit'}"
+ [detailOptions]="{url: '/categories/detail', permission: 'category:view'}"
+ [deleteOptions]="{url: '/rent/categories', permission: 'category:delete'}"
+ [breadcrumbs]="bredcrumbs()"
+ captionTitle="Kategori Listesi"
+>
+    <flexi-grid-column field="name" title="Kategori Adı"/>
+</grid>

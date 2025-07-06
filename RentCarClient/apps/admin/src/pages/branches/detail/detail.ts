@@ -22,7 +22,7 @@ export default class Detail {
   readonly result = httpResource<Result<BranchModel>>(() => `/rent/branches/${this.id()}`);
   readonly data = computed(() => this.result.value()?.data ?? initialBranch);
   readonly loading = computed(() => this.result.isLoading());
-  readonly pageTitle = computed(() => this.data().name);
+  readonly pageTitle = signal<string>("Şube Detay");
 
   readonly #activated = inject(ActivatedRoute);
   readonly #breadcrumb = inject(BreadcrumbService);

@@ -2,7 +2,7 @@ import { httpResource } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, computed, effect, inject, resource, signal, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import Blank from 'apps/admin/src/components/blank/blank';
-import { UserModel, initialUser } from 'apps/admin/src/models/user.model';
+import { CategoryModel, initialCategoryModel } from 'apps/admin/src/models/category.model';
 import { Result } from 'apps/admin/src/models/result.model';
 import { BreadcrumbModel, BreadcrumbService } from 'apps/admin/src/services/breadcrumb';
 
@@ -14,18 +14,18 @@ import { BreadcrumbModel, BreadcrumbService } from 'apps/admin/src/services/brea
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export default class Detail {
+export default class CategoryDetail {
   readonly id = signal<string>('');
   readonly bredcrumbs = signal<BreadcrumbModel[]>([]);
-  readonly result = httpResource<Result<UserModel>>(() => `/rent/users/${this.id()}`);
-  readonly data = computed(() => this.result.value()?.data ?? initialUser);
+  readonly result = httpResource<Result<CategoryModel>>(() => `/rent/categories/${this.id()}`);
+  readonly data = computed(() => this.result.value()?.data ?? initialCategoryModel);
   readonly loading = computed(() => this.result.isLoading());
-  readonly pageTitle = signal<string>("Kullanıcı Detay");
+  readonly pageTitle = signal<string>("Kategori Detay");
 
   readonly #activated = inject(ActivatedRoute);
   readonly #breadcrumb = inject(BreadcrumbService);
 
-  constructor(){
+  constructor() {
     this.#activated.params.subscribe(res => {
       this.id.set(res['id']);
     });
@@ -33,22 +33,22 @@ export default class Detail {
     effect(() => {
       const breadCrumbs: BreadcrumbModel[] = [
         {
-          title: 'Kullanıcılar',
-          icon: 'bi-people',
-          url: '/users'
+          title: 'Kategoriler',
+          icon: 'bi-tags',
+          url: '/categories'
         }
-      ]
+      ];
 
-      if(this.data()){
+      if (this.data()) {
         this.bredcrumbs.set(breadCrumbs);
         this.bredcrumbs.update(prev => [...prev, {
-          title: this.data().fullName,
+          title: this.data().name,
           icon: 'bi-zoom-in',
-          url: `/users/detail/${this.id()}`,
+          url: `/categories/detail/${this.id()}`,
           isActive: true
         }]);
         this.#breadcrumb.reset(this.bredcrumbs());
       }
-    })
+    });
   }
 }
