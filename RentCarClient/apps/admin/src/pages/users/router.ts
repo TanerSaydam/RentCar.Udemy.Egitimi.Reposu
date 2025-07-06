@@ -17,12 +17,12 @@ const router: Routes = [
         path: 'edit/:id',
         loadComponent: () => import('./create/create'),
         canActivate: [() => inject(Common).checkPermissionForRoute('user:edit')]
+    },
+    {
+        path: 'detail/:id',
+        loadComponent: () => import('./detail/detail'),
+        canActivate: [() => inject(Common).checkPermissionForRoute('user:view')]
     }
-    // {
-    //     path: 'detail/:id',
-    //     loadComponent: () => import('./detail/detail'),
-    //     canActivate: [() => inject(Common).checkPermissionForRoute('user:view')]
-    // }
 ]
 
 export default router;

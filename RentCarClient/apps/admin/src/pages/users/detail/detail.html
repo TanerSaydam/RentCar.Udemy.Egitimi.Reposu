@@ -15,9 +15,27 @@
         <div class="card-body">
             <div class="detail-grid">
                 <div class="detail-item">
-                    <label class="detail-label">Rol Adı</label>
+                    <label class="detail-label">Ad</label>
                     <span class="detail-value">
-                        {{data().name}}
+                        {{data().firstName}}
+                    </span>
+                </div>
+                <div class="detail-item">
+                    <label class="detail-label">Soyad</label>
+                    <span class="detail-value">
+                        {{data().lastName}}
+                    </span>
+                </div>
+                <div class="detail-item">
+                    <label class="detail-label">Kullanıcı Adı</label>
+                    <span class="detail-value">
+                        {{data().userName}}
+                    </span>
+                </div>
+                <div class="detail-item">
+                    <label class="detail-label">Mail Adresi</label>
+                    <span class="detail-value">
+                        {{data().email}}
                     </span>
                 </div>
             </div>
@@ -26,19 +44,22 @@
 
     <div class="admin-card">
         <div class="card-header">
-            <h6><i class="bi bi-key text-warning me-2"></i>izinler</h6>
+            <h6><i class="bi bi-key text-warning me-2"></i>Yetki Bilgileri</h6>
         </div>
         <div class="card-body">
             <div class="detail-grid">
-                @for(val of data().permissions; track val){
-                    <div class="detail-item">
-                        <span class="detail-value">
-                            {{val}}
-                        </span>
-                    </div>
-                }@empty {
-                    <span style="opacity: 0.4;"><i>İzin yok</i></span>
-                }
+                <div class="detail-item">
+                    <label class="detail-label">Şube Adı</label>
+                    <span class="detail-value">
+                        {{data().branchName}}
+                    </span>
+                </div>
+                <div class="detail-item">
+                    <label class="detail-label">Rol</label>
+                    <span class="detail-value">
+                        {{data().roleName}}
+                    </span>
+                </div>
             </div>
         </div>
     </div>

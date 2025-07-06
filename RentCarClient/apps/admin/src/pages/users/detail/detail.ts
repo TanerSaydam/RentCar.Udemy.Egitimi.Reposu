@@ -2,7 +2,7 @@ import { httpResource } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, computed, effect, inject, resource, signal, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import Blank from 'apps/admin/src/components/blank/blank';
-import { RoleModel, initialRole } from 'apps/admin/src/models/role.model';
+import { UserModel, initialUser } from 'apps/admin/src/models/user.model';
 import { Result } from 'apps/admin/src/models/result.model';
 import { BreadcrumbModel, BreadcrumbService } from 'apps/admin/src/services/breadcrumb';
 
@@ -17,10 +17,10 @@ import { BreadcrumbModel, BreadcrumbService } from 'apps/admin/src/services/brea
 export default class Detail {
   readonly id = signal<string>('');
   readonly bredcrumbs = signal<BreadcrumbModel[]>([]);
-  readonly result = httpResource<Result<RoleModel>>(() => `/rent/roles/${this.id()}`);
-  readonly data = computed(() => this.result.value()?.data ?? initialRole);
+  readonly result = httpResource<Result<UserModel>>(() => `/rent/users/${this.id()}`);
+  readonly data = computed(() => this.result.value()?.data ?? initialUser);
   readonly loading = computed(() => this.result.isLoading());
-  readonly pageTitle = computed(() => this.data().name);
+  readonly pageTitle = computed(() => this.data().firstName + " " + this.data().lastName);
 
   readonly #activated = inject(ActivatedRoute);
   readonly #breadcrumb = inject(BreadcrumbService);
@@ -33,18 +33,18 @@ export default class Detail {
     effect(() => {
       const breadCrumbs: BreadcrumbModel[] = [
         {
-          title: 'Roller',
-          icon: 'bi-clipboard2-check',
-          url: '/roles'
+          title: 'Kullanıcılar',
+          icon: 'bi-people',
+          url: '/users'
         }
       ]
 
       if(this.data()){
         this.bredcrumbs.set(breadCrumbs);
         this.bredcrumbs.update(prev => [...prev, {
-          title: this.data().name,
+          title: this.data().fullName,
           icon: 'bi-zoom-in',
-          url: `/roles/detail/${this.id()}`,
+          url: `/users/detail/${this.id()}`,
           isActive: true
         }]);
         this.#breadcrumb.reset(this.bredcrumbs());
