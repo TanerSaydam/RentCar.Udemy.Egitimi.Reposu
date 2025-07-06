@@ -5,6 +5,7 @@ using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
 using RentCarServer.Application.Branches;
 using RentCarServer.Application.Roles;
+using RentCarServer.Application.Users;
 using TS.MediatR;
 
 namespace RentCarServer.WebAPI.Controllers;
@@ -19,6 +20,7 @@ public class MainODataController : ODataController
         builder.EnableLowerCamelCase();
         builder.EntitySet<BranchDto>("branches");
         builder.EntitySet<RoleDto>("roles");
+        builder.EntitySet<UserDto>("users");
         return builder.GetEdmModel();
     }
 
@@ -29,4 +31,8 @@ public class MainODataController : ODataController
     [HttpGet("roles")]
     public IQueryable<RoleDto> Roles(ISender sender, CancellationToken cancellationToken = default)
         => sender.Send(new RoleGetAllQuery(), cancellationToken).Result;
+
+    [HttpGet("users")]
+    public IQueryable<UserDto> Users(ISender sender, CancellationToken cancellationToken = default)
+        => sender.Send(new UserGetAllQuery(), cancellationToken).Result;
 }
