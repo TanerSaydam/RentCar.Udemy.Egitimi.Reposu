@@ -18,7 +18,8 @@
     "form-validate-angular": "^20.0.0",
     "jwt-decode": "^4.0.0",
     "ngx-mask": "^19.0.7",
-    "rxjs": "~7.8.0"
+    "rxjs": "~7.8.0",
+    "tr-currency": "^20.0.0"
   },
   "devDependencies": {
     "@angular-devkit/core": "~20.0.0",

@@ -1,0 +1,14 @@
+<grid
+  pageTitle="Ekstralar"
+  endpoint="/rent/odata/extras"
+  [addOptions]="{url: '/extra/add', permission: 'extra:create' }"
+  [editOptions]="{url: '/extra/edit', permission: 'extra:edit'}"
+  [detailOptions]="{url: '/extra/detail', permission: 'extra:view'}"
+  [deleteOptions]="{url: '/rent/extras', permission: 'extra:delete'}"
+  [breadcrumbs]="bredcrumbs()"
+  captionTitle="Ekstra Listesi"
+>
+  <flexi-grid-column field="name" title="Ekstra Adı"/>
+  <flexi-grid-column field="description" title="Açıklama"/>
+  <flexi-grid-column field="price" title="Fiyat" filterType="number" format="c" symbol="₺" textAlign="right"/>
+</grid>
