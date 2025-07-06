@@ -1,4 +1,5 @@
 using RentCarServer.Domain.Abstractions;
+using RentCarServer.Domain.ProtectionPackages.ValueObjects;
 using RentCarServer.Domain.Shared;
 
 namespace RentCarServer.Domain.ProtectionPackages;
@@ -8,11 +9,16 @@ public sealed class ProtectionPackage : Entity
     private readonly List<ProtectionCoverage> _coverages = new();
     private ProtectionPackage() { }
 
-    public ProtectionPackage(Name name, Price price, IsRecommended isRecommended)
+    public ProtectionPackage(
+        Name name,
+        Price price,
+        IsRecommended isRecommended,
+        IEnumerable<ProtectionCoverage> coverages)
     {
         SetName(name);
         SetPrice(price);
         SetIsRecommended(isRecommended);
+        SetCoverages(coverages);
     }
 
     public Name Name { get; private set; } = default!;
