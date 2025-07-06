@@ -1,5 +1,6 @@
 import {
   ApplicationConfig,
+  LOCALE_ID,
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
 } from '@angular/core';
@@ -10,6 +11,10 @@ import { httpInterceptor } from './interceptors/http-interceptor';
 import { authInterceptor } from './interceptors/auth-interceptor';
 import { errorInterceptor } from './interceptors/error-interceptor';
 import { provideNgxMask } from 'ngx-mask';
+import localeTr from '@angular/common/locales/tr'
+import { registerLocaleData } from '@angular/common';
+
+registerLocaleData(localeTr);
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -21,7 +26,8 @@ export const appConfig: ApplicationConfig = {
       httpInterceptor,
       authInterceptor,
       errorInterceptor
-    ]))
+    ])),
+    { provide: LOCALE_ID, useValue: 'tr-TR'}
   ],
 };
 

@@ -2,7 +2,7 @@
 using GenericRepository;
 using RentCarServer.Application.Behaviors;
 using RentCarServer.Domain.Branches;
-using RentCarServer.Domain.Branchs.ValueObjects;
+using RentCarServer.Domain.Shared;
 using TS.MediatR;
 using TS.Result;
 
@@ -12,6 +12,7 @@ public sealed record BranchUpdateCommand(
     Guid Id,
     string Name,
     Address Address,
+    Contact Contact,
     bool IsActive
     ) : IRequest<Result<string>>;
 
@@ -23,7 +24,7 @@ public sealed class BranchUpdateCommandValidator : AbstractValidator<BranchUpdat
         RuleFor(i => i.Address.City).NotEmpty().WithMessage("Geçerli bir şehir seçin");
         RuleFor(i => i.Address.District).NotEmpty().WithMessage("Geçerli bir ilçe seçin");
         RuleFor(i => i.Address.FullAddress).NotEmpty().WithMessage("Geçerli bir tam adres girin");
-        RuleFor(i => i.Address.PhoneNumber1).NotEmpty().WithMessage("Geçerli bir telefon numarası girin");
+        RuleFor(i => i.Contact.PhoneNumber1).NotEmpty().WithMessage("Geçerli bir telefon numarası girin");
     }
 }
 
@@ -41,9 +42,11 @@ internal sealed class BranchUpdateCommandHandler(
 
         Name name = new(request.Name);
         Address address = request.Address;
+        Contact contact = request.Contact;
 
         branch.SetName(name);
         branch.SetAddress(address);
+        branch.SetContact(contact);
         branch.SetStatus(request.IsActive);
         branchRepository.Update(branch);
         await unitOfWork.SaveChangesAsync(cancellationToken);

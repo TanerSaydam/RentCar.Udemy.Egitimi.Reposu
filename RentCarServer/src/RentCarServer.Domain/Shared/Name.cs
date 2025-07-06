@@ -1,3 +1,3 @@
-﻿namespace RentCarServer.Domain.Branchs.ValueObjects;
+﻿namespace RentCarServer.Domain.Shared;
 
 public sealed record Name(string Value);

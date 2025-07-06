@@ -6851,3 +6851,7 @@ a{
 .flexi-treeview-caption h2{
     font-size: 25px;
 }
+
+.flexi-select-div{
+    font-size: 15px !important;
+}

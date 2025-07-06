@@ -1,11 +1,13 @@
 import { NgClass } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, inject, linkedSignal, resource, signal, ViewEncapsulation } from '@angular/core';
+import { httpResource } from '@angular/common/http';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, linkedSignal, resource, signal, ViewEncapsulation } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Blank from 'apps/admin/src/components/blank/blank';
 import { BranchModel, initialBranch } from 'apps/admin/src/models/branch.model';
 import { BreadcrumbModel, BreadcrumbService } from 'apps/admin/src/services/breadcrumb';
 import { HttpService } from 'apps/admin/src/services/http';
+import { FlexiSelectModule } from 'flexi-select';
 import { FlexiToastService } from 'flexi-toast';
 import { FormValidateDirective } from 'form-validate-angular';
 import { NgxMaskDirective } from 'ngx-mask';
@@ -17,7 +19,8 @@ import { lastValueFrom } from 'rxjs';
     FormsModule,
     FormValidateDirective,
     NgClass,
-    NgxMaskDirective
+    NgxMaskDirective,
+    FlexiSelectModule
   ],
   templateUrl: './create.html',
   encapsulation: ViewEncapsulation.None,
@@ -52,6 +55,10 @@ export default class Create {
   });
   readonly data = linkedSignal(() => this.result.value() ?? {...initialBranch});
   readonly loading = linkedSignal(() => this.result.isLoading());
+  readonly ilResult = httpResource<any[]>(() => "/il-lce.json");
+  readonly iller = computed(() => this.ilResult.value() ?? []);
+  readonly ilLoading = computed(() => this.ilResult.isLoading());
+  readonly ilceler = signal<any[]>([]);
 
   readonly #breadcrumb = inject(BreadcrumbService);
   readonly #activated = inject(ActivatedRoute);
@@ -71,6 +78,12 @@ export default class Create {
           isActive: true
         }]);
         this.#breadcrumb.reset(this.bredcrumbs());
+      }
+    })
+
+    effect(()=> {
+      if(this.data().address.city){
+        this.getIlceler();
       }
     })
   }
@@ -100,5 +113,10 @@ export default class Create {
       ...prev,
       isActive: status
     }));
+  }
+
+  getIlceler(){
+    const il = this.iller().find(i =>i.il_adi === this.data().address.city);
+    this.ilceler.set(il.ilceler);
   }
 }

@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
 using GenericRepository;
 using RentCarServer.Application.Behaviors;
-using RentCarServer.Domain.Branchs.ValueObjects;
 using RentCarServer.Domain.Roles;
+using RentCarServer.Domain.Shared;
 using TS.MediatR;
 using TS.Result;
 
