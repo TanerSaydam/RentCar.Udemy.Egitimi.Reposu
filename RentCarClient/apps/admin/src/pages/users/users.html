@@ -1,0 +1,18 @@
+<grid
+ pageTitle="Kullanıcılar"
+ endpoint="/rent/odata/users"
+ [addOptions]="{url: '/users/add', permission: 'user:create' }"
+ [editOptions]="{url: '/users/edit', permission: 'user:edit'}"
+ [detailOptions]="{url: '/users/detail', permission: 'user:view'}"
+ [deleteOptions]="{url: '/rent/users', permission: 'user:delete'}"
+ [breadcrumbs]="bredcrumbs()"
+ captionTitle="Kullanıcı Listesi"
+>
+    <flexi-grid-column field="firstName" title="Ad"/>
+    <flexi-grid-column field="lastName" title="Soyad"/>
+    <flexi-grid-column field="userName" title="Kullanıcı Adı"/>
+    <flexi-grid-column field="email" title="Mail Adresi"/>
+    <flexi-grid-column field="branchName" title="Şube Adı"/>
+    <flexi-grid-column field="roleName" title="Rol"/>
+
+</grid>

@@ -25,5 +25,11 @@ export const navigations: NavigationModel[] = [
         url: '/roles',
         icon: 'bi-clipboard2-check',
         permission: 'role:view'
-    }
+    },
+    {
+        title: 'Kullanıcılar',
+        url: '/users',
+        icon: 'bi-people',
+        permission: 'user:view'
+    },
 ]

@@ -38,6 +38,7 @@ public static class UserExtensions
                 UserName = s.Entity.UserName.Value,
                 RoleName = s.Role.Name.Value,
                 BranchName = s.Branch.Name.Value,
+                IsActive = s.Entity.IsActive,
                 CreatedAt = s.Entity.CreatedAt,
                 CreatedBy = s.Entity.CreatedBy.Value,
                 CreatedFullName = s.CreatedUser.FullName.Value,

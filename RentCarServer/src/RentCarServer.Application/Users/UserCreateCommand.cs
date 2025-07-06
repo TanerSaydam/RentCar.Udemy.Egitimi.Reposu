@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using GenericRepository;
+using RentCarServer.Application.Behaviors;
 using RentCarServer.Application.Services;
 using RentCarServer.Domain.Abstractions;
 using RentCarServer.Domain.Users;
@@ -8,13 +9,15 @@ using TS.MediatR;
 using TS.Result;
 
 namespace RentCarServer.Application.Users;
+[Permission("user:create")]
 public sealed record UserCreateCommand(
     string FirstName,
     string LastName,
     string Email,
     string UserName,
     Guid? BranchId,
-    Guid RoleId) : IRequest<Result<string>>;
+    Guid RoleId,
+    bool IsActive) : IRequest<Result<string>>;
 
 public sealed class UserCreateCommandValidator : AbstractValidator<UserCreateCommand>
 {
@@ -60,7 +63,15 @@ internal sealed class UserCreateCommandHandler(
         Password password = new("123");
         IdentityId branchIdRecord = new(branchId);
         IdentityId roleId = new(request.RoleId);
-        User user = new(firstName, lastName, email, userName, password, branchIdRecord, roleId);
+        User user = new(
+            firstName,
+            lastName,
+            email,
+            userName,
+            password,
+            branchIdRecord,
+            roleId,
+            request.IsActive);
         userRepository.Add(user);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
