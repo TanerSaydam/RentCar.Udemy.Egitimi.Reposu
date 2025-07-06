@@ -22,7 +22,7 @@ internal sealed class ApplicationDbContext : DbContext, IUnitOfWork
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
         configurationBuilder.Properties<IdentityId>().HaveConversion<IdentityIdValueConverter>();
-        configurationBuilder.Properties<decimal>().HaveColumnType("decimal(18,2)");
+        configurationBuilder.Properties<decimal>().HaveColumnType("money");
         configurationBuilder.Properties<string>().HaveColumnType("nvarchar(MAX)");
         base.ConfigureConventions(configurationBuilder);
     }
