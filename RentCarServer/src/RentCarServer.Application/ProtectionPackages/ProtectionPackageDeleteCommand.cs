@@ -1,4 +1,5 @@
 using GenericRepository;
+using RentCarServer.Application.Behaviors;
 using RentCarServer.Domain.ProtectionPackages;
 using TS.MediatR;
 using TS.Result;
@@ -6,7 +7,7 @@ using TS.Result;
 namespace RentCarServer.Application.ProtectionPackages;
 
 public sealed record ProtectionPackageDeleteCommand(Guid Id) : IRequest<Result<string>>;
-
+[Permission("protection_package:delete")]
 internal sealed class ProtectionPackageDeleteCommandHandler(
     IProtectionPackageRepository repository,
     IUnitOfWork unitOfWork) : IRequestHandler<ProtectionPackageDeleteCommand, Result<string>>

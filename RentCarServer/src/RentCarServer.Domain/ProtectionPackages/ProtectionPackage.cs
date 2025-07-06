@@ -13,12 +13,14 @@ public sealed class ProtectionPackage : Entity
         Name name,
         Price price,
         IsRecommended isRecommended,
-        IEnumerable<ProtectionCoverage> coverages)
+        IEnumerable<ProtectionCoverage> coverages,
+        bool isActive)
     {
         SetName(name);
         SetPrice(price);
         SetIsRecommended(isRecommended);
         SetCoverages(coverages);
+        SetStatus(isActive);
     }
 
     public Name Name { get; private set; } = default!;

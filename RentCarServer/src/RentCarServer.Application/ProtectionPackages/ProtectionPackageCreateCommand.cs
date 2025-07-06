@@ -1,5 +1,6 @@
 using FluentValidation;
 using GenericRepository;
+using RentCarServer.Application.Behaviors;
 using RentCarServer.Domain.ProtectionPackages;
 using RentCarServer.Domain.ProtectionPackages.ValueObjects;
 using RentCarServer.Domain.Shared;
@@ -7,12 +8,13 @@ using TS.MediatR;
 using TS.Result;
 
 namespace RentCarServer.Application.ProtectionPackages;
-
+[Permission("protection_package:create")]
 public sealed record ProtectionPackageCreateCommand(
     string Name,
     decimal Price,
     bool IsRecommended,
-    List<string> Coverages) : IRequest<Result<string>>;
+    List<string> Coverages,
+    bool IsActive) : IRequest<Result<string>>;
 
 public sealed class ProtectionPackageCreateCommandValidator : AbstractValidator<ProtectionPackageCreateCommand>
 {
@@ -38,7 +40,7 @@ internal sealed class ProtectionPackageCreateCommandHandler(
         IsRecommended isRecommended = new(request.IsRecommended);
         List<ProtectionCoverage> coverages = request.Coverages.Select(c => new ProtectionCoverage(c)).ToList();
 
-        ProtectionPackage package = new(name, price, isRecommended, coverages);
+        ProtectionPackage package = new(name, price, isRecommended, coverages, request.IsActive);
 
         repository.Add(package);
         await unitOfWork.SaveChangesAsync(cancellationToken);

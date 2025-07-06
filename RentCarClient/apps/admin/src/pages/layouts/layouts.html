@@ -18,7 +18,7 @@
                     <li
                       [routerLink]="nav.url"
                       routerLinkActive="active"
-                      [routerLinkActiveOptions]="{exact:true}"
+                      [routerLinkActiveOptions]="{exact:nav.url === '/'}"
                       class="menu-item">
                         <a class="menu-link">
                             <i class="bi" [ngClass]="nav.icon"></i>

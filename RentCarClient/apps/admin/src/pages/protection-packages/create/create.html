@@ -1,0 +1,68 @@
+<blank
+  [pageTitle]="pageTitle()"
+  [pageIcon]="pageIcon()"
+  (changeStatusEvent)="changeStatus($event)"
+  [status]="data().isActive"
+  [loading]="loading()"
+  size="col-md-5">
+  <form #form="ngForm" formValidate class="admin-form" (ngSubmit)="save(form)">
+    <div class="admin-card">
+      <div class="card-header">
+        <h6><i class="bi bi-info-circle text-primary me-2"></i>Paket Bilgileri</h6>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <label>Paket Adı (*)</label>
+          <input type="text" class="form-control" [(ngModel)]="data().name" name="name" required>
+          <div class="invalid-feedback">Geçerli bir paket adı girin</div>
+        </div>
+        <div class="form-group">
+          <label>Fiyat (*)</label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="data().price"
+            name="price"
+            mask="separator.2"
+            thousandSeparator="."
+            decimalMarker=","
+            required>
+          <div class="invalid-feedback">Geçerli bir fiyat girin</div>
+        </div>
+        <div class="form-group">
+            <div class="form-check form-switch">
+                <input type="checkbox" id="isRecommended" name="isRecommended" [(ngModel)]="data().isRecommended" class="form-check-input">
+                <label for="isRecommended" class="form-check-label">Önerilen mi?</label>
+            </div>
+        </div>
+        <div class="form-group">
+          <label>Kapsamlar</label>
+          <div class="d-flex gap-1">
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="coveragesInput"
+              placeholder="Kapsam ekle"
+              name="coveragesInput">
+            <button type="button" class="btn btn-outline-primary" (click)="addCoverage()">
+              <i class="bi bi-plus"></i>
+            </button>
+          </div>
+          <div class="mt-2">
+            @for (cov of data().coverages; track $index; let i = $index) {
+              <span class="badge bg-primary me-1">
+                {{cov}} <i class="bi bi-x ms-1" style="cursor:pointer" (click)="removeCoverage(i)"></i>
+              </span>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group mt-2 d-flex justify-content-end">
+      <button type="submit" class="btn btn-primary">
+        <i class="bi" [ngClass]="pageIcon()"></i>
+        {{btnName()}}
+      </button>
+    </div>
+  </form>
+</blank>

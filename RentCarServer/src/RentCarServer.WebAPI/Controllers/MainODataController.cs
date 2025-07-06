@@ -24,7 +24,7 @@ public class MainODataController : ODataController
         builder.EntitySet<RoleDto>("roles");
         builder.EntitySet<UserDto>("users");
         builder.EntitySet<CategoryDto>("categories");
-        builder.EntitySet<ProtectionPackageDto>("protectionPackages");
+        builder.EntitySet<ProtectionPackageDto>("protection-packages");
         return builder.GetEdmModel();
     }
 
@@ -44,7 +44,7 @@ public class MainODataController : ODataController
     public IQueryable<CategoryDto> Categories(ISender sender, CancellationToken cancellationToken = default)
         => sender.Send(new CategoryGetAllQuery(), cancellationToken).Result;
 
-    [HttpGet("protectionPackages")]
+    [HttpGet("protection-packages")]
     public IQueryable<ProtectionPackageDto> ProtectionPackages(ISender sender, CancellationToken cancellationToken = default)
         => sender.Send(new ProtectionPackageGetAllQuery(), cancellationToken).Result;
 }

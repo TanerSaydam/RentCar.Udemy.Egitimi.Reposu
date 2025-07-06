@@ -1,10 +1,11 @@
 using Microsoft.EntityFrameworkCore;
+using RentCarServer.Application.Behaviors;
 using RentCarServer.Domain.ProtectionPackages;
 using TS.MediatR;
 using TS.Result;
 
 namespace RentCarServer.Application.ProtectionPackages;
-
+[Permission("protection_package:view")]
 public sealed record ProtectionPackageGetQuery(Guid Id) : IRequest<Result<ProtectionPackageDto>>;
 
 internal sealed class ProtectionPackageGetQueryHandler(

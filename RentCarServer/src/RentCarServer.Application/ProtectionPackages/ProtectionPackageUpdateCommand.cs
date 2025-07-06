@@ -1,5 +1,6 @@
 using FluentValidation;
 using GenericRepository;
+using RentCarServer.Application.Behaviors;
 using RentCarServer.Domain.ProtectionPackages;
 using RentCarServer.Domain.ProtectionPackages.ValueObjects;
 using RentCarServer.Domain.Shared;
@@ -7,13 +8,14 @@ using TS.MediatR;
 using TS.Result;
 
 namespace RentCarServer.Application.ProtectionPackages;
-
+[Permission("protection_package:update")]
 public sealed record ProtectionPackageUpdateCommand(
     Guid Id,
     string Name,
     decimal Price,
     bool IsRecommended,
-    List<string> Coverages) : IRequest<Result<string>>;
+    List<string> Coverages,
+    bool IsActive) : IRequest<Result<string>>;
 
 public sealed class ProtectionPackageUpdateCommandValidator : AbstractValidator<ProtectionPackageUpdateCommand>
 {
@@ -53,6 +55,7 @@ internal sealed class ProtectionPackageUpdateCommandHandler(
         package.SetPrice(price);
         package.SetIsRecommended(isRecommended);
         package.SetCoverages(coverages);
+        package.SetStatus(request.IsActive);
 
         repository.Update(package);
         await unitOfWork.SaveChangesAsync(cancellationToken);
