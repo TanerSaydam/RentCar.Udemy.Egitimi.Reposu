@@ -1,7 +1,4 @@
 <Solution>
-  <Folder Name="/Solution Items/">
-    <File Path=".editorconfig" />
-  </Folder>
   <Folder Name="/src/">
     <Project Path="src/RentCarServer.Application/RentCarServer.Application.csproj" />
     <Project Path="src/RentCarServer.Domain/RentCarServer.Domain.csproj" Id="6a85663d-4f62-491c-95a3-d9b503d979ee" />
