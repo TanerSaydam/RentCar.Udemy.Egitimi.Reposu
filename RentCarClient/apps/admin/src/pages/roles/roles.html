@@ -1,10 +1,10 @@
 <grid
  pageTitle="Roller"
  endpoint="/rent/odata/roles"
- addUrl="/roles/add"
- editUrl="/roles/edit"
- detailUrl="/roles/detail"
- deleteEndpoint="/rent/roles"
+ [addOptions]="{url: '/roles/add', permission: 'role:create' }"
+ [editOptions]="{url: '/roles/edit', permission: 'role:edit'}"
+ [detailOptions]="{url: '/roles/detail', permission: 'role:view'}"
+ [deleteOptions]="{url: '/rent/roles', permission: 'role:delete'}"
  [breadcrumbs]="bredcrumbs()"
  captionTitle="Rol Listesi"
 >
@@ -12,12 +12,14 @@
     <flexi-grid-column field="permissionCount" title="İzin Sayısı" textAlign="right"/>
 
     <ng-template #columnCommandTemplate let-item>
-        <flexi-button
-          btnColor="pink"
-          btnSize="small"
-          btnIcon="key"
-          title="İzinler"
-          flexiTooltip
-          [routerLink]="['/roles/permissions',item.id]" />
+        @if(checkPermission('role:update_permissions')){
+            <flexi-button
+              btnColor="pink"
+              btnSize="small"
+              btnIcon="key"
+              title="İzinler"
+              flexiTooltip
+              [routerLink]="['/roles/permissions',item.id]" />
+        }
     </ng-template>
 </grid>

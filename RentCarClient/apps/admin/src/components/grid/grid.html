@@ -16,12 +16,14 @@ language="tr"
         @if(commandTemplateRef() !== undefined){
             <ng-container *ngTemplateOutlet="commandTemplateRef()!;"></ng-container>
         }
-        <flexi-button
-          btnColor="primary"
-          btnIcon="add"
-          title="Ekle"
-          flexiTooltip
-          [routerLink]="this.addUrl()" />
+        @if(checkPermission(addOptions().permission)){
+          <flexi-button
+            btnColor="primary"
+            btnIcon="add"
+            title="Ekle"
+            flexiTooltip
+            [routerLink]="this.addOptions().url" />
+        }
     </ng-template>
 
     <ng-content />
@@ -53,26 +55,32 @@ language="tr"
             </ng-container>
         }
 
-        <flexi-button
-          btnColor="indigo"
-          btnIcon="zoom_in"
-          title="Detay"
-          btnSize="small"
-          flexiTooltip
-          [routerLink]="[this.detailUrl(),item.id]" />
-        <flexi-button
-          btnColor="info"
-          btnIcon="edit"
-          title="Güncelle"
-          btnSize="small"
-          flexiTooltip
-          [routerLink]="[this.editUrl(),item.id]" />
-       <flexi-button
-          btnColor="danger"
-          btnIcon="delete"
-          title="Sil"
-          btnSize="small"
-          flexiTooltip
-          (click)="delete(item.id)" />
+        @if(checkPermission(detailOptions().permission)){
+          <flexi-button
+            btnColor="indigo"
+            btnIcon="zoom_in"
+            title="Detay"
+            btnSize="small"
+            flexiTooltip
+            [routerLink]="[this.detailOptions().url,item.id]" />
+        }
+        @if(checkPermission(editOptions().permission)){
+          <flexi-button
+            btnColor="info"
+            btnIcon="edit"
+            title="Güncelle"
+            btnSize="small"
+            flexiTooltip
+            [routerLink]="[this.editOptions().url,item.id]" />
+        }
+        @if(checkPermission(deleteOptions().permission)){
+          <flexi-button
+             btnColor="danger"
+             btnIcon="delete"
+             title="Sil"
+             btnSize="small"
+             flexiTooltip
+             (click)="delete(item.id)" />
+        }
     </ng-template>
 </flexi-grid>

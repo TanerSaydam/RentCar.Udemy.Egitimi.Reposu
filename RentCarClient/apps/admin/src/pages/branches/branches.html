@@ -1,10 +1,10 @@
 <grid
  pageTitle="Şubeler"
  endpoint="/rent/odata/branches"
- addUrl="/branches/add"
- editUrl="/branches/edit"
- detailUrl="/branches/detail"
- deleteEndpoint="/rent/branches"
+ [addOptions]="{url: '/branches/add', permission: 'branch:create' }"
+ [editOptions]="{url: '/branches/edit', permission: 'branch:edit'}"
+ [detailOptions]="{url: '/branches/detail', permission: 'branch:view'}"
+ [deleteOptions]="{url: '/rent/branches', permission: 'branch:delete'}"
  [breadcrumbs]="bredcrumbs()"
  captionTitle="Şube Listesi"
 >
