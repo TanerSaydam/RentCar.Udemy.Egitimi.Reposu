@@ -11,6 +11,7 @@ public sealed class UserDto : EntityDto
     public string FullName { get; set; } = default!;
     public string Email { get; set; } = default!;
     public string UserName { get; set; } = default!;
+    public Guid BranchId { get; set; }
     public string BranchName { get; set; } = default!;
     public string RoleName { get; set; } = default!;
 }
@@ -37,6 +38,7 @@ public static class UserExtensions
                 Email = s.Entity.Email.Value,
                 UserName = s.Entity.UserName.Value,
                 RoleName = s.Role.Name.Value,
+                BranchId = s.Entity.BranchId,
                 BranchName = s.Branch.Name.Value,
                 IsActive = s.Entity.IsActive,
                 CreatedAt = s.Entity.CreatedAt,
