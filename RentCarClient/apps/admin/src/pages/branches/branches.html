@@ -11,13 +11,13 @@
     <flexi-grid-column field="name" title="Şube Adı"/>
     <flexi-grid-column field="contact.phoneNumber1" title="Telefon 1">
         <ng-template flexiGridCellTemplate let-item>
-            <span>+90{{item.contact.phoneNumber1 | mask:'(000) 000 0000'}}</span>
+            <span>+90{{item.contact.phoneNumber1 | mask:'(000) 000 00 00'}}</span>
         </ng-template>
     </flexi-grid-column>
     <flexi-grid-column field="contact.phoneNumber2" title="Telefon 1">
         <ng-template flexiGridCellTemplate let-item>
           @if(item.contact.phoneNumber2){
-            <span>+90{{item.contact.phoneNumber2 | mask:'(000) 000 0000'}}</span>
+            <span>+90{{item.contact.phoneNumber2 | mask:'(000) 000 00 00'}}</span>
           }
         </ng-template>
     </flexi-grid-column>

@@ -8,16 +8,16 @@ const router: Routes = [
         loadComponent: () => import('./users'),
         canActivate: [() => inject(Common).checkPermissionForRoute('user:view')]
     },
-    // {
-    //     path: 'add',
-    //     loadComponent: () => import('./create/create'),
-    //     canActivate: [() => inject(Common).checkPermissionForRoute('user:create')]
-    // },
-    // {
-    //     path: 'edit/:id',
-    //     loadComponent: () => import('./create/create'),
-    //     canActivate: [() => inject(Common).checkPermissionForRoute('user:edit')]
-    // },
+    {
+        path: 'add',
+        loadComponent: () => import('./create/create'),
+        canActivate: [() => inject(Common).checkPermissionForRoute('user:create')]
+    },
+    {
+        path: 'edit/:id',
+        loadComponent: () => import('./create/create'),
+        canActivate: [() => inject(Common).checkPermissionForRoute('user:edit')]
+    }
     // {
     //     path: 'detail/:id',
     //     loadComponent: () => import('./detail/detail'),

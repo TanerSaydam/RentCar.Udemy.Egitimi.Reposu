@@ -33,13 +33,15 @@
                 <div class="detail-item">
                     <label class="detail-label">Telefon Numarası 1</label>
                     <span class="detail-value">
-                        {{data().contact.phoneNumber1}}
+                        +90{{data().contact.phoneNumber1 | mask:'(000) 000 00 00'}}
                     </span>
                 </div>
                 <div class="detail-item">
                     <label class="detail-label">Telefon Numarası 2</label>
                     <span class="detail-value">
-                        {{data().contact.phoneNumber1}}
+                        @if(data().contact.phoneNumber2){
+                            +90{{data().contact.phoneNumber2 | mask:'(000) 000 00 00'}}
+                        }
                     </span>
                 </div>
                 <div class="detail-item">

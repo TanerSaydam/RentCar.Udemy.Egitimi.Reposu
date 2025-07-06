@@ -91,7 +91,7 @@ app.MapControllers()
 app.MapAuth();
 app.MapBranch();
 app.MapRole();
-//app.MapPermission();
+app.MapPermission();
 app.MapUser();
 
 app.MapGet("/", () => "Hello World").RequireAuthorization();
