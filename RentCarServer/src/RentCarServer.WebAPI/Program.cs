@@ -94,6 +94,6 @@ app.MapRole();
 app.MapPermission();
 
 app.MapGet("/", () => "Hello World").RequireAuthorization();
-//await app.CreateFirstUser();
+await app.CreateFirstUser();
 await app.CleanRemovedPermissionsFromRoleAsync();
 app.Run();
