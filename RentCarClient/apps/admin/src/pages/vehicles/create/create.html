@@ -1,0 +1,313 @@
+<blank
+  [pageTitle]="pageTitle()"
+  [pageIcon]="pageIcon()"
+  (changeStatusEvent)="changeStatus($event)"
+  [status]="data().isActive"
+  [loading]="loading()"
+  size="col-md-12">
+  <form #form="ngForm" formValidate class="admin-form" (ngSubmit)="save(form)">
+    <div class="row g-4">
+      <div class="col-md-8">
+        <!-- Temel Bilgiler -->
+        <div class="admin-card">
+          <div class="card-header">
+            <h6><i class="bi bi-info-circle text-primary me-2"></i>Temel Bilgiler</h6>
+          </div>
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Marka *</label>
+                <select class="form-select" [(ngModel)]="data().brand" name="brand" required>
+                  <option value="">Marka seçiniz</option>
+                  @for (brand of brandList; track $index) {
+                    <option [value]="brand">{{brand}}</option>
+                  }
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Model *</label>
+                <input type="text" class="form-control" [(ngModel)]="data().model" name="model" required>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Model Yılı *</label>
+                <select class="form-select" [(ngModel)]="data().modelYear" name="modelYear" required>
+                  <option value="">Model yılı seçiniz</option>
+                  @for (year of modelYearList; track $index) {
+                    <option [value]="year">{{year}}</option>
+                  }
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Renk</label>
+                <select class="form-select" [(ngModel)]="data().color" name="color">
+                  <option value="">Renk seçiniz</option>
+                  @for (color of colorList; track $index) {
+                    <option [value]="color">{{color}}</option>
+                  }
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Plaka *</label>
+                <input type="text" class="form-control" [(ngModel)]="data().plate" name="plate" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Kategori *</label>
+                <flexi-select
+                  [data]="categoryList()"
+                  label="name"
+                  value="id"
+                  [(ngModel)]="data().categoryId"
+                  name="categoryId"
+                  language="tr"
+                  [required]="true"
+                  placeholder="Kategori seçiniz" />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Şube *</label>
+                <flexi-select
+                  [data]="branchList()"
+                  label="name"
+                  value="id"
+                  [(ngModel)]="data().branchId"
+                  name="branchId"
+                  language="tr"
+                  [required]="true"
+                  placeholder="Şube seçiniz" />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">VIN Numarası</label>
+                <input type="text" class="form-control" [(ngModel)]="data().vinNumber" name="vinNumber">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Motor Numarası</label>
+                <input type="text" class="form-control" [(ngModel)]="data().engineNumber" name="engineNumber">
+              </div>
+              <div class="col-12">
+                <label class="form-label">Açıklama</label>
+                <textarea class="form-control" [(ngModel)]="data().description" name="description"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Teknik Özellikler -->
+        <div class="admin-card">
+          <div class="card-header">
+            <h6><i class="bi bi-gear text-primary me-2"></i>Teknik Özellikler</h6>
+          </div>
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label class="form-label">Yakıt Türü *</label>
+                <select class="form-select" [(ngModel)]="data().fuelType" name="fuelType" required>
+                  <option value="">Yakıt türü seçiniz</option>
+                  @for (item of fuelTypeList; track $index) {
+                    <option [value]="item">{{item}}</option>
+                  }
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Şanzıman *</label>
+                <select class="form-select" [(ngModel)]="data().transmission" name="transmission" required>
+                  <option value="">Şanzıman seçiniz</option>
+                  @for (item of transmissionList; track $index) {
+                    <option [value]="item">{{item}}</option>
+                  }
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Kişi Kapasitesi *</label>
+                <select class="form-select" [(ngModel)]="data().seatCount" name="seatCount" required>
+                  <option [value]="0">Kapasite seçiniz</option>
+                  @for (item of seatCountList; track $index) {
+                    <option [value]="item.value">{{item.label}}</option>
+                  }
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Motor Hacmi (cc)</label>
+                <input type="number" class="form-control" [(ngModel)]="data().engineVolume" name="engineVolume">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Motor Gücü (HP)</label>
+                <input type="number" class="form-control" [(ngModel)]="data().enginePower" name="enginePower">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Kilometre</label>
+                <input type="number" class="form-control" [(ngModel)]="data().kilometer" name="kilometer">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Çekiş Türü</label>
+                <select class="form-select" [(ngModel)]="data().tractionType" name="tractionType">
+                  <option value="">Çekiş türü seçiniz</option>
+                  @for (item of tractionTypeList; track $index) {
+                    <option [value]="item">{{item}}</option>
+                  }
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Yakıt Tüketimi</label>
+                <input type="text" class="form-control" [(ngModel)]="data().fuelConsumption" name="fuelConsumption">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Özellikler -->
+        <div class="admin-card">
+          <div class="card-header">
+            <h6><i class="bi bi-stars text-primary me-2"></i>Özellikler & Donanım</h6>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              @for (group of featureGroups; track group.group) {
+                <div class="col-md-6 mb-3">
+                  <div class="fw-bold mb-2">{{ group.group }}</div>
+                  @for (f of group.features; track f.key) {
+                    <div class="form-check form-switch d-flex align-items-center mb-2">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        [checked]="isFeatureSelected(f.key)"
+                        (change)="toggleFeature(f.key)"
+                        id="feature-{{f.key}}">
+                      <label class="form-check-label ms-2" [for]="'feature-' + f.key">
+                        <i class="bi {{f.icon}} me-1"></i> {{f.label}}
+                      </label>
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- Fiyatlandırma & Lokasyon -->
+        <div class="admin-card">
+          <div class="card-header">
+            <h6><i class="bi bi-currency-dollar text-primary me-2"></i>Fiyatlandırma & Lokasyon</h6>
+          </div>
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label class="form-label">Günlük Fiyat (TL) *</label>
+                <input type="text" class="form-control" mask="separator.2" thousandSeparator="." decimalMarker="," [(ngModel)]="data().dailyPrice" name="dailyPrice" required>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Haftalık İndirim (%)</label>
+                <input type="number" class="form-control" [(ngModel)]="data().weeklyDiscountRate" name="weeklyDiscountRate">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Aylık İndirim (%)</label>
+                <input type="number" class="form-control" [(ngModel)]="data().monthlyDiscountRate" name="monthlyDiscountRate">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bakım & Sigorta -->
+        <div class="admin-card">
+          <div class="card-header">
+            <h6><i class="bi bi-wrench text-primary me-2"></i>Bakım & Sigorta</h6>
+          </div>
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label class="form-label">Sigorta Tipi</label>
+                <select class="form-select" [(ngModel)]="data().insuranceType" name="insuranceType">
+                  <option value="">Sigorta tipi seçiniz</option>
+                  @for (item of insuranceTypeList(); track $index) {
+                    <option [value]="item">{{item}}</option>
+                  }
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Son Bakım Tarihi</label>
+                <input type="date" class="form-control" [(ngModel)]="data().lastMaintenanceDate" name="lastMaintenanceDate">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Son Bakım Km</label>
+                <input type="number" class="form-control" [(ngModel)]="data().lastMaintenanceKm" name="lastMaintenanceKm">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Sonraki Bakım Km</label>
+                <input type="number" class="form-control" [(ngModel)]="data().nextMaintenanceKm" name="nextMaintenanceKm">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Muayene Tarihi</label>
+                <input type="date" class="form-control" [(ngModel)]="data().inspectionDate" name="inspectionDate">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Sigorta Bitiş</label>
+                <input type="date" class="form-control" [(ngModel)]="data().insuranceEndDate" name="insuranceEndDate">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Kasko Bitiş</label>
+                <input type="date" class="form-control" [(ngModel)]="data().cascoEndDate" name="cascoEndDate">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Lastik Durumu</label>
+                <select class="form-select" [(ngModel)]="data().tireStatus" name="tireStatus">
+                  <option value="">Lastik durumu seçiniz</option>
+                  @for (item of tireStatusList; track $index) {
+                    <option [value]="item">{{item}}</option>
+                  }
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Genel Durum</label>
+                <select class="form-select" [(ngModel)]="data().generalStatus" name="generalStatus">
+                  <option value="">Genel durum seçiniz</option>
+                  @for (item of generalStatusList; track $index) {
+                    <option [value]="item">{{item}}</option>
+                  }
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sağ Panel: Resim Yükleme ve Form Aksiyonları -->
+      <div class="col-md-4">
+        <div class="admin-card">
+          <div class="card-header">
+            <h6><i class="bi bi-image text-primary me-2"></i>Araç Fotoğrafı</h6>
+          </div>
+          <div class="card-body text-center">
+            <div
+              class="image-upload-dropzone"
+              (drop)="onImageDrop($event)"
+              (dragover)="onImageDragOver($event)"
+              (dragleave)="onImageDragLeave($event)"
+              [ngClass]="{'drag-over': dragOver}"
+              style="border:2px dashed #ccc; border-radius:8px; padding:16px; cursor:pointer; position:relative;"
+              (click)="triggerFileInput()"
+            >
+              <img
+                [src]="`https://localhost:7207/images/${data().imageUrl}` || '/no-noimage.png'"
+                alt="Araç Fotoğrafı"
+                class="img-fluid mb-2"
+                style="max-width: 100%; max-height: 400px; object-fit:cover; display:block; margin:auto;"
+              >
+              <div style="color:#888;">Dosyayı buraya sürükleyin<br>veya<br><button type="button" class="btn btn-link p-0">Dosya Seç</button></div>
+              <input
+                type="file"
+                accept="image/*"
+                style="display:none"
+                #fileInput
+                (change)="onImageChange($event)">
+            </div>
+          </div>
+        </div>
+        <div class="admin-card mt-3">
+          <div class="card-body">
+            <button type="submit" class="btn btn-primary w-100">
+              <i class="bi bi-check-circle me-2"></i>Kaydet
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</blank>
