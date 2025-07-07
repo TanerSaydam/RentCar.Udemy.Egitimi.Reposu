@@ -33,8 +33,7 @@ public sealed record ReservationCreateCommand(
     Guid ExtraId,
     decimal ExtraPrice,
     string Note,
-    CreditCartInformation CreditCartInformation,
-    string CartOwner
+    CreditCartInformation CreditCartInformation
 ) : IRequest<Result<string>>;
 
 public sealed class ReservationCreateCommandValidator : AbstractValidator<ReservationCreateCommand>
