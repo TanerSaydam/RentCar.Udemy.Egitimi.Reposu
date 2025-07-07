@@ -60,6 +60,11 @@ internal sealed class ReservationUpdateCommandHandler(
             return Result<string>.Failure("Rezervasyon bulunamadı");
         }
 
+        if (reservation.Status == Status.Completed || reservation.Status == Status.Canceled)
+        {
+            return Result<string>.Failure("Bu rezervasyon değiştirilemez");
+        }
+
         var locationId = request.PickUpLocationId ?? claimContext.GetBranchId();
 
         #region Şube, Müşteri ve Araç Kontrolü
