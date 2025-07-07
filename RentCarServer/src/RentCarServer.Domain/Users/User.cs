@@ -1,4 +1,5 @@
 ﻿using RentCarServer.Domain.Abstractions;
+using RentCarServer.Domain.Shared;
 using RentCarServer.Domain.Users.ValueObjects;
 
 namespace RentCarServer.Domain.Users;

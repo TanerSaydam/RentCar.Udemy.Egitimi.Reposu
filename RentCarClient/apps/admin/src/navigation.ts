@@ -33,6 +33,12 @@ export const navigations: NavigationModel[] = [
         permission: 'user:view'
     },
     {
+        title: 'Müşteriler',
+        url: '/customers',
+        icon: 'bi-person-vcard',
+        permission: 'customer:view'
+    },
+    {
         title: 'Kategoriler',
         url: '/categories',
         icon: 'bi-tags',

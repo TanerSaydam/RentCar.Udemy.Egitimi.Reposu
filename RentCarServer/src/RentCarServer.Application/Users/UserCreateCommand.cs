@@ -3,6 +3,7 @@ using GenericRepository;
 using RentCarServer.Application.Behaviors;
 using RentCarServer.Application.Services;
 using RentCarServer.Domain.Abstractions;
+using RentCarServer.Domain.Shared;
 using RentCarServer.Domain.Users;
 using RentCarServer.Domain.Users.ValueObjects;
 using TS.MediatR;

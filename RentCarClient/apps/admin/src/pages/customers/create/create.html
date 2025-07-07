@@ -1,0 +1,56 @@
+<blank
+  [pageTitle]="pageTitle()"
+  [pageIcon]="pageIcon()"
+  (changeStatusEvent)="changeStatus($event)"
+  [status]="data().isActive"
+  [loading]="loading()"
+  size="col-md-5">
+  <form #form="ngForm" formValidate class="admin-form" (ngSubmit)="save(form)">
+    <div class="admin-card">
+      <div class="card-header">
+        <h6><i class="bi bi-person-plus text-primary me-2"></i>Müşteri Bilgileri</h6>
+      </div>
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Ad *</label>
+            <input type="text" class="form-control" [(ngModel)]="data().firstName" name="firstName" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Soyad *</label>
+            <input type="text" class="form-control" [(ngModel)]="data().lastName" name="lastName" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">TC Kimlik No *</label>
+            <input type="text" class="form-control" [(ngModel)]="data().identityNumber" name="identityNumber" required maxlength="11" minlength="11">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Doğum Tarihi *</label>
+            <input type="date" class="form-control" [(ngModel)]="data().dateOfBirth" name="dateOfBirth" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Telefon *</label>
+            <input type="text" class="form-control" [(ngModel)]="data().phoneNumber" name="phoneNumber" required prefix="+90" mask="(000) 000 00 00">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">E-posta *</label>
+            <input type="email" class="form-control" [(ngModel)]="data().email" name="email" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Ehliyet Veriliş Tarihi *</label>
+            <input type="date" class="form-control" [(ngModel)]="data().drivingLicenseIssuanceDate" name="drivingLicenseIssuanceDate" required>
+          </div>
+          <div class="col-md-12">
+            <label class="form-label">Adres *</label>
+            <textarea class="form-control" [(ngModel)]="data().fullAddress" name="fullAddress" required></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer text-end">
+        <button type="submit" class="btn btn-primary">
+          <i class="bi bi-check-circle me-2"></i>{{btnName()}}
+        </button>
+      </div>
+    </div>
+  </form>
+</blank>

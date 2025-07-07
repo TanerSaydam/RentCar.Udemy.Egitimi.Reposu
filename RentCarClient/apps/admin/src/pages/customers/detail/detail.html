@@ -1,0 +1,46 @@
+<blank
+  [pageTitle]="pageTitle()"
+  pageIcon="bi-zoom-in"
+  [showStatusCheckbox]="false"
+  [showStatus]="true"
+  [status]="data().isActive"
+  [showAduit]="true"
+  [audit]="data()"
+  [loading]="loading()"
+  size="col-md-5">
+  <div class="admin-card">
+    <div class="card-header">
+      <h6><i class="bi bi-info-circle text-primary me-2"></i>Müşteri Bilgileri</h6>
+    </div>
+    <div class="card-body">
+      <div class="detail-grid">
+        <div class="detail-item">
+          <label class="detail-label">Ad Soyad</label>
+          <span class="detail-value">{{data().fullName}}</span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">TC Kimlik No</label>
+          <span class="detail-value">{{data().identityNumber}}</span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Doğum Tarihi</label>
+          <span class="detail-value">{{data().dateOfBirth | date:'dd.MM.yyyy'}}</span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Telefon</label>
+          <span class="detail-value">{{data().phoneNumber}}</span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">E-posta</label>
+          <span class="detail-value">{{data().email}}</span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Ehliyet Veriliş Tarihi</label>
+          <span class="detail-value">{{data().drivingLicenseIssuanceDate | date:'dd.MM.yyyy'}}</span>
+        </div>
+        <div class="detail-item">
+          <label class="detail-label">Adres</label>
+          <span class="detail-value">{{data().fullAddress}}</span>
+        </div>
+      </div>
+    </div>
