@@ -1,0 +1,47 @@
+<grid
+  pageTitle="Araçlar"
+  endpoint="/rent/odata/vehicles"
+  [addOptions]="{url: '/vehicles/add', permission: 'vehicle:create' }"
+  [editOptions]="{url: '/vehicles/edit', permission: 'vehicle:edit'}"
+  [detailOptions]="{url: '/vehicles/detail', permission: 'vehicle:view'}"
+  [deleteOptions]="{url: '/rent/vehicles', permission: 'vehicle:delete'}"
+  [breadcrumbs]="bredcrumbs()"
+  captionTitle="Araç Listesi"
+>
+  <flexi-grid-column field="brand" title="Marka">
+    <ng-template flexiGridCellTemplate let-item>
+      <img [src]="item.imageUrl" alt="Araç" style="width:40px;height:28px;object-fit:cover;margin-right:8px;border-radius:4px;">
+      {{item.brand}}
+    </ng-template>
+  </flexi-grid-column>
+  <flexi-grid-column field="model" title="Model"/>
+  <flexi-grid-column field="modelYear" title="Model Yılı"/>
+  <flexi-grid-column field="color" title="Renk"/>
+  <flexi-grid-column field="plate" title="Plaka"/>
+  <flexi-grid-column field="categoryId" title="Kategori"/>
+  <flexi-grid-column field="branchId" title="Şube"/>
+  <flexi-grid-column field="vinNumber" title="Şasi No"/>
+  <flexi-grid-column field="engineNumber" title="Motor No"/>
+  <flexi-grid-column field="description" title="Açıklama"/>
+  <flexi-grid-column field="fuelType" title="Yakıt"/>
+  <flexi-grid-column field="transmission" title="Vites"/>
+  <flexi-grid-column field="engineVolume" title="Motor Hacmi"/>
+  <flexi-grid-column field="enginePower" title="Motor Gücü"/>
+  <flexi-grid-column field="tractionType" title="Çekiş"/>
+  <flexi-grid-column field="fuelConsumption" title="Yakıt Tüketimi"/>
+  <flexi-grid-column field="seatCount" title="Koltuk"/>
+  <flexi-grid-column field="kilometer" title="Kilometre"/>
+  <flexi-grid-column field="dailyPrice" title="Günlük Fiyat"/>
+  <flexi-grid-column field="weeklyDiscountRate" title="Haftalık İndirim"/>
+  <flexi-grid-column field="monthlyDiscountRate" title="Aylık İndirim"/>
+  <flexi-grid-column field="insuranceType" title="Sigorta Tipi"/>
+  <flexi-grid-column field="lastMaintenanceDate" title="Son Bakım Tarihi"/>
+  <flexi-grid-column field="lastMaintenanceKm" title="Son Bakım Km"/>
+  <flexi-grid-column field="nextMaintenanceKm" title="Sonraki Bakım Km"/>
+  <flexi-grid-column field="inspectionDate" title="Muayene Tarihi"/>
+  <flexi-grid-column field="insuranceEndDate" title="Sigorta Bitiş"/>
+  <flexi-grid-column field="cascoEndDate" title="Kasko Bitiş"/>
+  <flexi-grid-column field="tireStatus" title="Lastik Durumu"/>
+  <flexi-grid-column field="generalStatus" title="Genel Durum"/>
+  <flexi-grid-column field="features" title="Özellikler"/>
+</grid>

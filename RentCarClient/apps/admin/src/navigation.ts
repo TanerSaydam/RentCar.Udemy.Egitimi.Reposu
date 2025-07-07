@@ -1,4 +1,4 @@
-export interface NavigationModel{
+export interface NavigationModel {
     title: string;
     url?: string;
     icon?: string;
@@ -27,10 +27,22 @@ export const navigations: NavigationModel[] = [
         permission: 'role:view'
     },
     {
+        title: 'Kullanıcılar',
+        url: '/users',
+        icon: 'bi-people',
+        permission: 'user:view'
+    },
+    {
         title: 'Kategoriler',
         url: '/categories',
         icon: 'bi-tags',
         permission: 'category:view'
+    },
+    {
+        title: 'Araçlar',
+        url: '/vehicles',
+        icon: 'bi-car-front',
+        permission: 'vehicle:view'
     },
     {
         title: 'Koruma Paketleri',
@@ -39,15 +51,9 @@ export const navigations: NavigationModel[] = [
         permission: 'protection_package:view'
     },
     {
-        title: 'Kullanıcılar',
-        url: '/users',
-        icon: 'bi-people',
-        permission: 'user:view'
-    },
-    {
         title: 'Ekstralar',
         url: '/extra',
         icon: 'bi-plus-square',
         permission: 'extra:view'
-    },
-]
+    }
+];
