@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject, signal, ViewEncapsulation } from '@angular/core';
-import { FlexiGridModule } from 'flexi-grid';
+import { ChangeDetectionStrategy, Component, computed, inject, signal, ViewEncapsulation } from '@angular/core';
+import { FlexiGridFilterDataModel, FlexiGridModule } from 'flexi-grid';
 import Grid from '../../components/grid/grid';
 import { BreadcrumbModel } from '../../services/breadcrumb';
 import { Common } from '../../services/common';
+import { brandList, colorList, modelYearList } from './create/create';
 
 @Component({
   imports: [
@@ -22,6 +23,24 @@ export default class Vehicles {
       isActive: true
     }
   ]);
+  readonly brandFilterData = computed<FlexiGridFilterDataModel[]>(() => 
+    brandList.map(val => ({
+        value: val,
+        name: val
+      }))
+  );
+  readonly modelYearFilterData = computed<FlexiGridFilterDataModel[]>(() => 
+    modelYearList.map(val => ({
+        value: val,
+        name: val
+      }))
+  );
+  readonly colorFilterData = computed<FlexiGridFilterDataModel[]>(() => 
+    colorList.map(val => ({
+        value: val,
+        name: val
+      }))
+  );
 
   readonly #common = inject(Common);
 

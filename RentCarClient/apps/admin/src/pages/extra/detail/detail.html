@@ -8,25 +8,13 @@
   [audit]="data()"
   [loading]="loading()"
   size="col-md-5">
-  <div class="admin-card">
-    <div class="card-header">
-      <h6><i class="bi bi-info-circle text-primary me-2"></i>Ekstra Bilgileri</h6>
+  <div class="service-item mb-4">
+    <div class="service-info">
+      <h6>{{data().name}}</h6>
+      <p class="text-muted small">{{data().description}}</p>
     </div>
-    <div class="card-body">
-      <div class="detail-grid">
-        <div class="detail-item">
-          <label class="detail-label">Ekstra Adı</label>
-          <span class="detail-value">{{data().name}}</span>
-        </div>
-        <div class="detail-item">
-          <label class="detail-label">Açıklama</label>
-          <span class="detail-value">{{data().description}}</span>
-        </div>
-        <div class="detail-item">
-          <label class="detail-label">Fiyat</label>
-          <span class="detail-value">{{data().price | trCurrency:'₺'}}</span>
-        </div>
-      </div>
+    <div class="service-action">
+      <div class="price-tag">{{data().price | trCurrency:'₺'}} <span class="currency">TL Günlük</span></div>
     </div>
   </div>
 </blank>

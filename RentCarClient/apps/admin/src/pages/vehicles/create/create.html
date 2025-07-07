@@ -19,7 +19,7 @@
                 <label class="form-label">Marka *</label>
                 <select class="form-select" [(ngModel)]="data().brand" name="brand" required>
                   <option value="">Marka seçiniz</option>
-                  @for (brand of brandList; track $index) {
+                  @for (brand of brandList(); track $index) {
                     <option [value]="brand">{{brand}}</option>
                   }
                 </select>
@@ -32,7 +32,7 @@
                 <label class="form-label">Model Yılı *</label>
                 <select class="form-select" [(ngModel)]="data().modelYear" name="modelYear" required>
                   <option value="">Model yılı seçiniz</option>
-                  @for (year of modelYearList; track $index) {
+                  @for (year of modelYearList(); track $index) {
                     <option [value]="year">{{year}}</option>
                   }
                 </select>
@@ -41,7 +41,7 @@
                 <label class="form-label">Renk</label>
                 <select class="form-select" [(ngModel)]="data().color" name="color">
                   <option value="">Renk seçiniz</option>
-                  @for (color of colorList; track $index) {
+                  @for (color of colorList(); track $index) {
                     <option [value]="color">{{color}}</option>
                   }
                 </select>

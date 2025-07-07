@@ -14,13 +14,17 @@
       {{item.brand}}
     </ng-template>
   </flexi-grid-column>
-  <flexi-grid-column field="brand" title="Marka" />
+  <flexi-grid-column field="brand" title="Marka" filterType="select" [filterData]="brandFilterData()" />
   <flexi-grid-column field="model" title="Model"/>
-  <flexi-grid-column field="modelYear" title="Model Yılı"/>
-  <flexi-grid-column field="color" title="Renk"/>
+  <flexi-grid-column
+    field="modelYear"
+    title="Model Yılı"
+    filterType="select"
+    [filterData]="modelYearFilterData()" />
+  <flexi-grid-column field="color" title="Renk" filterType="select" [filterData]="colorFilterData()"/>
   <flexi-grid-column field="plate" title="Plaka"/>
-  <flexi-grid-column field="categoryId" title="Kategori"/>
-  <flexi-grid-column field="branchId" title="Şube"/>
+  <flexi-grid-column field="categoryName" title="Kategori"/>
+  <flexi-grid-column field="branchName" title="Şube"/>
   <flexi-grid-column field="vinNumber" title="Şasi No"/>
   <flexi-grid-column field="engineNumber" title="Motor No"/>
   <flexi-grid-column field="description" title="Açıklama"/>

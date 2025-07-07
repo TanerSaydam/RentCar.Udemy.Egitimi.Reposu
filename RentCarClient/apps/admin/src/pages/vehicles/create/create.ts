@@ -21,6 +21,33 @@ export interface FeatureGroup {
     features: { key: string; label: string; icon: string }[];
 }
 
+export const brandList = [
+    'Toyota',
+    'Renault',
+    'Volkswagen',
+    'Ford', 'Fiat',
+    'Hyundai',
+    'Peugeot',
+    'Opel',
+    'Honda',
+    'BMW'
+  ];
+
+  export const colorList = [
+    'Beyaz',
+    'Siyah',
+    'Gri',
+    'Kırmızı',
+    'Mavi',
+    'Yeşil',
+    'Sarı',
+    'Turuncu',
+    'Kahverengi',
+    'Mor'
+  ];
+
+  export const modelYearList = Array.from({length: 16}, (_, i) => 2010 + i);
+
 @Component({
   imports: [
     Blank,
@@ -44,30 +71,9 @@ export default class CreateVehicle {
       url: '/vehicles'
     }
   ]);
-  readonly brandList = [
-    'Toyota',
-    'Renault',
-    'Volkswagen',
-    'Ford', 'Fiat',
-    'Hyundai',
-    'Peugeot',
-    'Opel',
-    'Honda',
-    'BMW'
-  ];
-  readonly modelYearList = Array.from({length: 21}, (_, i) => 2010 + i); // 2010-2030 arası
-  readonly colorList = [
-    'Beyaz',
-    'Siyah',
-    'Gri',
-    'Kırmızı',
-    'Mavi',
-    'Yeşil',
-    'Sarı',
-    'Turuncu',
-    'Kahverengi',
-    'Mor'
-  ];
+  readonly brandList = computed(() => brandList);
+  readonly modelYearList = computed(() => modelYearList);
+  readonly colorList = computed(() => colorList);
   readonly fuelTypeList = [
     'Benzin',
     'Dizel',
