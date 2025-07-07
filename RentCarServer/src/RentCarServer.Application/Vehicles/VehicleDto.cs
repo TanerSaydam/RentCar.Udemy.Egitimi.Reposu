@@ -33,7 +33,7 @@ public sealed class VehicleDto : EntityDto
     public int NextMaintenanceKm { get; set; }
     public DateOnly InspectionDate { get; set; }
     public DateOnly InsuranceEndDate { get; set; }
-    public DateOnly CascoEndDate { get; set; }
+    public DateOnly? CascoEndDate { get; set; }
     public string TireStatus { get; set; } = default!;
     public string GeneralStatus { get; set; } = default!;
     public List<string> Features { get; set; } = new();
@@ -74,7 +74,7 @@ public static class VehicleExtensions
             NextMaintenanceKm = s.Entity.NextMaintenanceKm.Value,
             InspectionDate = s.Entity.InspectionDate.Value,
             InsuranceEndDate = s.Entity.InsuranceEndDate.Value,
-            CascoEndDate = s.Entity.CascoEndDate.Value,
+            CascoEndDate = s.Entity.CascoEndDate != null ? s.Entity.CascoEndDate.Value : null,
             TireStatus = s.Entity.TireStatus.Value,
             GeneralStatus = s.Entity.GeneralStatus.Value,
             Features = s.Entity.Features.Select(f => f.Value).ToList(),

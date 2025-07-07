@@ -110,7 +110,7 @@ public sealed class Vehicle : Entity
     public NextMaintenanceKm NextMaintenanceKm { get; private set; } = default!;
     public InspectionDate InspectionDate { get; private set; } = default!;
     public InsuranceEndDate InsuranceEndDate { get; private set; } = default!;
-    public CascoEndDate CascoEndDate { get; private set; } = default!;
+    public CascoEndDate? CascoEndDate { get; private set; }
     public TireStatus TireStatus { get; private set; } = default!;
     public GeneralStatus GeneralStatus { get; private set; } = default!;
     public IReadOnlyCollection<Feature> Features => _features;

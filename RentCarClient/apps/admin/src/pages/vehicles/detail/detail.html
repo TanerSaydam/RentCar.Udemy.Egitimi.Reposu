@@ -1,0 +1,150 @@
+<blank
+  [pageTitle]="pageTitle()"
+  pageIcon="bi-zoom-in"
+  [showStatusCheckbox]="false"
+  [showStatus]="true"
+  [status]="data().isActive"
+  [showAduit]="true"
+  [audit]="data()"
+  [loading]="loading()"
+  size="col-md-12">
+
+  <div class="row g-4">
+    <!-- Sağ: Detaylı Bilgiler -->
+    <div class="col-lg-8">
+      <!-- Temel Bilgiler -->
+      <div class="admin-card mb-3">
+        <div class="card-header">
+          <h6><i class="bi bi-info-circle text-primary me-2"></i>Temel Bilgiler</h6>
+        </div>
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-md-4"><b>Renk:</b> {{data().color}}</div>
+            <div class="col-md-4"><b>VIN No:</b> {{data().vinNumber}}</div>
+            <div class="col-md-4"><b>Motor No:</b> {{data().engineNumber}}</div>
+            <div class="col-md-12"><b>Açıklama:</b> {{data().description}}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Teknik Özellikler -->
+      <div class="admin-card mb-3">
+        <div class="card-header">
+          <h6><i class="bi bi-gear text-primary me-2"></i>Teknik Özellikler</h6>
+        </div>
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-md-4"><b>Yakıt Türü:</b> {{data().fuelType}}</div>
+            <div class="col-md-4"><b>Şanzıman:</b> {{data().transmission}}</div>
+            <div class="col-md-4"><b>Kişi Kapasitesi:</b> {{data().seatCount}}</div>
+            <div class="col-md-4"><b>Motor Hacmi:</b> {{data().engineVolume}} cc</div>
+            <div class="col-md-4"><b>Motor Gücü:</b> {{data().enginePower}} HP</div>
+            <div class="col-md-4"><b>Kilometre:</b> {{data().kilometer | number}}</div>
+            <div class="col-md-4"><b>Yakıt Tüketimi:</b> {{data().fuelConsumption}}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Özellikler & Donanım -->
+      <div class="admin-card mb-3">
+        <div class="card-header">
+          <h6><i class="bi bi-stars text-primary me-2"></i>Özellikler & Donanım</h6>
+        </div>
+        <div class="card-body">
+            <div class="row">
+              @for (group of featureGroups; track group.group) {
+                <div class="col-md-6 mb-3">
+                  <div class="fw-bold mb-2">{{ group.group }}</div>
+                  @for (f of group.features; track f.key) {
+                    <div class="form-check form-switch d-flex align-items-center mb-2">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        [checked]="isFeatureSelected(f.key)"
+                        disabled
+                        id="feature-{{f.key}}">
+                      <label class="form-check-label ms-2" [for]="'feature-' + f.key">
+                        <i class="bi {{f.icon}} me-1"></i> {{f.label}}
+                      </label>
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+        </div>
+      </div>
+
+      <!-- Bakım & Sigorta -->
+      <div class="admin-card mb-3">
+        <div class="card-header">
+          <h6><i class="bi bi-wrench text-primary me-2"></i>Bakım & Sigorta</h6>
+        </div>
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-md-4"><b>Son Bakım Tarihi:</b> {{data().lastMaintenanceDate | date:'dd.MM.yyyy'}}</div>
+            <div class="col-md-4"><b>Son Bakım Km:</b> {{data().lastMaintenanceKm | number}}</div>
+            <div class="col-md-4"><b>Sonraki Bakım Km:</b> {{data().nextMaintenanceKm | number}}</div>
+            <div class="col-md-4"><b>Muayene Tarihi:</b> {{data().inspectionDate | date:'dd.MM.yyyy'}}</div>
+            <div class="col-md-4"><b>Sigorta Bitiş:</b> {{data().insuranceEndDate | date:'dd.MM.yyyy'}}</div>
+            @if(data().cascoEndDate){
+                <div class="col-md-4"><b>Kasko Bitiş:</b> {{data().cascoEndDate | date:'dd.MM.yyyy'}}</div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sol: Araç Fotoğrafı ve Temel Bilgiler -->
+    <div class="col-lg-4">
+      <div class="admin-card mb-3">
+        <div class="card-body text-center">
+          <img [src]="showImageUrl()" alt="Araç Fotoğrafı" class="img-fluid rounded mb-2" style="max-width: 100%; max-height: 220px; object-fit:cover;">
+          <h4 class="mt-2">{{data().brand}} {{data().model}} <span class="text-muted">({{data().modelYear}})</span></h4>
+          <div class="car-plate badge bg-secondary fs-6 mb-2">{{data().plate}}</div>
+        </div>
+      </div>
+      <div class="admin-card">
+        <div class="card-header">
+          <h6><i class="bi bi-currency-dollar text-primary me-2"></i>Fiyatlandırma</h6>
+        </div>
+        <div class="card-body">
+            <div class="mb-2 d-flex justify-content-between">
+                <b>Günlük Fiyat:</b> 
+                <span>{{data().dailyPrice | trCurrency:'₺'}}</span>
+            </div>
+            <div class="mb-2 d-flex justify-content-between">
+                <b>Haftalık İndirim:</b>
+                <span>%{{data().weeklyDiscountRate}}</span>
+            </div>
+            <div class="mb-2 d-flex justify-content-between">
+                <b>Aylık İndirim:</b>
+                <span>%{{data().monthlyDiscountRate}}</span>
+            </div>
+        </div>
+      </div>
+      <div class="admin-card">
+        <div class="card-header">
+          <h6><i class="bi bi-info-circle text-primary me-2"></i>Durumlar</h6>
+        </div>
+        <div class="card-body">
+            <div class="mb-2 d-flex justify-content-between">
+                <b>Genel Durum:</b>
+                <span class="badge bg-success">{{data().generalStatus}}</span>
+            </div>
+            <div class="mb-2 d-flex justify-content-between">
+                <b>Lastik Durumu:</b>
+                <span class="badge bg-info text-dark">{{data().tireStatus}}</span>
+            </div>
+            <div class="mb-2 d-flex justify-content-between">
+                <b>Çekiş Türü:</b>
+                <span>{{data().tractionType}}</span>
+            </div>
+            <div class="mb-2 d-flex justify-content-between">
+                <b>Sigorta Tipi:</b>
+                <span class="badge bg-warning text-dark">{{data().insuranceType}}</span>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</blank>
