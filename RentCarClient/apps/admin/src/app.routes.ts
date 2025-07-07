@@ -6,7 +6,11 @@ import { Common } from './services/common';
 export const appRoutes: Route[] = [
     {
         path: 'unauthorize',
-        loadComponent: () => import('./pages/unatuhorize/unatuhorize')
+        loadComponent: () => import('./pages/unauthorize/unauthorize')
+    },
+    {
+        path: 'unavailable',
+        loadComponent: () => import('./pages/unavailable/unavailable')
     },
     {
         path: 'login',

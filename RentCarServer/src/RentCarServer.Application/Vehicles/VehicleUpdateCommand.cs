@@ -2,6 +2,7 @@ using FluentValidation;
 using GenericFileService.Files;
 using GenericRepository;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using RentCarServer.Application.Behaviors;
 using RentCarServer.Domain.Abstractions;
 using RentCarServer.Domain.Shared;
@@ -46,9 +47,12 @@ public sealed record VehicleUpdateCommand(
     string TireStatus,
     string GeneralStatus,
     List<string> Features,
-    IFormFile? File,
     bool IsActive
-) : IRequest<Result<string>>;
+) : IRequest<Result<string>>
+{
+    [FromForm]
+    public IFormFile? File { get; set; }
+}
 
 public sealed class VehicleUpdateCommandValidator : AbstractValidator<VehicleUpdateCommand>
 {
@@ -69,10 +73,6 @@ public sealed class VehicleUpdateCommandValidator : AbstractValidator<VehicleUpd
         RuleFor(p => p.Plate)
             .NotEmpty()
             .WithMessage("Plaka bilgisi girilmelidir.");
-
-        RuleFor(p => p.File)
-            .NotEmpty()
-            .WithMessage("Araç görseli yüklemelisiniz.");
 
         RuleFor(p => p.Features)
             .Must(i => i != null && i.Any())

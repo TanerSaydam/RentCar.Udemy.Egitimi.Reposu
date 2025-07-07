@@ -5,7 +5,7 @@ import { RouterLink } from '@angular/router';
   imports: [
     RouterLink
   ],
-  templateUrl: './unatuhorize.html',
+  templateUrl: './unauthorize.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
