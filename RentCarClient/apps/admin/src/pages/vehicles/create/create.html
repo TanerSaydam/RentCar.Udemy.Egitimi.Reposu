@@ -195,59 +195,38 @@
               </div>
               <div class="col-md-4">
                 <label class="form-label">Haftalık İndirim (%)</label>
-                <input type="number" class="form-control" [(ngModel)]="data().weeklyDiscountRate" name="weeklyDiscountRate">
+                <input type="number" class="form-control" [(ngModel)]="data().weeklyDiscountRate" name="weeklyDiscountRate" required>
               </div>
               <div class="col-md-4">
                 <label class="form-label">Aylık İndirim (%)</label>
-                <input type="number" class="form-control" [(ngModel)]="data().monthlyDiscountRate" name="monthlyDiscountRate">
+                <input type="number" class="form-control" [(ngModel)]="data().monthlyDiscountRate" name="monthlyDiscountRate" required>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Bakım & Sigorta -->
+        <!-- Bakım -->
         <div class="admin-card">
           <div class="card-header">
-            <h6><i class="bi bi-wrench text-primary me-2"></i>Bakım & Sigorta</h6>
+            <h6><i class="bi bi-wrench text-primary me-2"></i>Bakım</h6>
           </div>
           <div class="card-body">
             <div class="row g-3">
               <div class="col-md-4">
-                <label class="form-label">Sigorta Tipi</label>
-                <select class="form-select" [(ngModel)]="data().insuranceType" name="insuranceType">
-                  <option value="">Sigorta tipi seçiniz</option>
-                  @for (item of insuranceTypeList(); track $index) {
-                    <option [value]="item">{{item}}</option>
-                  }
-                </select>
-              </div>
-              <div class="col-md-4">
                 <label class="form-label">Son Bakım Tarihi</label>
-                <input type="date" class="form-control" [(ngModel)]="data().lastMaintenanceDate" name="lastMaintenanceDate">
+                <input type="date" class="form-control" [(ngModel)]="data().lastMaintenanceDate" name="lastMaintenanceDate" required>
               </div>
               <div class="col-md-4">
                 <label class="form-label">Son Bakım Km</label>
-                <input type="number" class="form-control" [(ngModel)]="data().lastMaintenanceKm" name="lastMaintenanceKm">
+                <input type="number" class="form-control" [(ngModel)]="data().lastMaintenanceKm" name="lastMaintenanceKm" required>
               </div>
               <div class="col-md-4">
                 <label class="form-label">Sonraki Bakım Km</label>
-                <input type="number" class="form-control" [(ngModel)]="data().nextMaintenanceKm" name="nextMaintenanceKm">
-              </div>
-              <div class="col-md-4">
-                <label class="form-label">Muayene Tarihi</label>
-                <input type="date" class="form-control" [(ngModel)]="data().inspectionDate" name="inspectionDate">
-              </div>
-              <div class="col-md-4">
-                <label class="form-label">Sigorta Bitiş</label>
-                <input type="date" class="form-control" [(ngModel)]="data().insuranceEndDate" name="insuranceEndDate">
-              </div>
-              <div class="col-md-4">
-                <label class="form-label">Kasko Bitiş</label>
-                <input type="date" class="form-control" [(ngModel)]="data().cascoEndDate" name="cascoEndDate">
+                <input type="number" class="form-control" [(ngModel)]="data().nextMaintenanceKm" name="nextMaintenanceKm" required>
               </div>
               <div class="col-md-4">
                 <label class="form-label">Lastik Durumu</label>
-                <select class="form-select" [(ngModel)]="data().tireStatus" name="tireStatus">
+                <select class="form-select" [(ngModel)]="data().tireStatus" name="tireStatus" required>
                   <option value="">Lastik durumu seçiniz</option>
                   @for (item of tireStatusList; track $index) {
                     <option [value]="item">{{item}}</option>
@@ -256,13 +235,47 @@
               </div>
               <div class="col-md-4">
                 <label class="form-label">Genel Durum</label>
-                <select class="form-select" [(ngModel)]="data().generalStatus" name="generalStatus">
+                <select class="form-select" [(ngModel)]="data().generalStatus" name="generalStatus" required>
                   <option value="">Genel durum seçiniz</option>
                   @for (item of generalStatusList; track $index) {
                     <option [value]="item">{{item}}</option>
                   }
                 </select>
               </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sigorta & Kasko -->
+        <div class="admin-card">
+          <div class="card-header">
+            <h6><i class="bi bi-wrench text-primary me-2"></i>Sigorta & Kasko</h6>
+          </div>
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-3">
+                <label class="form-label">Sigorta Tipi</label>
+                <select class="form-select" [(ngModel)]="data().insuranceType" name="insuranceType" required>
+                  <option [value]="''">Sigorta tipi seçiniz</option>
+                  @for (item of insuranceTypeList(); track $index) {
+                    <option [value]="item">{{item}}</option>
+                  }
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Muayene Tarihi</label>
+                <input type="date" class="form-control" [(ngModel)]="data().inspectionDate" name="inspectionDate" required>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Sigorta Bitiş</label>
+                <input type="date" class="form-control" [(ngModel)]="data().insuranceEndDate" name="insuranceEndDate" required>
+              </div>
+              @if(data().insuranceType === 'Kasko & Sigorta'){
+                  <div class="col-md-3">
+                    <label class="form-label">Kasko Bitiş</label>
+                    <input type="date" class="form-control" [(ngModel)]="data().cascoEndDate" name="cascoEndDate" required>
+                  </div>
+              }
             </div>
           </div>
         </div>

@@ -38,7 +38,7 @@ public sealed class Vehicle : Entity
         NextMaintenanceKm nextMaintenanceKm,
         InspectionDate inspectionDate,
         InsuranceEndDate insuranceEndDate,
-        CascoEndDate cascoEndDate,
+        CascoEndDate? cascoEndDate,
         TireStatus tireStatus,
         GeneralStatus generalStatus,
         IEnumerable<Feature> features,
@@ -72,7 +72,10 @@ public sealed class Vehicle : Entity
         SetNextMaintenanceKm(nextMaintenanceKm);
         SetInspectionDate(inspectionDate);
         SetInsuranceEndDate(insuranceEndDate);
-        SetCascoEndDate(cascoEndDate);
+        if (cascoEndDate is not null)
+        {
+            SetCascoEndDate(cascoEndDate);
+        }
         SetTireStatus(tireStatus);
         SetGeneralStatus(generalStatus);
         SetFeatures(features);

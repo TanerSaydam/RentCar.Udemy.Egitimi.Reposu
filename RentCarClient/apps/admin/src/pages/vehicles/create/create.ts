@@ -131,12 +131,8 @@ export default class CreateVehicle {
   ];
 
   readonly insuranceTypeList = signal<string[]>([
-    'Kasko',
-    'Trafik',
-    'Kasko ve Trafik',
-    'Yok',
-    'Full',
-    'Partial'
+    'Kasko & Sigorta',
+    'Sigorta'
   ]);
 
   readonly tractionTypeList = [
@@ -278,6 +274,8 @@ export default class CreateVehicle {
     // Resim dosyası (fileInput ile seçilen dosya)
     if (this.file()) {
       formData.append('File', this.file(),this.file().name);
+    }else{
+        formData.append('File',"null");
     }
 
     // Güncellemede Id ekle
