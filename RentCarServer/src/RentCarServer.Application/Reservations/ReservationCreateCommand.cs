@@ -30,10 +30,10 @@ public sealed record ReservationCreateCommand(
     decimal VehicleDailyPrice,
     Guid ProtectionPackageId,
     decimal ProtectionPackagePrice,
-    Guid ExtraId,
-    decimal ExtraPrice,
+    List<ReservationExtra> ReservationExtras,
     string Note,
-    CreditCartInformation CreditCartInformation
+    CreditCartInformation CreditCartInformation,
+    decimal Total
 ) : IRequest<Result<string>>;
 
 public sealed class ReservationCreateCommandValidator : AbstractValidator<ReservationCreateCommand>
@@ -137,12 +137,12 @@ internal sealed class ReservationCreateCommandHandler(
         Price vehicleDailyPrice = new(request.VehicleDailyPrice);
         IdentityId protectionPackageId = new(request.ProtectionPackageId);
         Price protectionPackagePrice = new(request.ProtectionPackagePrice);
-        IdentityId extraId = new(request.ExtraId);
-        Price extraPrice = new(request.ExtraPrice);
+        IEnumerable<ReservationExtra> reservationExtras = request.ReservationExtras.Select(s => new ReservationExtra(s.ExtraId, s.Price));
         Note note = new(request.Note);
         var last4Digits = request.CreditCartInformation.CartNumber[^4..];
         PaymentInformation paymentInformation = new(last4Digits, request.CreditCartInformation.Owner);
         Status status = Status.Pending;
+        Total total = new(request.Total);
 
         Reservation reservation = Reservation.Create(
             customerId,
@@ -155,11 +155,11 @@ internal sealed class ReservationCreateCommandHandler(
             vehicleDailyPrice,
             protectionPackageId,
             protectionPackagePrice,
-            extraId,
-            extraPrice,
+            reservationExtras,
             note,
             paymentInformation,
-            status
+            status,
+            total
         );
         #endregion
 

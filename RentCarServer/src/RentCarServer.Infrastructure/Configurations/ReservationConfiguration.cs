@@ -17,9 +17,10 @@ internal sealed class ReservationConfiguration : IEntityTypeConfiguration<Reserv
         builder.OwnsOne(p => p.TotalDay);
         builder.OwnsOne(p => p.VehicleDailyPrice);
         builder.OwnsOne(p => p.ProtectionPackagePrice);
-        builder.OwnsOne(p => p.ExtraPrice);
+        builder.OwnsMany(p => p.ReservationExtras);
         builder.OwnsOne(p => p.Note);
         builder.OwnsOne(p => p.PaymentInformation);
         builder.OwnsOne(p => p.Status);
+        builder.OwnsOne(p => p.Total);
     }
 }
