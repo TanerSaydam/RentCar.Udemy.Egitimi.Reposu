@@ -1,4 +1,5 @@
 ﻿using RentCarServer.Application.Reservations;
+using RentCarServer.Application.Vehicles;
 using TS.MediatR;
 using TS.Result;
 
@@ -45,5 +46,13 @@ public static class ReservationModule
                 return res.IsSuccessful ? Results.Ok(res) : Results.InternalServerError(res);
             })
             .Produces<Result<ReservationDto>>();
+
+        app.MapPost("vehicle-getall",
+           async (ReservationGetAllVehicleQuery request, ISender sender, CancellationToken cancellationToken) =>
+           {
+               var res = await sender.Send(request, cancellationToken);
+               return Results.Ok(res);
+           })
+           .Produces<Result<List<VehicleDto>>>();
     }
 }

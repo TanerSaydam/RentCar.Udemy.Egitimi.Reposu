@@ -139,6 +139,12 @@
                             <i class="bi bi-clock"></i>
                             <span class="duration-text">Toplam: <strong>{{data().totalDay}} gün</strong></span>
                         </div>
+
+                        @if(data().totalDay > 0){
+                            <div class="mt-2 d-flex justify-content-center">
+                                <button type="button" class="btn btn-dark btn-lg w-100" (click)="getVehicles()">Araçları Listele</button>
+                            </div>
+                        }
                     </div>
                 </div>
 
@@ -188,97 +194,47 @@
 
                             <!-- Araç Listesi -->
                             <div class="vehicle-list">
-                                <!-- Araç Kartı 1 -->
-                                <div class="vehicle-card available">
-                                    <input type="radio" name="vehicle" id="vehicle1" class="vehicle-radio">
-                                    <label for="vehicle1" class="vehicle-label">
-                                        <div class="vehicle-image">
-                                            <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?w=300&h=200&fit=crop"
-                                                alt="BMW 320i">
-                                            <span class="availability-badge bg-success">Uygun</span>
-                                        </div>
-                                        <div class="vehicle-info">
-                                            <h6>BMW 320i</h6>
-                                            <p class="vehicle-plate">38 ABC 123</p>
-                                            <div class="vehicle-features">
-                                                <span><i class="bi bi-fuel-pump"></i> Benzin</span>
-                                                <span><i class="bi bi-gear"></i> Otomatik</span>
-                                                <span><i class="bi bi-people"></i> 5 Kişi</span>
+                                @for(vehicle of vehicles(); track vehicle.id){
+                                    <div class="vehicle-card available">
+                                        <input type="radio" name="vehicle" id="vehicle1" class="vehicle-radio">
+                                        <label for="vehicle1" class="vehicle-label">
+                                            <div class="vehicle-image">
+                                                <img [src]="getVehicleImage(vehicle)" [alt]="vehicle.model">
+                                                <span class="availability-badge bg-success">Uygun</span>
                                             </div>
-                                        </div>
-                                        <div class="vehicle-price">
-                                            <div class="price-per-day">
-                                                <small>Günlük</small>
-                                                <strong>650₺</strong>
+                                            <div class="vehicle-info">
+                                                <h6>{{vehicle.model}}</h6>
+                                                <p class="vehicle-plate">{{vehicle.plate}}</p>
+                                                <div class="vehicle-features">
+                                                    <span>
+                                                        <i class="bi bi-fuel-pump"></i>
+                                                        {{vehicle.fuelType}}
+                                                    </span>
+                                                    <span>
+                                                        <i class="bi bi-gear"></i>
+                                                        {{vehicle.transmission}}
+                                                    </span>
+                                                    <span>
+                                                        <i class="bi bi-people"></i>
+                                                        {{vehicle.seatCount}} Kişi
+                                                    </span>
+                                                </div>
                                             </div>
-                                            <div class="total-price">
-                                                <small>Toplam</small>
-                                                <strong class="text-primary">0₺</strong>
+                                            <div class="vehicle-price">
+                                                <div class="price-per-day">
+                                                    <small>Günlük</small>
+                                                    <strong>{{vehicle.dailyPrice | trCurrency:'₺'}}</strong>
+                                                </div>
+                                                <div class="total-price">
+                                                    <small>Toplam</small>
+                                                    <strong class="text-primary">
+                                                        {{(data().totalDay * vehicle.dailyPrice) | trCurrency:'₺'}}
+                                                    </strong>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </label>
-                                </div>
-
-                                <!-- Araç Kartı 2 -->
-                                <div class="vehicle-card available">
-                                    <input type="radio" name="vehicle" id="vehicle2" class="vehicle-radio">
-                                    <label for="vehicle2" class="vehicle-label">
-                                        <div class="vehicle-image">
-                                            <img src="https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=300&h=200&fit=crop"
-                                                alt="Mercedes C180">
-                                            <span class="availability-badge bg-success">Uygun</span>
-                                        </div>
-                                        <div class="vehicle-info">
-                                            <h6>Mercedes C180</h6>
-                                            <p class="vehicle-plate">34 XYZ 456</p>
-                                            <div class="vehicle-features">
-                                                <span><i class="bi bi-fuel-pump"></i> Benzin</span>
-                                                <span><i class="bi bi-gear"></i> Otomatik</span>
-                                                <span><i class="bi bi-people"></i> 5 Kişi</span>
-                                            </div>
-                                        </div>
-                                        <div class="vehicle-price">
-                                            <div class="price-per-day">
-                                                <small>Günlük</small>
-                                                <strong>750₺</strong>
-                                            </div>
-                                            <div class="total-price">
-                                                <small>Toplam</small>
-                                                <strong class="text-primary">0₺</strong>
-                                            </div>
-                                        </div>
-                                    </label>
-                                </div>
-
-                                <!-- Araç Kartı 3 -->
-                                <div class="vehicle-card unavailable">
-                                    <input type="radio" name="vehicle" id="vehicle3" class="vehicle-radio" disabled>
-                                    <label for="vehicle3" class="vehicle-label">
-                                        <div class="vehicle-image">
-                                            <img src="https://images.unsplash.com/photo-1619767886558-efdc259cde1a?w=300&h=200&fit=crop"
-                                                alt="Audi A4">
-                                            <span class="availability-badge bg-danger">Kirada</span>
-                                        </div>
-                                        <div class="vehicle-info">
-                                            <h6>Audi A4</h6>
-                                            <p class="vehicle-plate">06 DEF 789</p>
-                                            <div class="vehicle-features">
-                                                <span><i class="bi bi-fuel-pump"></i> Dizel</span>
-                                                <span><i class="bi bi-gear"></i> Otomatik</span>
-                                                <span><i class="bi bi-people"></i> 5 Kişi</span>
-                                            </div>
-                                        </div>
-                                        <div class="vehicle-price">
-                                            <div class="price-per-day">
-                                                <small>Günlük</small>
-                                                <strong>850₺</strong>
-                                            </div>
-                                            <div class="unavailable-date">
-                                                <small class="text-danger">28 Haz'a kadar kirada</small>
-                                            </div>
-                                        </div>
-                                    </label>
-                                </div>
+                                        </label>
+                                    </div>
+                                }
                             </div>
                         </div>
                     </div>

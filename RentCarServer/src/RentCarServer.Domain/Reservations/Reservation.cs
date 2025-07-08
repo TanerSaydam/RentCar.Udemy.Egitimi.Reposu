@@ -40,14 +40,18 @@ public sealed class Reservation : Entity, IAggregate
         SetStatus(status);
         SetTotalDay();
         SetTotal(total);
+        SetPickupDateTime();
+        SetDeliveryDateTime();
     }
 
     public IdentityId CustomerId { get; private set; } = default!;
     public IdentityId PickUpLocationId { get; private set; } = default!;
     public PickUpDate PickUpDate { get; private set; } = default!;
     public PickUpTime PickUpTime { get; private set; } = default!;
+    public PickUpDatetime PickUpDatetime { get; private set; } = default!;
     public DeliveryDate DeliveryDate { get; private set; } = default!;
     public DeliveryTime DeliveryTime { get; private set; } = default!;
+    public DeliveryDatetime DeliveryDatetime { get; private set; } = default!;
     public TotalDay TotalDay { get; private set; } = default!;
     public IdentityId VehicleId { get; private set; } = default!;
     public Price VehicleDailyPrice { get; private set; } = default!;
@@ -59,7 +63,6 @@ public sealed class Reservation : Entity, IAggregate
     public Status Status { get; private set; } = default!;
     public Total Total { get; private set; } = default!;
 
-    #region Behaviors
     public static Reservation Create(
         IdentityId customerId,
         IdentityId pickUpLocationId,
@@ -98,6 +101,7 @@ public sealed class Reservation : Entity, IAggregate
         return reservation;
     }
 
+    #region Behaviors
     public void SetCustomerId(IdentityId customerId)
     {
         CustomerId = customerId;
@@ -196,5 +200,20 @@ public sealed class Reservation : Entity, IAggregate
     {
         Total = total;
     }
+
+    public void SetPickupDateTime()
+    {
+        var date = new DateTime(PickUpDate.Value, PickUpTime.Value);
+        PickUpDatetime = new(new DateTimeOffset(date));
+    }
+
+    public void SetDeliveryDateTime()
+    {
+        var date = new DateTime(DeliveryDate.Value, DeliveryTime.Value);
+        DeliveryDatetime = new(new DateTimeOffset(date));
+    }
     #endregion
 }
+
+public sealed record PickUpDatetime(DateTimeOffset Value);
+public sealed record DeliveryDatetime(DateTimeOffset Value);

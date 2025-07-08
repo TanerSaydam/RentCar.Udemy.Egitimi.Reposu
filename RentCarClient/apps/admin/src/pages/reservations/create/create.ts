@@ -8,6 +8,7 @@ import { BranchModel } from 'apps/admin/src/models/branch.model';
 import { CustomerModel, initialCustomerModel } from 'apps/admin/src/models/customer.model';
 import { ODataModel } from 'apps/admin/src/models/odata.model';
 import { initialReservation, ReservationModel } from 'apps/admin/src/models/reservation.model';
+import { VehicleModel } from 'apps/admin/src/models/vehicle.model';
 import { BreadcrumbModel, BreadcrumbService } from 'apps/admin/src/services/breadcrumb';
 import { Common } from 'apps/admin/src/services/common';
 import { HttpService } from 'apps/admin/src/services/http';
@@ -18,6 +19,7 @@ import { FlexiToastService } from 'flexi-toast';
 import { FormValidateDirective } from 'form-validate-angular';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { lastValueFrom } from 'rxjs';
+import { TrCurrencyPipe } from 'tr-currency';
 
 @Component({
   imports: [
@@ -32,7 +34,8 @@ import { lastValueFrom } from 'rxjs';
     NgxMaskPipe,
     NgTemplateOutlet,
     FlexiSelectModule,
-    DatePipe
+    DatePipe,
+    TrCurrencyPipe
   ],
   templateUrl: './create.html',
   encapsulation: ViewEncapsulation.None,
@@ -94,6 +97,8 @@ export default class Create {
     })
   );
   readonly branchName = linkedSignal(() => this.#common.decode().branch);
+  readonly vehicles = signal<VehicleModel[]>([]);
+  readonly vehicleLoading = signal<boolean>(false);
 
   readonly #breadcrumb = inject(BreadcrumbService);
   readonly #activated = inject(ActivatedRoute);
@@ -178,6 +183,7 @@ export default class Create {
   }
 
   calculateDayDifference() {
+    this.vehicles.set([]);
     const pickUpDateTime = new Date(`${this.data().pickUpDate}T${this.data().pickUpTime}`);
     const deliveryDateTime = new Date(`${this.data().deliveryDate}T${this.data().deliveryTime}`);
 
@@ -200,5 +206,26 @@ export default class Create {
   setLocation(id:any){
     const branch = this.branchesData().find(i => i.id == id)!;
     this.branchName.set(branch.name);
+  }
+
+  getVehicles(){
+    const data = {
+      branchId: !this.data().pickUpLocationId ? this.#common.decode().branchId : this.data().pickUpLocationId,
+      pickUpDate: this.data().pickUpDate,
+      pickUpTime: this.data().pickUpTime,
+      deliveryDate: this.data().deliveryDate,
+      deliverTime: this.data().deliveryTime
+    }
+
+    this.vehicleLoading.set(true);
+    this.#http.post<VehicleModel[]>('/rent/reservations/vehicle-getall', data,(res) => {
+      this.vehicles.set(res);
+      this.vehicleLoading.set(false);
+    },()=> this.vehicleLoading.set(false));
+  }
+
+  getVehicleImage(vehicle: VehicleModel){
+    const endpoint = "https://localhost:7207/images/";
+    return endpoint + vehicle.imageUrl;
   }
 }

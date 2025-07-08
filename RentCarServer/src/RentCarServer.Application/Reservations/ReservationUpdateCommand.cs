@@ -163,7 +163,8 @@ internal sealed class ReservationUpdateCommandHandler(
         reservation.SetReservationExtras(reservationExtras);
         reservation.SetNote(note);
         reservation.SetTotal(total);
-
+        reservation.SetPickupDateTime();
+        reservation.SetDeliveryDateTime();
         #endregion
 
         reservationRepository.Update(reservation);
