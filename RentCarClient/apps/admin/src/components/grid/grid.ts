@@ -1,6 +1,6 @@
 import { httpResource } from '@angular/common/http';
 import { AfterViewInit, ChangeDetectionStrategy, Component, computed, contentChild, contentChildren, inject, input, signal, TemplateRef, ViewEncapsulation } from '@angular/core';
-import { FlexiGridColumnComponent, FlexiGridModule, FlexiGridService, StateModel, StateOrderModel } from 'flexi-grid';
+import { FlexiGridColumnComponent, FlexiGridModule, FlexiGridService, StateFilterModel, StateModel, StateOrderModel } from 'flexi-grid';
 import { ODataModel } from '../../models/odata.model';
 import { RouterLink } from '@angular/router';
 import { FlexiToastService } from 'flexi-toast';
@@ -39,6 +39,7 @@ export default class Grid implements AfterViewInit {
   readonly captionTitle = input.required<string>();
   readonly showIsActive = input<boolean>(true);
   readonly sort = input<StateOrderModel>(new StateOrderModel());
+  readonly filter = input<StateFilterModel>(new StateFilterModel());
 
   readonly columns = contentChildren(FlexiGridColumnComponent, {descendants: true});
   readonly commandTemplateRef = contentChild<TemplateRef<any>>("commandTemplate");
@@ -68,7 +69,7 @@ export default class Grid implements AfterViewInit {
   readonly #common = inject(Common);
 
   ngOnInit(){
-    this.state.update(prev => ({...prev, sort: this.sort()}))
+    this.state.update(prev => ({...prev, sort: this.sort(), filter: [{...this.filter()}]}))
   }
 
   ngAfterViewInit(): void {

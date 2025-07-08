@@ -8,6 +8,14 @@
   [breadcrumbs]="bredcrumbs()"
   captionTitle="Rezervasyon Listesi"
   [showIsActive]="false"
+  [sort]="{field:'PickUpDateTime', dir:''}"
+  [filter]='{
+    field: "status",
+    value: "Bekliyor",
+    value2: "",
+    operator: "eq",
+    type: "select"
+  }'
   >
     <flexi-grid-column field="reservationNumber" title="Rez.Numarası"/>
     <flexi-grid-column field="status" title="Durum" filterType="select" [filterData]="statusFilterData()" textAlign="center">
