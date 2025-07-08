@@ -24,6 +24,7 @@ import { TrCurrencyPipe } from 'tr-currency';
 import { fuelTypeList, transmissionList } from '../../vehicles/create/create';
 import { VehiclePipe } from 'apps/admin/src/pipes/vehicle-pipe';
 import { ProtectionPackageModel } from 'apps/admin/src/models/protection-package.model';
+import { ExtraModel } from 'apps/admin/src/models/extra.model';
 
 @Component({
   imports: [
@@ -71,6 +72,15 @@ export default class Create {
         isActive: true
       }]);
       this.#breadcrumb.reset(this.bredcrumbs());
+
+      const customer = res.data!.customer;
+      this.selectedCustomer.set({
+        ...initialCustomerModel,
+        id: res.data!.customerId,
+        fullName: customer.fullName,
+        fullAddress: customer.fullAddress,
+        phoneNumber: customer.phoneNumber,
+        email: customer.email })
       return res.data;
     }
   });
@@ -118,6 +128,10 @@ export default class Create {
   readonly protectionPackageResult = httpResource<ODataModel<ProtectionPackageModel>>(()=> '/rent/odata/protection-packages?$orderby=OrderNumber');
   readonly protectionPackagesData = computed(() => this.protectionPackageResult.value()?.value ?? []);
   readonly protectionPackagesLoading = computed(() => this.protectionPackageResult.isLoading());
+  readonly extraResult = httpResource<ODataModel<ExtraModel>>(()=> '/rent/odata/extras');
+  readonly extrasData = computed(() => this.extraResult.value()?.value ?? []);
+  readonly extrasLoading = computed(() => this.extraResult.isLoading());
+  readonly totalExtra = signal<number>(0);
 
   readonly #breadcrumb = inject(BreadcrumbService);
   readonly #activated = inject(ActivatedRoute);
@@ -278,14 +292,36 @@ export default class Create {
     this.calculateTotal();
   }
 
+  selectExtra(val: ExtraModel){
+    const extras = [...this.data().reservationExtras];
+    const index = extras.findIndex(i => i.extraId === val.id);
+
+    if (index !== -1) {
+      extras.splice(index, 1);
+    } else {
+      extras.push({ extraId: val.id, price: val.price, extraName: val.name });
+    }
+
+    this.data.update(prev => ({ ...prev, reservationExtras: extras }));
+    this.calculateTotal();
+  }
+
   calculateTotal(){
     const totalVehicle = this.data().vehicleDailyPrice * this.data().totalDay;
     const totalProtectionpackage = this.data().protectionPackagePrice * this.data().totalDay;
-
-    const total = totalVehicle + totalProtectionpackage;
+    let totalExtra = 0;
+    this.data().reservationExtras.forEach(val => {
+      totalExtra += (val.price * this.data().totalDay)
+    });
+    this.totalExtra.set(totalExtra);
+    const total = totalVehicle + totalProtectionpackage + totalExtra;
     this.data.update(prev => ({
       ...prev,
       total: total
     }));
+  }
+
+  checkedExtra(val: ExtraModel){
+    return this.data().reservationExtras.some(i => i.extraId === val.id);
   }
 }

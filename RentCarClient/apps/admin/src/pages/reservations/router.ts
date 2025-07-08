@@ -13,11 +13,11 @@ const router: Routes = [
         loadComponent: () => import('./create/create'),
         canActivate: [() => inject(Common).checkPermissionForRoute('reservation:create')]
     },
-    // {
-    //     path: 'edit/:id',
-    //     loadComponent: () => import('./create/create'),
-    //     canActivate: [() => inject(Common).checkPermissionForRoute('reservation:edit')]
-    // },
+    {
+        path: 'edit/:id',
+        loadComponent: () => import('./create/create'),
+        canActivate: [() => inject(Common).checkPermissionForRoute('reservation:edit')]
+    }
     // {
     //     path: 'detail/:id',
     //     loadComponent: () => import('./detail/detail'),

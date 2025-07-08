@@ -265,56 +265,36 @@
                         <div class="row g-3">
                             <!-- Ek Ekipmanlar -->
                             <div class="col-12">
-                                <h6 class="mb-3">Ek Ekipmanlar</h6>
                                 <div class="extras-grid">
-                                    <div class="extra-item">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="gps">
-                                            <label class="form-check-label" for="gps">
-                                                <i class="bi bi-geo-alt text-primary"></i>
-                                                <span class="extra-name">GPS Navigasyon</span>
-                                                <span class="extra-price">+15₺/gün</span>
-                                            </label>
+                                    @for(val of extrasData(); track val.id){
+                                        <div class="extra-item">
+                                            <div class="form-check">
+                                                <input
+                                                  class="form-check-input"
+                                                  type="checkbox"
+                                                  id="gps{{val.id}}"
+                                                  (change)="selectExtra(val)"
+                                                  [checked]="checkedExtra(val)">
+                                                <label class="form-check-label" for="gps{{val.id}}">
+                                                    <i class="bi bi-geo-alt text-primary"></i>
+                                                    <span class="extra-name">{{val.name}}</span>
+                                                    <span class="extra-price">+{{val.price | trCurrency:'₺'}}/gün</span>
+                                                </label>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="extra-item">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="babySeat">
-                                            <label class="form-check-label" for="babySeat">
-                                                <i class="bi bi-person-badge text-primary"></i>
-                                                <span class="extra-name">Bebek Koltuğu</span>
-                                                <span class="extra-price">+20₺/gün</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="extra-item">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="additionalDriver">
-                                            <label class="form-check-label" for="additionalDriver">
-                                                <i class="bi bi-person-plus text-primary"></i>
-                                                <span class="extra-name">Ek Sürücü</span>
-                                                <span class="extra-price">+25₺/gün</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="extra-item">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="insurance">
-                                            <label class="form-check-label" for="insurance">
-                                                <i class="bi bi-shield-check text-primary"></i>
-                                                <span class="extra-name">Tam Kasko</span>
-                                                <span class="extra-price">+50₺/gün</span>
-                                            </label>
-                                        </div>
-                                    </div>
+                                    }
                                 </div>
                             </div>
 
                             <!-- Özel İstekler -->
                             <div class="col-12">
                                 <label class="form-label">Özel İstekler / Notlar</label>
-                                <textarea class="form-control" rows="3"
-                                    placeholder="Müşterinin özel istekleri veya rezervasyon notları..."></textarea>
+                                <textarea
+                                  class="form-control"
+                                  rows="3"
+                                  placeholder="Müşterinin özel istekleri veya rezervasyon notları..."
+                                  name="note"
+                                  [(ngModel)]="data().note"></textarea>
                             </div>
                         </div>
                     </div>
@@ -437,7 +417,7 @@
                                     </div>
                                     <div class="price-line">
                                         <span>Ek Hizmetler</span>
-                                        <span id="extrasPrice">0₺</span>
+                                        <span id="extrasPrice">{{totalExtra() | trCurrency:'₺'}}</span>
                                     </div>
                                     <div class="price-line discount">
                                         <span>İndirimler</span>
