@@ -72,48 +72,72 @@
                     </div>
                     <div class="card-body">
                         <div class="row g-3">
-                            <div class="col-md-6">
-                                <label class="form-label">Teslim Alma Lokasyonu *</label>
-                                <select class="form-select" required>
-                                    <option value="">Lokasyon seçiniz</option>
-                                    <option value="kayseri-havalimani">Kayseri Havalimanı</option>
-                                    <option value="kayseri-merkez">Kayseri Merkez Ofis</option>
-                                    <option value="ankara-esenboga">Ankara Esenboğa Havalimanı</option>
-                                    <option value="istanbul-sabiha">İstanbul Sabiha Gökçen</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Teslim Etme Lokasyonu *</label>
-                                <select class="form-select" required>
-                                    <option value="">Lokasyon seçiniz</option>
-                                    <option value="kayseri-havalimani">Kayseri Havalimanı</option>
-                                    <option value="kayseri-merkez">Kayseri Merkez Ofis</option>
-                                    <option value="ankara-esenboga">Ankara Esenboğa Havalimanı</option>
-                                    <option value="istanbul-sabiha">İstanbul Sabiha Gökçen</option>
-                                </select>
-                            </div>
+                            @if(isAdmin()){
+                                <div class="col-md-12">
+                                    <label class="form-label">Teslim Alma Lokasyonu *</label>
+                                    <flexi-select
+                                      [data]="branchesData()"
+                                      label="name"
+                                      value="id"
+                                      [(ngModel)]="data().pickUpLocationId"
+                                      (selected)="setLocation($event)"
+                                      language="tr"
+                                      name="pickUpLocationId"
+                                      [required]="true" />
+                                </div>
+                            }
                             <div class="col-md-6">
                                 <label class="form-label">Teslim Alma Tarihi *</label>
-                                <input type="date" class="form-control" required>
+                                <input
+                                  type="date"
+                                  [(ngModel)]="data().pickUpDate"
+                                  name="pickUpDate"
+                                  class="form-control"
+                                  (ngModelChange)="calculateDayDifference()"
+                                  required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Teslim Alma Saati *</label>
-                                <input type="time" class="form-control" value="10:00" required>
+                                <select
+                                  class="form-control"
+                                  [(ngModel)]="data().pickUpTime"
+                                  (ngModelChange)="calculateDayDifference()"
+                                  name="pickUpTime"
+                                  required>
+                                    @for(time of timeData(); track time){
+                                        <option>{{time}}</option>
+                                    }
+                                </select>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Teslim Etme Tarihi *</label>
-                                <input type="date" class="form-control" required>
+                                <input
+                                  type="date"
+                                  [(ngModel)]="data().deliveryDate"
+                                  (ngModelChange)="calculateDayDifference()"
+                                  name="deliveryDate"
+                                  class="form-control"
+                                  required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Teslim Etme Saati *</label>
-                                <input type="time" class="form-control" value="10:00" required>
+                                <select
+                                  class="form-control"
+                                  [(ngModel)]="data().deliveryTime"
+                                  (ngModelChange)="calculateDayDifference()"
+                                  name="deliveryTime"
+                                  required>
+                                    @for(time of timeData(); track time){
+                                        <option>{{time}}</option>
+                                    }
+                                </select>
                             </div>
                         </div>
 
                         <!-- Kiralama Süresi Göstergesi -->
                         <div class="rental-duration-display">
                             <i class="bi bi-clock"></i>
-                            <span class="duration-text">Toplam: <strong>0 gün</strong></span>
+                            <span class="duration-text">Toplam: <strong>{{data().totalDay}} gün</strong></span>
                         </div>
                     </div>
                 </div>
@@ -573,9 +597,26 @@
 
                             <!-- Tarih Özeti -->
                             <div class="summary-section">
-                                <h6 class="summary-title">Tarih & Lokasyon</h6>
+                                <h6 class="summary-title">Lokasyon & Tarih</h6>
                                 <div class="summary-content" id="dateSummary">
-                                    <p class="text-muted">Tarih seçilmedi</p>
+                                    <div>
+                                        <i class="bi bi-info-circle me-2 text-primary"></i>
+                                        <strong>{{branchName()}}</strong>
+                                    </div>
+                                    <div>
+                                        <i class="bi bi-info-circle me-2 text-primary"></i>
+                                        <strong>Toplam Gün: {{data().totalDay}}</strong>
+                                    </div>
+                                    <div>
+                                        <i class="bi bi-info-circle me-2 text-primary"></i>
+                                        <strong>
+                                            {{data().pickUpDate | date:'dd MMM yyyy'}} {{data().pickUpTime}}
+                                        </strong>
+                                        &rarr;
+                                        <strong>
+                                            {{data().deliveryDate | date:'dd MMM yyyy'}} {{data().deliveryTime}}
+                                        </strong>
+                                    </div>
                                 </div>
                             </div>
 
