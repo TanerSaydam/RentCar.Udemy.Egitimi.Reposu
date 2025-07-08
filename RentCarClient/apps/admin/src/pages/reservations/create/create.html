@@ -307,38 +307,47 @@
                     </div>
                     <div class="card-body">
                         <div class="row g-3">
-                            <div class="col-md-6">
-                                <label class="form-label">Ödeme Yöntemi *</label>
-                                <select class="form-select" required>
-                                    <option value="">Seçiniz</option>
-                                    <option value="credit-card">Kredi Kartı</option>
-                                    <option value="cash">Nakit</option>
-                                    <option value="bank-transfer">Banka Havalesi</option>
-                                    <option value="corporate">Kurumsal Fatura</option>
-                                </select>
+                             <div class="col-md-12">
+                                <label class="form-label">Kart Sahibi *</label>
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  name="owner"
+                                  [(ngModel)]="data().creditCartInformation.owner"
+                                  required>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label">Kart Numarası *</label>
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  mask="0000 0000 0000 0000"
+                                  placeholder="4444 4444 4444 444"
+                                  name="cartNumber"
+                                  [(ngModel)]="data().creditCartInformation.cartNumber"
+                                  required>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label">Depozit Tutarı *</label>
-                                <div class="input-group">
-                                    <input type="number" class="form-control" value="2000" required>
-                                    <span class="input-group-text">₺</span>
-                                </div>
+                                <label class="form-label">Son Kullanma Tarihi *</label>
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  placeholder="10/20"
+                                  name="expiry"
+                                  [(ngModel)]="data().creditCartInformation.expiry"
+                                  required>
                             </div>
-                            <div class="col-12">
-                                <div class="payment-options">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="depositPaid">
-                                        <label class="form-check-label" for="depositPaid">
-                                            Depozit alındı
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="fullPayment">
-                                        <label class="form-check-label" for="fullPayment">
-                                            Tam ödeme alındı
-                                        </label>
-                                    </div>
-                                </div>
+                            <div class="col-md-6">
+                                <label class="form-label">CCV *</label>
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  placeholder="333"
+                                  maxlength="3"
+                                  minlength="3"
+                                  name="ccv"
+                                  [(ngModel)]="data().creditCartInformation.ccv"
+                                  required>
                             </div>
                         </div>
                     </div>
@@ -440,55 +449,14 @@
                                 </div>
                                 <div class="form-actions">
                                     <button type="submit" class="btn btn-primary w-100 mb-2">
-                                        <i class="bi bi-check-circle me-2"></i>Rezervasyon Oluştur
-                                    </button>
-                                    <button type="button" class="btn btn-success w-100 mb-2">
-                                        <i class="bi bi-check-all me-2"></i>Oluştur ve Onayla
-                                    </button>
-                                    <button type="button" class="btn btn-outline-secondary w-100">
-                                        <i class="bi bi-save me-2"></i>Taslak Olarak Kaydet
+                                        <i class="bi bi-check-circle me-2"></i>{{btnName()}}
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Hızlı Ayarlar -->
-                <div class="admin-card">
-                    <div class="card-header">
-                        <h6><i class="bi bi-gear text-primary me-2"></i>Hızlı Ayarlar</h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="quick-settings">
-                            <div class="form-check form-switch mb-3">
-                                <input class="form-check-input" type="checkbox" id="sendEmail" checked>
-                                <label class="form-check-label" for="sendEmail">
-                                    Müşteriye e-posta gönder
-                                </label>
-                            </div>
-                            <div class="form-check form-switch mb-3">
-                                <input class="form-check-input" type="checkbox" id="sendSms" checked>
-                                <label class="form-check-label" for="sendSms">
-                                    SMS bildirimi gönder
-                                </label>
-                            </div>
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="printContract">
-                                <label class="form-check-label" for="printContract">
-                                    Sözleşmeyi yazdır
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
-        </div>
-        <div class="form-group mt-2 d-flex justify-content-end">
-            <button type="submit" class="btn btn-primary">
-                <i class="bi" [ngClass]="pageIcon()"></i>
-                {{btnName()}}
-            </button>
         </div>
     </form>
 </blank>
