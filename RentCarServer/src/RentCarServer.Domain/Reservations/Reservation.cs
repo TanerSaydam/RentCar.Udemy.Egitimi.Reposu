@@ -16,7 +16,7 @@ public sealed class Reservation : Entity, IAggregate
         DeliveryTime deliveryTime,
         IdentityId vehicleId,
         Price vehicleDailyPrice,
-        IdentityId protectionPackageId,
+        IdentityId? protectionPackageId,
         Price protectionPackagePrice,
         IEnumerable<ReservationExtra> reservationExtras,
         Note note,
