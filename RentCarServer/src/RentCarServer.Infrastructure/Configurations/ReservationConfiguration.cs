@@ -25,5 +25,6 @@ internal sealed class ReservationConfiguration : IEntityTypeConfiguration<Reserv
         builder.OwnsOne(p => p.Total);
         builder.OwnsOne(p => p.PickUpDatetime);
         builder.OwnsOne(p => p.DeliveryDatetime);
+        builder.OwnsMany(p => p.Histories);
     }
 }

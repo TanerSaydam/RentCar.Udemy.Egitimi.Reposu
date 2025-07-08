@@ -59,7 +59,8 @@ export interface ReservationModel extends EntityModel {
   paymentInformation: {
     cartNumber: string,
     owner:string;
-  }
+  },
+  histories: {title: string, description:string, createdAt: string}[]
 }
 
 export const initialReservation: ReservationModel = {
@@ -78,10 +79,10 @@ export const initialReservation: ReservationModel = {
     phoneNumber: ''
   },
   pickUpDate: '',
-  pickUpTime: '09:00',
+  pickUpTime: '09:00:00',
   pickUpDateTime: '',
   deliveryDate: '',
-  deliveryTime: '09:00',
+  deliveryTime: '09:00:00',
   deliveryDateTime: '',
   vehicleId: '',
   vehicleDailyPrice: 0,
@@ -117,6 +118,7 @@ export const initialReservation: ReservationModel = {
     cartNumber: '',
     owner: '',
   },
+  histories: [],
   id: '',
   isActive: true,
   createdAt: '',

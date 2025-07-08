@@ -340,36 +340,18 @@
         </div>
         <div class="card-body">
           <div class="timeline">
-            <div class="timeline-item">
-              <div class="timeline-icon bg-success">
-                <i class="bi bi-check"></i>
+            @for(val of data().histories; track val){
+              <div class="timeline-item">
+                <div class="timeline-icon bg-primary">
+                  <i class="bi bi-info"></i>
+                </div>
+                <div class="timeline-content">
+                  <h6>{{val.title}}</h6>
+                  <p>{{val.description}}</p>
+                  <small>{{val.createdAt | date:'dd MMM yyyy, HH:mm'}}</small>
+                </div>
               </div>
-              <div class="timeline-content">
-                <h6>Rezervasyon Onaylandı</h6>
-                <p>Admin tarafından onaylandı</p>
-                <small>15 Haz 2025, 15:00</small>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-icon bg-info">
-                <i class="bi bi-credit-card"></i>
-              </div>
-              <div class="timeline-content">
-                <h6>Depozit Ödendi</h6>
-                <p>2.000₺ kredi kartı ile ödendi</p>
-                <small>15 Haz 2025, 14:32</small>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-icon bg-primary">
-                <i class="bi bi-calendar-plus"></i>
-              </div>
-              <div class="timeline-content">
-                <h6>Rezervasyon Oluşturuldu</h6>
-                <p>Online olarak oluşturuldu</p>
-                <small>15 Haz 2025, 14:30</small>
-              </div>
-            </div>
+            }
           </div>
         </div>
       </div>

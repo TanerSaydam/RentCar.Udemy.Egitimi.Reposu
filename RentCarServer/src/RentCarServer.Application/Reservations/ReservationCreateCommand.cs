@@ -153,6 +153,7 @@ internal sealed class ReservationCreateCommandHandler(
         Status status = Status.Pending;
         Total total = new(request.Total);
         TotalDay totalDay = new(request.TotalDay);
+        ReservationHistory history = new("Rezervayon Oluşturuldu", "Online olarak rezervasyon oluşturuldu", DateTimeOffset.Now);
 
         Reservation reservation = Reservation.Create(
             customerId,
@@ -170,8 +171,12 @@ internal sealed class ReservationCreateCommandHandler(
             paymentInformation,
             status,
             total,
-            totalDay
+            totalDay,
+            history
         );
+
+        ReservationHistory history2 = new("Ödeme Alındı", "Reservasyonun ödemesi başarıyla alındı", DateTimeOffset.Now);
+        reservation.SetHistory(history2);
         #endregion
 
         reservationRepository.Add(reservation);
