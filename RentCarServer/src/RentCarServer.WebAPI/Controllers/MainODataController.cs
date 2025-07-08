@@ -71,6 +71,9 @@ public class MainODataController : ODataController
         => sender.Send(new CustomerGetAllQuery(), cancellationToken).Result;
 
     [HttpGet("reservations")]
-    public IQueryable<ReservationDto> Reservations(ISender sender, CancellationToken cancellationToken = default)
-        => sender.Send(new ReservationGetAllQuery(), cancellationToken).Result;
+    public async Task<IQueryable<ReservationDto>> Reservations(ISender sender, CancellationToken cancellationToken = default)
+    {
+        var res = await sender.Send(new ReservationGetAllQuery(), cancellationToken);
+        return res;
+    }
 }

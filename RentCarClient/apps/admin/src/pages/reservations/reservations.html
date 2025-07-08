@@ -1,24 +1,41 @@
 <grid
   pageTitle="Rezervasyonlar"
-  endpoint="/rent/odata/reservations"
+  endpoint="/rent/odata/reservations?$expand=vehicle"
   [addOptions]="{url: '/reservation/add', permission: 'reservation:create' }"
   [editOptions]="{url: '/reservation/edit', permission: 'reservation:edit'}"
   [detailOptions]="{url: '/reservation/detail', permission: 'reservation:view'}"
   [deleteOptions]="{url: '/rent/reservations', permission: 'reservation:delete'}"
   [breadcrumbs]="bredcrumbs()"
   captionTitle="Rezervasyon Listesi"
+  [showIsActive]="false"
 >
+    <flexi-grid-column field="status" title="Durum" filterType="select" [filterData]="statusFilterData()" textAlign="center">
+        <ng-template flexiGridCellTemplate let-item>
+            <span class="flexi-grid-card" [ngClass]="getStatusClass(item.status)">{{item.status}}</span>
+        </ng-template>
+    </flexi-grid-column>
     <flexi-grid-column field="pickUp.name" title="Alış Noktası"/>
-    <flexi-grid-column field="pickUpDate" title="Alış Tarihi"/>
-    <flexi-grid-column field="pickUpTime" title="Alış Saati"/>
-    <flexi-grid-column field="deliveryDate" title="Teslim Tarihi"/>
-    <flexi-grid-column field="deliveryTime" title="Teslim Saati"/>
+    <flexi-grid-column
+      field="pickUpDateTime"
+      title="Alış Tarihi"
+      filterType="date"
+      format="dd MMM yyyy HH:mm" />
+    <flexi-grid-column
+      field="deliveryDateTime"
+      title="Teslim Tarihi"
+      filterType="date"
+      format="dd MMM yyyy HH:mm" />
     <flexi-grid-column field="customer.fullName" title="Müşteri"/>
-    <flexi-grid-column field="customer.phoneNumber" title="Telefon"/>
+    <flexi-grid-column field="customer.phoneNumber" title="Telefon">
+        <ng-template flexiGridCellTemplate let-item>
+            <span>+90{{ item.customer.phoneNumber | mask: '(000) 000 00 00' }}</span>
+        </ng-template>
+    </flexi-grid-column>
+    <flexi-grid-column field="totalDay" title="Gün" textAlign="center"/>
     <flexi-grid-column title="Araç Resmi">
         <ng-template flexiGridCellTemplate let-item>
             <img
-                [src]="`https://localhost:7207/images/${item.imageUrl}`"
+                [src]="`https://localhost:7207/images/${item.vehicle?.imageUrl}`"
                 alt="Araç"
                 class="vehicle-image">
         </ng-template>
@@ -28,7 +45,6 @@
     <flexi-grid-column field="vehicle.modelYear" title="Model Yılı"/>
     <flexi-grid-column field="vehicle.color" title="Renk"/>
     <flexi-grid-column field="vehicle.categoryName" title="Kategori"/>
-    <flexi-grid-column field="totalDay" title="Gün"/>
     <flexi-grid-column
       field="total"
       title="Toplam Tutar"
@@ -36,5 +52,4 @@
       format="c"
       symbol="₺"
       textAlign="right" />
-    <flexi-grid-column field="status" title="Durum"/>
 </grid>

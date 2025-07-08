@@ -29,12 +29,14 @@ language="tr"
     <ng-content />
 
     @if(showAudit()){
+      @if(showIsActive()){
         <flexi-grid-column
           field="isActive"
           title="Aktif Mi?"
           filterType="boolean"
           [booleanData]="['Aktif', 'Pasif']"
           textAlign="center" />
+      }
         <flexi-grid-column
           field="createdAt"
           title="Oluturulma Tarihi"

@@ -81,14 +81,14 @@ public static class ReservationExtensions
        )
     {
         var res = entities
-            .Join(customers, m => m.Entity.CustomerId.Value, m => m.Id, (r, customer) => new
+            .Join(customers, m => m.Entity.CustomerId, m => m.Id, (r, customer) => new
             {
                 r.Entity,
                 r.CreatedUser,
                 r.UpdatedUser,
                 Customer = customer
             })
-            .Join(branches, m => m.Entity.PickUpLocationId.Value, m => m.Id, (r, branch) => new
+            .Join(branches, m => m.Entity.PickUpLocationId, m => m.Id, (r, branch) => new
             {
                 r.Entity,
                 r.CreatedUser,
@@ -96,38 +96,24 @@ public static class ReservationExtensions
                 r.Customer,
                 Branch = branch
             })
-            .Join(
-                vehicles.Join(categories, n => n.CategoryId.Value, n => n.Id, (v, category) => new VehicleDto
-                {
-                    Id = v.Id,
-                    Brand = v.Brand.Value,
-                    Model = v.Model.Value,
-                    ModelYear = v.ModelYear.Value,
-                    CategoryName = category.Name.Value,
-                    Color = v.Color.Value,
-                    FuelConsumption = v.FuelConsumption.Value,
-                    SeatCount = v.SeatCount.Value,
-                    TractionType = v.TractionType.Value,
-                    Kilometer = v.Kilometer.Value,
-                    ImageUrl = v.ImageUrl.Value,
-                }).AsQueryable(), m => m.Entity.VehicleId.Value, m => m.Id, (r, vehicle) => new
-                {
-                    r.Entity,
-                    r.CreatedUser,
-                    r.UpdatedUser,
-                    r.Customer,
-                    r.Branch,
-                    Vehicle = vehicle
-                })
-            .Join(protectionPackages, m => m.Entity.ProtectionPackageId.Value, m => m.Id, (r, protectionPackage) => new
+            .Join(protectionPackages, m => m.Entity.ProtectionPackageId, m => m.Id, (r, protectionPackage) => new
             {
                 r.Entity,
                 r.CreatedUser,
                 r.UpdatedUser,
                 r.Customer,
                 r.Branch,
-                r.Vehicle,
                 ProtectionPackage = protectionPackage
+            })
+            .Join(vehicles, m => m.Entity.VehicleId, m => m.Id, (r, vehicle) => new
+            {
+                r.Entity,
+                r.CreatedUser,
+                r.UpdatedUser,
+                r.Customer,
+                r.Branch,
+                r.ProtectionPackage,
+                Vehicle = vehicle
             })
             .Select(s => new ReservationDto
             {
@@ -156,7 +142,20 @@ public static class ReservationExtensions
                 DeliveryDateTime = new DateTime(s.Entity.DeliveryDate.Value, s.Entity.DeliveryTime.Value),
                 VehicleId = s.Entity.VehicleId.Value,
                 VehicleDailyPrice = s.Entity.VehicleDailyPrice.Value,
-                Vehicle = s.Vehicle,
+                Vehicle = new VehicleDto
+                {
+                    Id = s.Vehicle.Id,
+                    Brand = s.Vehicle.Brand.Value,
+                    Model = s.Vehicle.Model.Value,
+                    ModelYear = s.Vehicle.ModelYear.Value,
+                    CategoryName = categories.First(i => i.Id == s.Vehicle.CategoryId.Value).Name.Value,
+                    Color = s.Vehicle.Color.Value,
+                    FuelConsumption = s.Vehicle.FuelConsumption.Value,
+                    SeatCount = s.Vehicle.SeatCount.Value,
+                    TractionType = s.Vehicle.TractionType.Value,
+                    Kilometer = s.Vehicle.Kilometer.Value,
+                    ImageUrl = s.Vehicle.ImageUrl.Value,
+                },
                 ProtectionPackageId = s.Entity.ProtectionPackageId.Value,
                 ProtectionPackagePrice = s.Entity.ProtectionPackagePrice.Value,
                 ProtectionPackageName = s.ProtectionPackage.Name.Value,

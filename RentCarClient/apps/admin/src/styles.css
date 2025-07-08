@@ -6917,3 +6917,15 @@ a {
     margin-right: 8px;
     border-radius: 4px;
 }
+
+.flexi-grid-card-warning {
+    background-color: #ffc10778;
+    border-color: #ffc107 !important;
+    color: black;
+}
+
+.flexi-grid-card-info {
+    background-color: #5360ad7c;
+    border-color: #5360ad !important;
+    color: black;
+}
