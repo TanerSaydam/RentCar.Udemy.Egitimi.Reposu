@@ -1,0 +1,178 @@
+﻿using RentCarServer.Domain.Abstractions;
+using RentCarServer.Domain.Branches;
+using RentCarServer.Domain.Categories;
+using RentCarServer.Domain.Customers;
+using RentCarServer.Domain.Extras;
+using RentCarServer.Domain.ProtectionPackages;
+using RentCarServer.Domain.Reservations;
+using RentCarServer.Domain.Vehicles;
+
+namespace RentCarServer.Application.Reservations;
+
+public sealed class PickUpDto
+{
+    public string Name { get; set; } = default!;
+    public string FullAddress { get; set; } = default!;
+    public string PhoneNumber { get; set; } = default!;
+}
+public sealed class CustomerDto
+{
+    public string FullName { get; set; } = default!;
+    public string IdentityNumber { get; set; } = default!;
+    public string PhoneNumber { get; set; } = default!;
+    public string Email { get; set; } = default!;
+    public string FullAddress { get; set; } = default!;
+}
+public sealed class VehicleDto
+{
+    public Guid Id { get; set; } = default!;
+    public string Brand { get; set; } = default!;
+    public string Model { get; set; } = default!;
+    public int ModelYear { get; set; } = default!;
+    public string Color { get; set; } = default!;
+    public string CategoryName { get; set; } = default!;
+    public decimal FuelConsumption { get; set; } = default!;
+    public int SeatCount { get; set; } = default!;
+    public string TractionType { get; set; } = default!;
+    public int Kilometer { get; set; } = default!;
+}
+public sealed class ReservationExtraDto
+{
+    public Guid ExtraId { get; set; }
+    public string ExtraName { get; set; } = default!;
+    public decimal Price { get; set; }
+}
+public sealed class ReservationDto : EntityDto
+{
+    public Guid CustomerId { get; set; } = default!;
+    public CustomerDto Customer { get; set; } = default!;
+    public Guid PickUpLocationId { get; set; } = default!;
+    public PickUpDto PickUp { get; set; } = default!;
+    public DateOnly PickUpDate { get; set; } = default!;
+    public TimeOnly PickUpTime { get; set; } = default!;
+    public DateOnly DeliveryDate { get; set; } = default!;
+    public TimeOnly DeliveryTime { get; set; } = default!;
+    public Guid VehicleId { get; set; } = default!;
+    public decimal VehicleDailyPrice { get; set; } = default!;
+    public VehicleDto Vehicle { get; set; } = default!;
+    public Guid ProtectionPackageId { get; set; } = default!;
+    public decimal ProtectionPackagePrice { get; set; } = default!;
+    public string ProtectionPackageName { get; set; } = default!;
+    public List<ReservationExtraDto> ReservationExtras { get; set; } = default!;
+    public string Note { get; set; } = default!;
+    public decimal Total { get; set; } = default!;
+    public string Status { get; set; } = default!;
+    public int TotalDay { get; set; } = default!;
+}
+
+public static class ReservationExtensions
+{
+    public static IQueryable<ReservationDto> MapTo(
+        this IQueryable<EntityWithAuditDto<Reservation>> entities,
+             IQueryable<Customer> customers,
+             IQueryable<Branch> branches,
+             IQueryable<Vehicle> vehicles,
+             IQueryable<Category> categories,
+             IQueryable<ProtectionPackage> protectionPackages,
+             IQueryable<Extra> extras
+       )
+    {
+        var res = entities
+            .Join(customers, m => m.Entity.CustomerId, m => m.Id, (r, customer) => new
+            {
+                r.Entity,
+                r.CreatedUser,
+                r.UpdatedUser,
+                Customer = customer
+            })
+            .Join(branches, m => m.Entity.PickUpLocationId, m => m.Id, (r, branch) => new
+            {
+                r.Entity,
+                r.CreatedUser,
+                r.UpdatedUser,
+                r.Customer,
+                Branch = branch
+            })
+            .Join(
+                vehicles.Join(categories, n => n.CategoryId, n => n.Id, (v, category) => new VehicleDto
+                {
+                    Id = v.Id,
+                    Brand = v.Brand.Value,
+                    Model = v.Model.Value,
+                    ModelYear = v.ModelYear.Value,
+                    CategoryName = category.Name.Value,
+                    Color = v.Color.Value,
+                    FuelConsumption = v.FuelConsumption.Value,
+                    SeatCount = v.SeatCount.Value,
+                    TractionType = v.TractionType.Value,
+                    Kilometer = v.Kilometer.Value,
+                }).AsQueryable(), m => m.Entity.VehicleId, m => m.Id, (r, vehicle) => new
+                {
+                    r.Entity,
+                    r.CreatedUser,
+                    r.UpdatedUser,
+                    r.Customer,
+                    r.Branch,
+                    Vehicle = vehicle
+                })
+            .Join(protectionPackages, m => m.Entity.ProtectionPackageId, m => m.Id, (r, protectionPackage) => new
+            {
+                r.Entity,
+                r.CreatedUser,
+                r.UpdatedUser,
+                r.Customer,
+                r.Branch,
+                r.Vehicle,
+                ProtectionPackage = protectionPackage
+            })
+            .Select(s => new ReservationDto
+            {
+                Id = s.Entity.Id,
+                CustomerId = s.Entity.CustomerId,
+                Customer = new CustomerDto
+                {
+                    Email = s.Customer.Email.Value,
+                    FullAddress = s.Customer.FullAddress.Value,
+                    FullName = s.Customer.FullName.Value,
+                    IdentityNumber = s.Customer.IdentityNumber.Value,
+                    PhoneNumber = s.Customer.PhoneNumber.Value
+                },
+                PickUpLocationId = s.Entity.PickUpLocationId,
+                PickUp = new PickUpDto
+                {
+                    Name = s.Branch.Name.Value,
+                    FullAddress = s.Branch.Address.FullAddress,
+                    PhoneNumber = s.Branch.Contact.PhoneNumber1
+                },
+                PickUpDate = s.Entity.PickUpDate.Value,
+                PickUpTime = s.Entity.PickUpTime.Value,
+                DeliveryDate = s.Entity.DeliveryDate.Value,
+                DeliveryTime = s.Entity.DeliveryTime.Value,
+                VehicleId = s.Entity.VehicleId.Value,
+                VehicleDailyPrice = s.Entity.VehicleDailyPrice.Value,
+                Vehicle = s.Vehicle,
+                ProtectionPackageId = s.Entity.ProtectionPackageId.Value,
+                ProtectionPackagePrice = s.Entity.ProtectionPackagePrice.Value,
+                ProtectionPackageName = s.ProtectionPackage.Name.Value,
+                ReservationExtras = s.Entity.ReservationExtras.Join(extras, m => m.ExtraId, m => m.Id, (re, extra) => new ReservationExtraDto
+                {
+                    ExtraId = re.ExtraId,
+                    ExtraName = extra.Name.Value,
+                    Price = re.Price
+                }).ToList(),
+                Note = s.Entity.Note.Value,
+                Total = s.Entity.Total.Value,
+                TotalDay = s.Entity.TotalDay.Value,
+                Status = s.Entity.Status.Value,
+                IsActive = s.Entity.IsActive,
+                CreatedAt = s.Entity.CreatedAt,
+                CreatedBy = s.Entity.CreatedBy.Value,
+                CreatedFullName = s.CreatedUser.FullName.Value,
+                UpdatedAt = s.Entity.UpdatedAt,
+                UpdatedBy = s.Entity.UpdatedBy != null ? s.Entity.UpdatedBy.Value : null,
+                UpdatedFullName = s.UpdatedUser != null ? s.UpdatedUser.FullName.Value : null,
+            });
+
+        return res;
+    }
+}
