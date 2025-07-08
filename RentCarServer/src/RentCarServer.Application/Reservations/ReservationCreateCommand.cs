@@ -106,7 +106,8 @@ internal sealed class ReservationCreateCommandHandler(
         var requestedDelivery = request.DeliveryDate.ToDateTime(request.DeliveryTime);
 
         var possibleOverlaps = await reservationRepository
-            .Where(r => r.VehicleId == request.VehicleId)
+            .Where(r => r.VehicleId == request.VehicleId
+            && (r.Status.Value == Status.Pending.Value || r.Status.Value == Status.Delivered.Value))
             .Select(s => new
             {
                 Id = s.Id,

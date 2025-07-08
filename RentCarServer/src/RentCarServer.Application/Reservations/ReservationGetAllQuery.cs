@@ -22,9 +22,7 @@ internal sealed class ReservationGetAllQueryHandler(
     IExtraRepository extraRepository
     ) : IRequestHandler<ReservationGetAllQuery, IQueryable<ReservationDto>>
 {
-    public Task<IQueryable<ReservationDto>> Handle(ReservationGetAllQuery request, CancellationToken cancellationToken)
-    {
-        var res = reservationRepository.GetAllWithAudit()
+    public Task<IQueryable<ReservationDto>> Handle(ReservationGetAllQuery request, CancellationToken cancellationToken) => Task.FromResult(reservationRepository.GetAllWithAudit()
             .MapTo(
                 customerRepository.GetAll(),
                 brancheRepository.GetAll(),
@@ -32,11 +30,5 @@ internal sealed class ReservationGetAllQueryHandler(
                 categoryRepository.GetAll(),
                 protectionPackageRepository.GetAll(),
                 extraRepository.GetAll())
-            .AsQueryable();
-
-        var list = res.ToList();
-
-        return Task.FromResult(list.AsQueryable());
-    }
-
+            .AsQueryable());
 }
