@@ -4606,10 +4606,6 @@ body {
     font-size: 14px;
 }
 
-.feature-item:last-child {
-    margin-bottom: 0;
-}
-
 .feature-item i {
     font-size: 16px;
     flex-shrink: 0;
@@ -6938,4 +6934,10 @@ a {
     background-color: #5360ad7c;
     border-color: #5360ad !important;
     color: black;
+}
+
+.reservation-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
 }

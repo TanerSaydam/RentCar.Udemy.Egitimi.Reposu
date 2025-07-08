@@ -1,6 +1,7 @@
 import { EntityModel } from "./entity.model";
 
 export interface ReservationModel extends EntityModel {
+  reservationNumber: string;
   customerId: string;
   customer: {
     fullName: string;
@@ -35,6 +36,7 @@ export interface ReservationModel extends EntityModel {
     tractionType: string;
     kilometer: number;
     imageUrl: string;
+    plate: string;
   };
   protectionPackageId: string;
   protectionPackagePrice: number;
@@ -53,10 +55,15 @@ export interface ReservationModel extends EntityModel {
     owner:string;
     expiry: string;
     ccv: string;
+  },
+  paymentInformation: {
+    cartNumber: string,
+    owner:string;
   }
 }
 
 export const initialReservation: ReservationModel = {
+  reservationNumber: '',
   customerId: '',
   customer: {
     fullName: '',
@@ -89,7 +96,8 @@ export const initialReservation: ReservationModel = {
     seatCount: 0,
     tractionType: '',
     kilometer: 0,
-    imageUrl: ''
+    imageUrl: '',
+    plate: ''
   },
   protectionPackageId: '',
   protectionPackagePrice: 0,
@@ -104,6 +112,10 @@ export const initialReservation: ReservationModel = {
     owner: '',
     expiry: '',
     ccv: ''
+  },
+  paymentInformation: {
+    cartNumber: '',
+    owner: '',
   },
   id: '',
   isActive: true,

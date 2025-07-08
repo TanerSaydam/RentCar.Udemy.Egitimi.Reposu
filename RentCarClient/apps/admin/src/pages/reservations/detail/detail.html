@@ -1,0 +1,407 @@
+<blank
+  [pageTitle]="pageTitle()"
+  pageIcon="bi-zoom-in"
+  [showStatusCheckbox]="false"
+  [showStatus]="false"
+  [status]="data().isActive"
+  [showAduit]="true"
+  [audit]="data()"
+  [loading]="loading()"
+  size="col-md-12">
+  <!-- Rezervasyon Detay Content -->
+  <div class="row g-4">
+    <!-- Ana Detaylar -->
+    <div class="col-lg-8">
+      <!-- Rezervasyon Bilgileri -->
+      <div class="admin-card">
+        <div class="card-header">
+          <h6><i class="bi bi-info-circle text-primary me-2"></i>Rezervasyon Bilgileri</h6>
+        </div>
+        <div class="card-body">
+          <div class="reservation-detail-grid">
+            <div class="detail-item">
+              <label class="detail-label">Rezervasyon No</label>
+              <span class="detail-value">
+                <strong>{{data().reservationNumber}}</strong>
+              </span>
+            </div>
+            <div class="detail-item">
+              <label class="detail-label">Rezervasyon Tarihi</label>
+              <span class="detail-value">
+                {{data().pickUpDate | date:'dd MMMM yyyy'}}, {{data().pickUpTime.substring(0,5)}}
+              </span>
+            </div>
+            <div class="detail-item">
+              <label class="detail-label">Rezervasyon Türü</label>
+              <span class="detail-value">
+                <span class="badge bg-primary">Online Rezervasyon</span>
+              </span>
+            </div>
+            <div class="detail-item">
+              <label class="detail-label">Durum</label>
+              <span class="detail-value">
+                <span class="badge" [ngClass]="getStatusClass()">{{data().status}}</span>
+              </span>
+            </div>
+            <div class="detail-item">
+              <label class="detail-label">Kiralama Başlangıç</label>
+              <span class="detail-value">
+                <strong>
+                  {{data().pickUpDate | date:'dd MMMM yyyy'}}, {{data().pickUpTime.substring(0,5)}}
+                </strong>
+              </span>
+            </div>
+            <div class="detail-item">
+              <label class="detail-label">Kiralama Bitiş</label>
+              <span class="detail-value">
+                <strong>
+                  {{data().deliveryDate | date:'dd MMMM yyyy'}}, {{data().deliveryTime.substring(0,5)}}
+                </strong>
+              </span>
+            </div>
+            <div class="detail-item">
+              <label class="detail-label">Toplam Süre</label>
+              <span class="detail-value">{{data().totalDay}} gün</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Müşteri Bilgileri -->
+      <div class="admin-card">
+        <div class="card-header">
+          <h6><i class="bi bi-person text-primary me-2"></i>Müşteri Bilgileri</h6>
+        </div>
+        <div class="card-body">
+          <div class="reservation-detail-grid">
+            <div class="detail-item">
+              <label class="detail-label">Ad Soyad</label>
+              <span class="detail-value">
+                <a  class="detail-link">{{data().customer.fullName}}</a>
+              </span>
+            </div>
+            <div class="detail-item">
+              <label class="detail-label">E-posta</label>
+              <span class="detail-value">
+                <a class="detail-link">{{data().customer.email}}</a>
+              </span>
+            </div>
+            <div class="detail-item">
+              <label class="detail-label">Telefon</label>
+              <span class="detail-value">
+                <a class="detail-link">+90{{data().customer.phoneNumber | mask:'(000) 000 00 00'}}</a>
+              </span>
+            </div>
+            <div class="detail-item">
+              <label class="detail-label">TC Kimlik No</label>
+              <span class="detail-value">{{data().customer.identityNumber}}</span>
+            </div>
+            <div class="detail-item">
+              <label class="detail-label">Adres</label>
+              <span class="detail-value">{{data().customer.fullAddress}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Araç Bilgileri -->
+      <div class="admin-card">
+        <div class="card-header">
+          <h6><i class="bi bi-car-front text-primary me-2"></i>Araç Bilgileri</h6>
+        </div>
+        <div class="card-body">
+          <div class="reservation-detail-grid">
+            <div class="detail-item">
+              <label class="detail-label">Araç</label>
+              <span class="detail-value">
+                <a class="detail-link">{{data().vehicle.brand}} {{data().vehicle.model}}</a>
+              </span>
+            </div>
+            <div class="detail-item">
+              <label class="detail-label">Plaka</label>
+              <span class="detail-value">
+                <strong>{{data().vehicle.plate}}</strong>
+              </span>
+            </div>
+            <div class="detail-item">
+              <label class="detail-label">Model Yılı</label>
+              <span class="detail-value">{{data().vehicle.modelYear}}</span>
+            </div>
+            <div class="detail-item">
+              <label class="detail-label">Renk</label>
+              <span class="detail-value">{{data().vehicle.color}}</span>
+            </div>
+            <div class="detail-item">
+              <label class="detail-label">Kategori</label>
+              <span class="detail-value">
+                <span class="badge bg-primary">{{data().vehicle.categoryName}}</span>
+              </span>
+            </div>
+            <div class="detail-item">
+              <label class="detail-label">Yakıt Türü</label>
+              <span class="detail-value">{{data().vehicle.fuelConsumption}}</span>
+            </div>
+            <div class="detail-item">
+              <label class="detail-label">Şanzıman</label>
+              <span class="detail-value">{{data().vehicle.tractionType}}</span>
+            </div>
+            <div class="detail-item">
+              <label class="detail-label">Kişi Kapasitesi</label>
+              <span class="detail-value">{{data().vehicle.seatCount}} Kişi</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lokasyon Bilgileri -->
+      <div class="admin-card">
+        <div class="card-header">
+          <h6><i class="bi bi-geo-alt text-primary me-2"></i>Lokasyon Bilgileri</h6>
+        </div>
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <div class="location-card pickup">
+                <div class="location-header">
+                  <i class="bi bi-box-arrow-up text-success"></i>
+                  <h6>Teslim Alma</h6>
+                </div>
+                <div class="location-details">
+                  <p class="location-name">{{data().pickUp.name}}</p>
+                  <p class="location-address">{{data().pickUp.fullAddress}}</p>
+                  <p class="location-time">
+                    <strong>
+                      {{data().pickUpDate | date:'dd MMMM yyyy'}}, {{data().pickUpTime.substring(0,5)}}
+                    </strong>
+                  </p>
+                  <p class="location-contact">
+                    <i class="bi bi-telephone me-1"></i>
+                    +90{{data().pickUp.phoneNumber | mask:'(000) 000 00 00'}}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="location-card pickup">
+                <div class="location-header">
+                  <i class="bi bi-box-arrow-up text-success"></i>
+                  <h6>Teslim Etme</h6>
+                </div>
+                <div class="location-details">
+                  <p class="location-name">{{data().pickUp.name}}</p>
+                  <p class="location-address">{{data().pickUp.fullAddress}}</p>
+                  <p class="location-time">
+                    <strong>
+                      {{data().deliveryDate | date:'dd MMMM yyyy'}}, {{data().deliveryTime.substring(0,5)}}
+                    </strong>
+                  </p>
+                  <p class="location-contact">
+                    <i class="bi bi-telephone me-1"></i>
+                    +90{{data().pickUp.phoneNumber | mask:'(000) 000 00 00'}}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fiyat Detayları -->
+      <div class="admin-card">
+        <div class="card-header">
+          <h6><i class="bi bi-currency-dollar text-primary me-2"></i>Fiyat Detayları</h6>
+        </div>
+        <div class="card-body">
+          <div class="price-breakdown">
+            <div class="price-item">
+              <span class="price-label">Günlük Ücret ({{data().totalDay}} gün)</span>
+              <span class="price-value">
+                {{data().vehicleDailyPrice | trCurrency:'₺'}} x {{data().totalDay}} = {{(data().vehicleDailyPrice * data().totalDay) | trCurrency:'₺'}}
+              </span>
+            </div>
+            <div class="price-item">
+              <span class="price-label">{{data().protectionPackageName}}</span>
+              <span class="price-value">{{data().protectionPackagePrice | trCurrency:'₺'}} x {{data().totalDay}} = {{(data().protectionPackagePrice * data().totalDay) | trCurrency:'₺'}}</span>
+            </div>
+            @for(val of data().reservationExtras; track val){
+              <div class="price-item discount">
+                <span class="price-label">{{val.extraName}}</span>
+                <span class="price-value">{{(val.price * data().totalDay) | trCurrency:'₺'}}</span>
+              </div>
+            }
+            <div class="price-item tax">
+              <span class="price-label">KDV (%20)</span>
+              <span class="price-value">Dahil</span>
+            </div>
+            <hr>
+            <div class="price-item total">
+              <span class="price-label">Toplam Tutar</span>
+              <span class="price-value">{{data().total | trCurrency:'₺'}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ödeme Bilgileri -->
+      <div class="admin-card">
+        <div class="card-header">
+          <h6><i class="bi bi-credit-card text-primary me-2"></i>Ödeme Bilgileri</h6>
+        </div>
+        <div class="card-body">
+          <div class="reservation-detail-grid">
+            <div class="detail-item">
+              <label class="detail-label">Ödeme Yöntemi</label>
+              <span class="detail-value">
+                <i class="bi bi-credit-card me-1"></i>
+                Kredi Kartı
+              </span>
+            </div>
+            <div class="detail-item">
+              <label class="detail-label">Kart Türü</label>
+              <span class="detail-value">**** {{data().paymentInformation.cartNumber}}</span>
+            </div>
+            <div class="detail-item">
+              <label class="detail-label">Ödeme Durumu</label>
+              <span class="detail-value">
+                <span class="badge bg-warning">Ödendi</span>
+              </span>
+            </div>
+            <div class="detail-item">
+              <label class="detail-label">Ödenen Tutar</label>
+              <span class="detail-value">{{data().total | trCurrency:'₺'}}</span>
+            </div>
+            <div class="detail-item">
+              <label class="detail-label">Ödeme Tarihi</label>
+              <span class="detail-value">
+                 {{data().pickUpDate | date:'dd MMMM yyyy'}}, {{data().pickUpTime.substring(0,5)}}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Not -->
+      <div class="admin-card">
+        <div class="card-header">
+          <h6><i class="bi bi-card-text text-primary me-2"></i>Notlar</h6>
+        </div>
+        <div class="card-body">
+          <div class="reservation-detail-grid">
+            <div class="detail-item full-width">
+              <label class="detail-label">Admin Notu</label>
+              <span class="detail-value">
+                <em class="text-muted">{{data().note}}</em>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sağ Kenar Çubuğu -->
+    <div class="col-lg-4">
+      <!-- Rezervasyon Özeti -->
+      <div class="admin-card">
+        <div class="card-body text-center">
+          <div class="reservation-summary">
+            <div class="reservation-id">
+              <h4>{{data().reservationNumber}}</h4>
+            </div>
+            <div class="reservation-status">
+              <span class="badge fs-6" [ngClass]="getStatusClass()">{{data().status}}</span>
+            </div>
+            <div class="reservation-dates">
+              <div class="date-item">
+                <small class="text-muted">Başlangıç</small>
+                <p class="mb-0"><strong>{{data().pickUpDate | date: 'dd MMM yyyy'}}</strong></p>
+                <p class="mb-0 text-muted">{{data().pickUpTime.substring(0,5)}}</p>
+              </div>
+              <div class="date-separator">
+                <i class="bi bi-arrow-right"></i>
+              </div>
+              <div class="date-item">
+                <small class="text-muted">Bitiş</small>
+                <p class="mb-0"><strong>{{data().deliveryDate | date: 'dd MMM yyyy'}}</strong></p>
+                <p class="mb-0 text-muted">{{data().deliveryTime.substring(0,5)}}</p>
+              </div>
+            </div>
+            <div class="total-amount">
+              <h3 class="text-primary">{{data().total | trCurrency:'₺'}}</h3>
+              <small class="text-muted">{{data().totalDay}} gün kiralama</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rezervasyon Timeline -->
+      <div class="admin-card">
+        <div class="card-header">
+          <h6><i class="bi bi-clock-history text-primary me-2"></i>Rezervasyon Geçmişi</h6>
+        </div>
+        <div class="card-body">
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-icon bg-success">
+                <i class="bi bi-check"></i>
+              </div>
+              <div class="timeline-content">
+                <h6>Rezervasyon Onaylandı</h6>
+                <p>Admin tarafından onaylandı</p>
+                <small>15 Haz 2025, 15:00</small>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-icon bg-info">
+                <i class="bi bi-credit-card"></i>
+              </div>
+              <div class="timeline-content">
+                <h6>Depozit Ödendi</h6>
+                <p>2.000₺ kredi kartı ile ödendi</p>
+                <small>15 Haz 2025, 14:32</small>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-icon bg-primary">
+                <i class="bi bi-calendar-plus"></i>
+              </div>
+              <div class="timeline-content">
+                <h6>Rezervasyon Oluşturuldu</h6>
+                <p>Online olarak oluşturuldu</p>
+                <small>15 Haz 2025, 14:30</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Araç Bilgileri Kart -->
+      <div class="admin-card">
+        <div class="card-header">
+          <h6><i class="bi bi-car-front text-primary me-2"></i>Araç Özeti</h6>
+        </div>
+        <div class="card-body">
+          <div class="car-summary">
+            <div class="car-image">
+              <img [src]="`https://localhost:7207/images/${data().vehicle.imageUrl}`" [alt]="data().vehicle.brand">
+            </div>
+            <div class="car-info">
+              <h6>{{data().vehicle.brand}} {{data().vehicle.model}}</h6>
+              <p class="text-muted">{{data().vehicle.plate}}</p>
+              <div class="car-features">
+                <span class="feature-item">
+                  <i class="bi bi-fuel-pump"></i> {{data().vehicle.fuelConsumption}}
+                </span>
+                <span class="feature-item">
+                  <i class="bi bi-gear"></i> {{data().vehicle.tractionType}}
+                </span>
+                <span class="feature-item">
+                  <i class="bi bi-people"></i> {{data().vehicle.seatCount}} Kişi
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</blank>

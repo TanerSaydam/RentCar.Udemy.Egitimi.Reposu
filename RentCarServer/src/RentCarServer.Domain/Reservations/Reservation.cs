@@ -198,7 +198,7 @@ public sealed class Reservation : Entity, IAggregate
         DeliveryDatetime = new(new DateTimeOffset(date));
     }
 
-    public void SetReservationNumber()
+    private void SetReservationNumber()
     {
         var date = DateTime.Now;
         Random random = new();

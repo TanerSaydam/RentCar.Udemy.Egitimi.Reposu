@@ -37,6 +37,7 @@ public sealed class ReservationVehicleDto
     public string TractionType { get; set; } = default!;
     public int Kilometer { get; set; } = default!;
     public string ImageUrl { get; set; } = default!;
+    public string Plate { get; set; } = default!;
 }
 public sealed class ReservationExtraDto
 {
@@ -159,6 +160,7 @@ public static class ReservationExtensions
                     TractionType = s.Vehicle.TractionType.Value,
                     Kilometer = s.Vehicle.Kilometer.Value,
                     ImageUrl = s.Vehicle.ImageUrl.Value,
+                    Plate = s.Vehicle.Plate.Value
                 },
                 ProtectionPackageId = s.Entity.ProtectionPackageId.Value,
                 ProtectionPackagePrice = s.Entity.ProtectionPackagePrice.Value,
