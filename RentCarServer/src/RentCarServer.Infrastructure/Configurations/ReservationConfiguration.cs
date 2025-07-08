@@ -10,6 +10,7 @@ internal sealed class ReservationConfiguration : IEntityTypeConfiguration<Reserv
         builder.ToTable("Reservations");
         builder.HasKey(x => x.Id);
 
+        builder.OwnsOne(p => p.ReservationNumber);
         builder.OwnsOne(p => p.PickUpDate);
         builder.OwnsOne(p => p.PickUpTime);
         builder.OwnsOne(p => p.DeliveryDate);

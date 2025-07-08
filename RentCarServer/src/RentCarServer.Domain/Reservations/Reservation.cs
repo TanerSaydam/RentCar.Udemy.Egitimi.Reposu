@@ -43,8 +43,9 @@ public sealed class Reservation : Entity, IAggregate
         SetTotal(total);
         SetPickupDateTime();
         SetDeliveryDateTime();
+        SetReservationNumber();
     }
-
+    public ReservationNumber ReservationNumber { get; private set; } = default!;
     public IdentityId CustomerId { get; private set; } = default!;
     public IdentityId PickUpLocationId { get; private set; } = default!;
     public PickUpDate PickUpDate { get; private set; } = default!;
@@ -196,8 +197,14 @@ public sealed class Reservation : Entity, IAggregate
         var date = new DateTime(DeliveryDate.Value, DeliveryTime.Value);
         DeliveryDatetime = new(new DateTimeOffset(date));
     }
+
+    public void SetReservationNumber()
+    {
+        var date = DateTime.Now;
+        Random random = new();
+        var num = string.Concat(Enumerable.Range(0, 8).Select(_ => random.Next(10)));
+        string number = "RSV-" + date.Year + "-" + num;
+        ReservationNumber = new(number);
+    }
     #endregion
 }
-
-public sealed record PickUpDatetime(DateTimeOffset Value);
-public sealed record DeliveryDatetime(DateTimeOffset Value);

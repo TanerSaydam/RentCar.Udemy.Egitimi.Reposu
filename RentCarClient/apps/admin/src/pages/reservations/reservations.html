@@ -8,7 +8,8 @@
   [breadcrumbs]="bredcrumbs()"
   captionTitle="Rezervasyon Listesi"
   [showIsActive]="false"
->
+  >
+    <flexi-grid-column field="reservationNumber" title="Rez.Numarası"/>
     <flexi-grid-column field="status" title="Durum" filterType="select" [filterData]="statusFilterData()" textAlign="center">
         <ng-template flexiGridCellTemplate let-item>
             <span class="flexi-grid-card" [ngClass]="getStatusClass(item.status)">{{item.status}}</span>
