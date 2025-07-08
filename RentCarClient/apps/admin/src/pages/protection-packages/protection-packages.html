@@ -1,14 +1,16 @@
 <grid
-  pageTitle="Koruma Paketleri"
+  pageTitle="Güvence Paketleri"
   endpoint="/rent/odata/protection-packages"
   [addOptions]="{url: '/protection-packages/add', permission: 'protectionpackage:create' }"
   [editOptions]="{url: '/protection-packages/edit', permission: 'protectionpackage:edit'}"
   [detailOptions]="{url: '/protection-packages/detail', permission: 'protectionpackage:view'}"
   [deleteOptions]="{url: '/rent/protection-packages', permission: 'protectionpackage:delete'}"
   [breadcrumbs]="bredcrumbs()"
-  captionTitle="Koruma Paketi Listesi"
+  captionTitle="Güvence Paketi Listesi"
+  [sort]="{field: 'OrderNumber', dir: ''}"
 >
   <flexi-grid-column field="name" title="Paket Adı"/>
   <flexi-grid-column field="price" title="Fiyat" filterType="number" format="c" textAlign="right" symbol="₺"/>
   <flexi-grid-column field="isRecommended" title="Önerilen mi?" filterType="boolean" [booleanData]="['Evet', 'Hayır']" textAlign="center"/>
+  <flexi-grid-column field="orderNumber" title="Sıra Numarası" textAlign="center"/>
 </grid>

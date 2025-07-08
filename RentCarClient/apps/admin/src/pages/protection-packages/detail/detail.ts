@@ -22,7 +22,7 @@ export default class ProtectionPackageDetail {
   readonly result = httpResource<Result<ProtectionPackageModel>>(() => `/rent/protection-packages/${this.id()}`);
   readonly data = computed(() => this.result.value()?.data ?? initialProtectionPackageModel);
   readonly loading = computed(() => this.result.isLoading());
-  readonly pageTitle = signal<string>("Koruma Paketi Detay");
+  readonly pageTitle = signal<string>("Güvence Paketi Detay");
 
   readonly #activated = inject(ActivatedRoute);
   readonly #breadcrumb = inject(BreadcrumbService);
@@ -35,7 +35,7 @@ export default class ProtectionPackageDetail {
     effect(() => {
       const breadCrumbs: BreadcrumbModel[] = [
         {
-          title: 'Koruma Paketleri',
+          title: 'Güvence Paketleri',
           icon: 'bi-shield-check',
           url: '/protection-packages'
         }

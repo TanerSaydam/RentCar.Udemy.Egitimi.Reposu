@@ -29,7 +29,8 @@ public sealed record ReservationUpdateCommand(
     decimal ProtectionPackagePrice,
     List<ReservationExtra> ReservationExtras,
     string Note,
-    decimal Total
+    decimal Total,
+    int TotalDay
 ) : IRequest<Result<string>>;
 
 public sealed class ReservationUpdateCommandValidator : AbstractValidator<ReservationUpdateCommand>
@@ -149,6 +150,7 @@ internal sealed class ReservationUpdateCommandHandler(
         IEnumerable<ReservationExtra> reservationExtras = request.ReservationExtras.Select(s => new ReservationExtra(s.ExtraId, s.Price));
         Note note = new(request.Note);
         Total total = new(request.Total);
+        TotalDay totalDay = new(request.TotalDay);
 
         reservation.SetCustomerId(customerId);
         reservation.SetPickUpLocationId(pickUpLocationId);
@@ -158,13 +160,20 @@ internal sealed class ReservationUpdateCommandHandler(
         reservation.SetDeliveryTime(deliveryTime);
         reservation.SetVehicleId(vehicleId);
         reservation.SetVehicleDailyPrice(vehicleDailyPrice);
-        reservation.SetProtectionPackageId(protectionPackageId);
-        reservation.SetProtectionPackagePrice(protectionPackagePrice);
+        if (protectionPackageId is not null)
+        {
+            reservation.SetProtectionPackageId(protectionPackageId);
+        }
+        if (protectionPackagePrice is not null)
+        {
+            reservation.SetProtectionPackagePrice(protectionPackagePrice);
+        }
         reservation.SetReservationExtras(reservationExtras);
         reservation.SetNote(note);
         reservation.SetTotal(total);
         reservation.SetPickupDateTime();
         reservation.SetDeliveryDateTime();
+        reservation.SetTotalDay(totalDay);
         #endregion
 
         reservationRepository.Update(reservation);

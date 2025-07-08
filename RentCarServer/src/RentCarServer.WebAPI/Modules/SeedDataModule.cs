@@ -54,6 +54,7 @@ public static class SeedDataModule
                         new("Mini Güvence Paketi"),
                         new(150),
                         new(false),
+                        new(1),
                         new List<ProtectionCoverage>
                         {
                             new("Hasar Sorumluluk Güvencesi (CDW)"),
@@ -65,6 +66,7 @@ public static class SeedDataModule
                         new("Standart Güvence Paketi"),
                         new(250),
                         new(true),
+                        new(2),
                         new List<ProtectionCoverage>
                         {
                             new("Önceki Paketin Tüm Özellikleri Dahil"),
@@ -77,6 +79,7 @@ public static class SeedDataModule
                         new("Full Güvence Paketi"),
                         new(350),
                         new(false),
+                        new(3),
                         new List<ProtectionCoverage>
                         {
                             new("Önceki Paketin Tüm Özellikleri Dahil"),

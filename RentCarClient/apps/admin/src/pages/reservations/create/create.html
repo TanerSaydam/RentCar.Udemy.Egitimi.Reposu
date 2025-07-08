@@ -207,165 +207,41 @@
                     </div>
                     <div class="card-body">
                         <div class="protection-packages-grid">
-                            <!-- Sınırlı Güvence -->
-                            <div class="protection-package-card">
-                                <input type="radio" name="protectionPackage" id="packageLimited" value="limited"
-                                    checked>
-                                <label for="packageLimited" class="package-label">
-                                    <div class="package-header">
-                                        <h6 class="package-name">Sınırlı Güvence</h6>
-                                        <div class="package-rating">
-                                            <i class="bi bi-star text-warning"></i>
-                                            <i class="bi bi-star text-warning"></i>
-                                            <i class="bi bi-star text-muted"></i>
+                            @for(val of protectionPackagesData(); track val.id){
+                                <div
+                                  class="protection-package-card"
+                                  [class.recommended]="val.isRecommended"
+                                  (click)="selectProtectionPackage(val)">
+                                    @if(val.isRecommended){
+                                        <div class="recommended-badge">Önerilen</div>
+                                    }
+                                    <input type="radio" name="protectionPackage" id="packageGold{{$index}}" value="gold">
+                                    <label for="packageGold" class="package-label">
+                                        <div class="package-header" [class.protection-package-selected]="val.id === data().protectionPackageId">
+                                            <h6 class="package-name">{{val.name}}</h6>
+                                            <div class="package-rating">
+                                                <i class="bi bi-star-fill text-warning"></i>
+                                                <i class="bi bi-star-fill text-warning"></i>
+                                                <i class="bi bi-star-fill text-warning"></i>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="package-price">
-                                        <div class="price-amount">11.500₺</div>
-                                        <div class="price-label">Muafiyet</div>
-                                    </div>
-                                    <div class="package-features">
-                                        <div class="feature-item not-included">
-                                            <i class="bi bi-x-circle text-danger"></i>
-                                            <span>Lastik Cam Far Güvencesi</span>
+                                        <div class="package-price">
+                                            <div class="price-label text-success">Muafiyetsiz</div>
                                         </div>
-                                        <div class="feature-item not-included">
-                                            <i class="bi bi-x-circle text-danger"></i>
-                                            <span>3. Şahıs Sorumluluk</span>
+                                        <div class="package-features" style="height: 250px;">
+                                            @for(detail of val.coverages; track detail){
+                                                <div class="feature-item included">
+                                                    <i class="bi bi-check-circle text-success"></i>
+                                                    <span>{{detail}}</span>
+                                                </div>
+                                            }
                                         </div>
-                                        <div class="feature-item not-included">
-                                            <i class="bi bi-x-circle text-danger"></i>
-                                            <span>Mini Hasar Güvencesi</span>
+                                        <div class="package-footer">
+                                            <div class="daily-price">+{{val.price | trCurrency:'₺'}}<span>/gün</span></div>
                                         </div>
-                                        <div class="feature-item not-included">
-                                            <i class="bi bi-x-circle text-danger"></i>
-                                            <span>Anahtar/Plaka Güvencesi</span>
-                                        </div>
-                                    </div>
-                                    <div class="package-footer">
-                                        <div class="daily-price">Dahil</div>
-                                    </div>
-                                </label>
-                            </div>
-
-                            <!-- Minimum Güvence -->
-                            <div class="protection-package-card">
-                                <input type="radio" name="protectionPackage" id="packageMinimum" value="minimum">
-                                <label for="packageMinimum" class="package-label">
-                                    <div class="package-header">
-                                        <h6 class="package-name">Minimum Güvence</h6>
-                                        <div class="package-rating">
-                                            <i class="bi bi-star-fill text-warning"></i>
-                                            <i class="bi bi-star text-warning"></i>
-                                            <i class="bi bi-star text-muted"></i>
-                                        </div>
-                                    </div>
-                                    <div class="package-price">
-                                        <div class="price-amount">11.500₺</div>
-                                        <div class="price-label">Muafiyet</div>
-                                    </div>
-                                    <div class="package-features">
-                                        <div class="feature-item included">
-                                            <i class="bi bi-check-circle text-success"></i>
-                                            <span>3. Şahıs Sorumluluk</span>
-                                        </div>
-                                        <div class="feature-item not-included">
-                                            <i class="bi bi-x-circle text-danger"></i>
-                                            <span>Lastik Cam Far Güvencesi</span>
-                                        </div>
-                                        <div class="feature-item not-included">
-                                            <i class="bi bi-x-circle text-danger"></i>
-                                            <span>Mini Hasar Güvencesi</span>
-                                        </div>
-                                        <div class="feature-item not-included">
-                                            <i class="bi bi-x-circle text-danger"></i>
-                                            <span>Anahtar/Plaka Güvencesi</span>
-                                        </div>
-                                    </div>
-                                    <div class="package-footer">
-                                        <div class="daily-price">+166₺<span>/gün</span></div>
-                                    </div>
-                                </label>
-                            </div>
-
-                            <!-- Gold Güvence -->
-                            <div class="protection-package-card recommended">
-                                <div class="recommended-badge">Önerilen</div>
-                                <input type="radio" name="protectionPackage" id="packageGold" value="gold">
-                                <label for="packageGold" class="package-label">
-                                    <div class="package-header">
-                                        <h6 class="package-name">Gold Güvence</h6>
-                                        <div class="package-rating">
-                                            <i class="bi bi-star-fill text-warning"></i>
-                                            <i class="bi bi-star-fill text-warning"></i>
-                                            <i class="bi bi-star-fill text-warning"></i>
-                                        </div>
-                                    </div>
-                                    <div class="package-price">
-                                        <div class="price-label text-success">Muafiyetsiz</div>
-                                    </div>
-                                    <div class="package-features">
-                                        <div class="feature-item included">
-                                            <i class="bi bi-check-circle text-success"></i>
-                                            <span>Lastik Cam Far Güvencesi</span>
-                                        </div>
-                                        <div class="feature-item included">
-                                            <i class="bi bi-check-circle text-success"></i>
-                                            <span>3. Şahıs Sorumluluk</span>
-                                        </div>
-                                        <div class="feature-item included">
-                                            <i class="bi bi-check-circle text-success"></i>
-                                            <span>Mini Hasar Güvencesi</span>
-                                        </div>
-                                        <div class="feature-item not-included">
-                                            <i class="bi bi-x-circle text-danger"></i>
-                                            <span>Anahtar/Plaka Güvencesi</span>
-                                        </div>
-                                    </div>
-                                    <div class="package-footer">
-                                        <div class="daily-price">+472₺<span>/gün</span></div>
-                                    </div>
-                                </label>
-                            </div>
-
-                            <!-- Full Güvence -->
-                            <div class="protection-package-card">
-                                <input type="radio" name="protectionPackage" id="packageFull" value="full">
-                                <label for="packageFull" class="package-label">
-                                    <div class="package-header">
-                                        <h6 class="package-name">Full Güvence</h6>
-                                        <div class="package-rating">
-                                            <i class="bi bi-star-fill text-warning"></i>
-                                            <i class="bi bi-star-fill text-warning"></i>
-                                            <i class="bi bi-star-fill text-warning"></i>
-                                        </div>
-                                    </div>
-                                    <div class="package-price">
-                                        <div class="price-label text-success">Muafiyetsiz</div>
-                                    </div>
-                                    <div class="package-features">
-                                        <div class="feature-item included">
-                                            <i class="bi bi-check-circle text-success"></i>
-                                            <span>Lastik Cam Far Güvencesi</span>
-                                        </div>
-                                        <div class="feature-item included">
-                                            <i class="bi bi-check-circle text-success"></i>
-                                            <span>3. Şahıs Sorumluluk</span>
-                                        </div>
-                                        <div class="feature-item included">
-                                            <i class="bi bi-check-circle text-success"></i>
-                                            <span>Mini Hasar Güvencesi</span>
-                                        </div>
-                                        <div class="feature-item included">
-                                            <i class="bi bi-check-circle text-success"></i>
-                                            <span>Anahtar/Plaka Güvencesi</span>
-                                        </div>
-                                    </div>
-                                    <div class="package-footer">
-                                        <div class="daily-price">+680₺<span>/gün</span></div>
-                                    </div>
-                                </label>
-                            </div>
+                                    </label>
+                                </div>
+                            }
                         </div>
 
                         <!-- Güvence Paketi Açıklaması -->
@@ -492,7 +368,7 @@
             <!-- Sağ Kolon - Özet ve İşlemler -->
             <div class="col-lg-4">
                 <!-- Rezervasyon Özeti -->
-                <div class="admin-card sticky-top">
+                <div class="admin-card">
                     <div class="card-header">
                         <h6><i class="bi bi-receipt text-primary me-2"></i>Rezervasyon Özeti</h6>
                     </div>
@@ -554,6 +430,10 @@
                                     <div class="price-line">
                                         <span>Araç Ücreti</span>
                                         <span id="vehiclePrice">{{(data().vehicleDailyPrice * data().totalDay) | trCurrency:'₺'}}</span>
+                                    </div>
+                                    <div class="price-line">
+                                        <span>Güvence Paketi</span>
+                                        <span id="protectionPrice">{{(data().protectionPackagePrice * data().totalDay) | trCurrency:'₺'}}</span>
                                     </div>
                                     <div class="price-line">
                                         <span>Ek Hizmetler</span>

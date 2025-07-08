@@ -4539,6 +4539,11 @@ body {
     color: white;
 }
 
+.protection-package-selected{
+    background: #1976d2 !important;
+    color: white;
+}
+
 .package-header {
     padding: 20px;
     background: #f8f9fa;

@@ -30,6 +30,16 @@
           <div class="invalid-feedback">Geçerli bir fiyat girin</div>
         </div>
         <div class="form-group">
+          <label>Sıra Numarası (*)</label>
+          <input
+            type="number"
+            class="form-control"
+            [(ngModel)]="data().orderNumber"
+            name="orderNumber"
+            required>
+          <div class="invalid-feedback">Geçerli bir sıra numarası girin</div>
+        </div>
+        <div class="form-group">
             <div class="form-check form-switch">
                 <input type="checkbox" id="isRecommended" name="isRecommended" [(ngModel)]="data().isRecommended" class="form-check-input">
                 <label for="isRecommended" class="form-check-label">Önerilen mi?</label>

@@ -23,6 +23,7 @@ import { lastValueFrom } from 'rxjs';
 import { TrCurrencyPipe } from 'tr-currency';
 import { fuelTypeList, transmissionList } from '../../vehicles/create/create';
 import { VehiclePipe } from 'apps/admin/src/pipes/vehicle-pipe';
+import { ProtectionPackageModel } from 'apps/admin/src/models/protection-package.model';
 
 @Component({
   imports: [
@@ -89,9 +90,9 @@ export default class Create {
   readonly customersTotal = computed(() => this.customersResult.value()?.['@odata.count'] ?? 0);
   readonly customersLoading = computed(() => this.customersResult.isLoading());
   readonly selectedCustomer = signal<CustomerModel | undefined>(undefined);
-  readonly branchesResult = httpResource<ODataModel<BranchModel>>(() => '/rent/odata/branches');
-  readonly branchesData = computed(() => this.branchesResult.value()?.value ?? []);
-  readonly branchesLoading = computed(() => this.branchesResult.isLoading());
+  readonly branchResult = httpResource<ODataModel<BranchModel>>(() => '/rent/odata/branches');
+  readonly branchesData = computed(() => this.branchResult.value()?.value ?? []);
+  readonly branchesLoading = computed(() => this.branchResult.isLoading());
   readonly isAdmin = computed(() => this.#common.decode().role === 'sys_admin');
   readonly timeData = signal<string[]>(
     Array.from({ length: 31 }, (_, i) => {
@@ -113,7 +114,10 @@ export default class Create {
     fuelType: '',
     transmission: ''
   });
-  readonly selectedVehicle = signal<VehicleModel | undefined>(undefined)
+  readonly selectedVehicle = signal<VehicleModel | undefined>(undefined);
+  readonly protectionPackageResult = httpResource<ODataModel<ProtectionPackageModel>>(()=> '/rent/odata/protection-packages?$orderby=OrderNumber');
+  readonly protectionPackagesData = computed(() => this.protectionPackageResult.value()?.value ?? []);
+  readonly protectionPackagesLoading = computed(() => this.protectionPackageResult.isLoading());
 
   readonly #breadcrumb = inject(BreadcrumbService);
   readonly #activated = inject(ActivatedRoute);
@@ -251,7 +255,37 @@ export default class Create {
       vehicleId: item.id,
       vehicle: item,
       vehicleDailyPrice: item.dailyPrice,
-      total: (item.dailyPrice * prev.totalDay)
-    }))
+    }));
+    this.calculateTotal();
+  }
+
+  selectProtectionPackage(val: ProtectionPackageModel){
+    if(val.id === this.data().protectionPackageId){
+      this.data.update(prev => ({
+        ...prev,
+        protectionPackageId: '',
+        protectionPackagePrice: 0,
+        protectionPackageName: ''
+      }));
+    }else{
+      this.data.update(prev => ({
+        ...prev,
+        protectionPackageId: val.id,
+        protectionPackagePrice: val.price,
+        protectionPackageName: val.name
+      }));
+    }
+    this.calculateTotal();
+  }
+
+  calculateTotal(){
+    const totalVehicle = this.data().vehicleDailyPrice * this.data().totalDay;
+    const totalProtectionpackage = this.data().protectionPackagePrice * this.data().totalDay;
+
+    const total = totalVehicle + totalProtectionpackage;
+    this.data.update(prev => ({
+      ...prev,
+      total: total
+    }));
   }
 }

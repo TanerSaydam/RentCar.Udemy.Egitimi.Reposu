@@ -13,6 +13,7 @@ public sealed record ProtectionPackageCreateCommand(
     string Name,
     decimal Price,
     bool IsRecommended,
+    int OrderNumber,
     List<string> Coverages,
     bool IsActive) : IRequest<Result<string>>;
 
@@ -21,7 +22,7 @@ public sealed class ProtectionPackageCreateCommandValidator : AbstractValidator<
     public ProtectionPackageCreateCommandValidator()
     {
         RuleFor(p => p.Name).NotEmpty().WithMessage("Geçerli bir paket adý girin");
-        RuleFor(p => p.Price).GreaterThan(0).WithMessage("Fiyat pozitif olmalý");
+        RuleFor(p => p.Price).GreaterThan(-1).WithMessage("Fiyat pozitif olmalý");
     }
 }
 
@@ -38,9 +39,16 @@ internal sealed class ProtectionPackageCreateCommandHandler(
         Name name = new(request.Name);
         Price price = new(request.Price);
         IsRecommended isRecommended = new(request.IsRecommended);
+        OrderNumber orderNumber = new(request.OrderNumber);
         List<ProtectionCoverage> coverages = request.Coverages.Select(c => new ProtectionCoverage(c)).ToList();
 
-        ProtectionPackage package = new(name, price, isRecommended, coverages, request.IsActive);
+        ProtectionPackage package = new(
+            name,
+            price,
+            isRecommended,
+            orderNumber,
+            coverages,
+            request.IsActive);
 
         repository.Add(package);
         await unitOfWork.SaveChangesAsync(cancellationToken);

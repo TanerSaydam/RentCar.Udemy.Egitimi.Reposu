@@ -27,7 +27,7 @@ export default class CreateProtectionPackage {
   readonly id = signal<string | undefined>(undefined);
   readonly bredcrumbs = signal<BreadcrumbModel[]>([
     {
-      title: 'Koruma Paketleri',
+      title: 'Güvence Paketleri',
       icon: 'bi-shield-check',
       url: '/protection-packages'
     }
