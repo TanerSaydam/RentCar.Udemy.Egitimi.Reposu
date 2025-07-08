@@ -15,23 +15,23 @@ public sealed record ReservationGetQuery(
 
 internal sealed class ReservationGetQueryHandler(
     IReservationRepository reservationRepository,
-    IQueryable<Customer> customers,
-    IQueryable<Branch> branches,
-    IQueryable<Vehicle> vehicles,
-    IQueryable<Category> categories,
-    IQueryable<ProtectionPackage> protectionPackages,
-    IQueryable<Extra> extras
+    ICustomerRepository customerRepository,
+    IBranchRepository brancheRepository,
+    IVehicleRepository vehicleRepository,
+    ICategoryRepository categoryRepository,
+    IProtectionPackageRepository protectionPackageRepository,
+    IExtraRepository extraRepository
     ) : IRequestHandler<ReservationGetQuery, Result<ReservationDto>>
 {
     public async Task<Result<ReservationDto>> Handle(ReservationGetQuery request, CancellationToken cancellationToken)
     {
         var res = await reservationRepository.GetAllWithAudit().MapTo(
-            customers,
-            branches,
-            vehicles,
-            categories,
-            protectionPackages,
-            extras)
+            customerRepository.GetAll(),
+            brancheRepository.GetAll(),
+            vehicleRepository.GetAll(),
+            categoryRepository.GetAll(),
+            protectionPackageRepository.GetAll(),
+            extraRepository.GetAll())
             .Where(i => i.Id == request.Id)
             .FirstOrDefaultAsync(cancellationToken);
 
