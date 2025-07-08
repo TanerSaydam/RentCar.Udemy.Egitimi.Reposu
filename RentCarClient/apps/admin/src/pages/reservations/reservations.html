@@ -1,9 +1,9 @@
 <grid
   pageTitle="Rezervasyonlar"
   endpoint="/rent/odata/reservations?$expand=vehicle"
-  [addOptions]="{url: '/reservation/add', permission: 'reservation:create' }"
-  [editOptions]="{url: '/reservation/edit', permission: 'reservation:edit'}"
-  [detailOptions]="{url: '/reservation/detail', permission: 'reservation:view'}"
+  [addOptions]="{url: '/reservations/add', permission: 'reservation:create' }"
+  [editOptions]="{url: '/reservations/edit', permission: 'reservation:edit'}"
+  [detailOptions]="{url: '/reservations/detail', permission: 'reservation:view'}"
   [deleteOptions]="{url: '/rent/reservations', permission: 'reservation:delete'}"
   [breadcrumbs]="bredcrumbs()"
   captionTitle="Rezervasyon Listesi"

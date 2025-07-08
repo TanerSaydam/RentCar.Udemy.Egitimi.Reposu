@@ -3,11 +3,13 @@ import { BreadcrumbModel, BreadcrumbService } from 'apps/admin/src/services/brea
 import { inject } from '@angular/core';
 import Grid from '../../components/grid/grid';
 import { FlexiGridModule } from 'flexi-grid';
+import { NgxMaskPipe } from 'ngx-mask';
 
 @Component({
     imports: [
         Grid,
-        FlexiGridModule
+        FlexiGridModule,
+        NgxMaskPipe
     ],
   templateUrl: './customers.html',
   encapsulation: ViewEncapsulation.None,

@@ -1,0 +1,745 @@
+<blank
+  [pageTitle]="pageTitle()"
+  [pageIcon]="pageIcon()"
+  [showStatus]="false"
+  [loading]="loading()"
+  [showStatusCheckbox]="false"
+  size="col-md-12">
+    <form #form="ngForm" formValidate class="admin-form" (ngSubmit)="save(form)">
+        <div class="row g-4">
+            <!-- Sol Kolon - Ana Form -->
+            <div class="col-lg-8">
+                <!-- Step 1: Müşteri Seçimi -->
+                <div class="admin-card">
+                    <div class="card-header">
+                        <h6><i class="bi bi-person text-primary me-2"></i>1. Müşteri Bilgileri</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="customer-selection">
+                            <div class="row g-3">
+                                @if(selectedCustomer()){
+                                    <!-- Seçili Müşteri -->
+                                    <ng-container *ngTemplateOutlet="customerCard" />
+                                }@else {
+                                    <div class="mt-2">
+                                        <flexi-grid
+                                        [data]="customersData()"
+                                        [total]="customersTotal()"
+                                        [dataBinding]="true"
+                                        commandColumnWidth="50px"
+                                        language="tr"
+                                        (dataStateChange)="customerDataStateChange($event)"
+                                        >
+                                            <flexi-grid-column field="fullName" title="Ad Soyad"/>
+                                            <flexi-grid-column field="identityNumber" title="TC Kimlik No"/>
+                                            <flexi-grid-column field="phoneNumber" title="Telefon">
+                                                <ng-template flexiGridCellTemplate let-item>
+                                                        <span>+90{{ item.phoneNumber | mask: '(000) 000 00 00' }}</span>
+                                                </ng-template>
+                                            </flexi-grid-column>
+
+                                            <ng-template flexiGridColumnCommandTemplate let-item>
+                                                <flexi-button
+                                                  btnColor="purple"
+                                                  btnSize="small"
+                                                  btnIcon="check"
+                                                  title="Seç"
+                                                  flexiTooltip
+                                                  (click)="selectCustomer(item)"
+                                                   />
+                                            </ng-template>
+                                        </flexi-grid>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="new-customer-toggle d-flex justify-content-end">
+                                            <button class="btn btn-primary" (click)="isCustomerPopupVisible = true">
+                                                <strong>Yeni Müşteri Oluştur</strong>
+                                            </button>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Tarih ve Lokasyon -->
+                <div class="admin-card">
+                    <div class="card-header">
+                        <h6><i class="bi bi-calendar-date text-primary me-2"></i>2. Tarih ve Lokasyon
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Teslim Alma Lokasyonu *</label>
+                                <select class="form-select" required>
+                                    <option value="">Lokasyon seçiniz</option>
+                                    <option value="kayseri-havalimani">Kayseri Havalimanı</option>
+                                    <option value="kayseri-merkez">Kayseri Merkez Ofis</option>
+                                    <option value="ankara-esenboga">Ankara Esenboğa Havalimanı</option>
+                                    <option value="istanbul-sabiha">İstanbul Sabiha Gökçen</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Teslim Etme Lokasyonu *</label>
+                                <select class="form-select" required>
+                                    <option value="">Lokasyon seçiniz</option>
+                                    <option value="kayseri-havalimani">Kayseri Havalimanı</option>
+                                    <option value="kayseri-merkez">Kayseri Merkez Ofis</option>
+                                    <option value="ankara-esenboga">Ankara Esenboğa Havalimanı</option>
+                                    <option value="istanbul-sabiha">İstanbul Sabiha Gökçen</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Teslim Alma Tarihi *</label>
+                                <input type="date" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Teslim Alma Saati *</label>
+                                <input type="time" class="form-control" value="10:00" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Teslim Etme Tarihi *</label>
+                                <input type="date" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Teslim Etme Saati *</label>
+                                <input type="time" class="form-control" value="10:00" required>
+                            </div>
+                        </div>
+
+                        <!-- Kiralama Süresi Göstergesi -->
+                        <div class="rental-duration-display">
+                            <i class="bi bi-clock"></i>
+                            <span class="duration-text">Toplam: <strong>0 gün</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Araç Seçimi -->
+                <div class="admin-card">
+                    <div class="card-header">
+                        <h6><i class="bi bi-car-front text-primary me-2"></i>3. Araç Seçimi</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="vehicle-selection">
+                            <!-- Filtreler -->
+                            <div class="vehicle-filters">
+                                <div class="row g-2 mb-3">
+                                    <div class="col-md-3">
+                                        <select class="form-select form-select-sm">
+                                            <option value="">Tüm Kategoriler</option>
+                                            <option value="ekonomi">Ekonomi</option>
+                                            <option value="kompakt">Kompakt</option>
+                                            <option value="orta">Orta Sınıf</option>
+                                            <option value="lux">Lüks</option>
+                                            <option value="suv">SUV</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select class="form-select form-select-sm">
+                                            <option value="">Yakıt Türü</option>
+                                            <option value="benzin">Benzin</option>
+                                            <option value="dizel">Dizel</option>
+                                            <option value="elektrik">Elektrik</option>
+                                            <option value="hibrit">Hibrit</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select class="form-select form-select-sm">
+                                            <option value="">Şanzıman</option>
+                                            <option value="manuel">Manuel</option>
+                                            <option value="otomatik">Otomatik</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button type="button" class="btn btn-sm btn-primary w-100">
+                                            <i class="bi bi-filter"></i> Filtrele
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Araç Listesi -->
+                            <div class="vehicle-list">
+                                <!-- Araç Kartı 1 -->
+                                <div class="vehicle-card available">
+                                    <input type="radio" name="vehicle" id="vehicle1" class="vehicle-radio">
+                                    <label for="vehicle1" class="vehicle-label">
+                                        <div class="vehicle-image">
+                                            <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?w=300&h=200&fit=crop"
+                                                alt="BMW 320i">
+                                            <span class="availability-badge bg-success">Uygun</span>
+                                        </div>
+                                        <div class="vehicle-info">
+                                            <h6>BMW 320i</h6>
+                                            <p class="vehicle-plate">38 ABC 123</p>
+                                            <div class="vehicle-features">
+                                                <span><i class="bi bi-fuel-pump"></i> Benzin</span>
+                                                <span><i class="bi bi-gear"></i> Otomatik</span>
+                                                <span><i class="bi bi-people"></i> 5 Kişi</span>
+                                            </div>
+                                        </div>
+                                        <div class="vehicle-price">
+                                            <div class="price-per-day">
+                                                <small>Günlük</small>
+                                                <strong>650₺</strong>
+                                            </div>
+                                            <div class="total-price">
+                                                <small>Toplam</small>
+                                                <strong class="text-primary">0₺</strong>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+
+                                <!-- Araç Kartı 2 -->
+                                <div class="vehicle-card available">
+                                    <input type="radio" name="vehicle" id="vehicle2" class="vehicle-radio">
+                                    <label for="vehicle2" class="vehicle-label">
+                                        <div class="vehicle-image">
+                                            <img src="https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=300&h=200&fit=crop"
+                                                alt="Mercedes C180">
+                                            <span class="availability-badge bg-success">Uygun</span>
+                                        </div>
+                                        <div class="vehicle-info">
+                                            <h6>Mercedes C180</h6>
+                                            <p class="vehicle-plate">34 XYZ 456</p>
+                                            <div class="vehicle-features">
+                                                <span><i class="bi bi-fuel-pump"></i> Benzin</span>
+                                                <span><i class="bi bi-gear"></i> Otomatik</span>
+                                                <span><i class="bi bi-people"></i> 5 Kişi</span>
+                                            </div>
+                                        </div>
+                                        <div class="vehicle-price">
+                                            <div class="price-per-day">
+                                                <small>Günlük</small>
+                                                <strong>750₺</strong>
+                                            </div>
+                                            <div class="total-price">
+                                                <small>Toplam</small>
+                                                <strong class="text-primary">0₺</strong>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+
+                                <!-- Araç Kartı 3 -->
+                                <div class="vehicle-card unavailable">
+                                    <input type="radio" name="vehicle" id="vehicle3" class="vehicle-radio" disabled>
+                                    <label for="vehicle3" class="vehicle-label">
+                                        <div class="vehicle-image">
+                                            <img src="https://images.unsplash.com/photo-1619767886558-efdc259cde1a?w=300&h=200&fit=crop"
+                                                alt="Audi A4">
+                                            <span class="availability-badge bg-danger">Kirada</span>
+                                        </div>
+                                        <div class="vehicle-info">
+                                            <h6>Audi A4</h6>
+                                            <p class="vehicle-plate">06 DEF 789</p>
+                                            <div class="vehicle-features">
+                                                <span><i class="bi bi-fuel-pump"></i> Dizel</span>
+                                                <span><i class="bi bi-gear"></i> Otomatik</span>
+                                                <span><i class="bi bi-people"></i> 5 Kişi</span>
+                                            </div>
+                                        </div>
+                                        <div class="vehicle-price">
+                                            <div class="price-per-day">
+                                                <small>Günlük</small>
+                                                <strong>850₺</strong>
+                                            </div>
+                                            <div class="unavailable-date">
+                                                <small class="text-danger">28 Haz'a kadar kirada</small>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Güvence Paketleri -->
+                <div class="admin-card">
+                    <div class="card-header">
+                        <h6><i class="bi bi-shield-check text-primary me-2"></i>4. Güvence Paketleri
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="protection-packages-grid">
+                            <!-- Sınırlı Güvence -->
+                            <div class="protection-package-card">
+                                <input type="radio" name="protectionPackage" id="packageLimited" value="limited"
+                                    checked>
+                                <label for="packageLimited" class="package-label">
+                                    <div class="package-header">
+                                        <h6 class="package-name">Sınırlı Güvence</h6>
+                                        <div class="package-rating">
+                                            <i class="bi bi-star text-warning"></i>
+                                            <i class="bi bi-star text-warning"></i>
+                                            <i class="bi bi-star text-muted"></i>
+                                        </div>
+                                    </div>
+                                    <div class="package-price">
+                                        <div class="price-amount">11.500₺</div>
+                                        <div class="price-label">Muafiyet</div>
+                                    </div>
+                                    <div class="package-features">
+                                        <div class="feature-item not-included">
+                                            <i class="bi bi-x-circle text-danger"></i>
+                                            <span>Lastik Cam Far Güvencesi</span>
+                                        </div>
+                                        <div class="feature-item not-included">
+                                            <i class="bi bi-x-circle text-danger"></i>
+                                            <span>3. Şahıs Sorumluluk</span>
+                                        </div>
+                                        <div class="feature-item not-included">
+                                            <i class="bi bi-x-circle text-danger"></i>
+                                            <span>Mini Hasar Güvencesi</span>
+                                        </div>
+                                        <div class="feature-item not-included">
+                                            <i class="bi bi-x-circle text-danger"></i>
+                                            <span>Anahtar/Plaka Güvencesi</span>
+                                        </div>
+                                    </div>
+                                    <div class="package-footer">
+                                        <div class="daily-price">Dahil</div>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <!-- Minimum Güvence -->
+                            <div class="protection-package-card">
+                                <input type="radio" name="protectionPackage" id="packageMinimum" value="minimum">
+                                <label for="packageMinimum" class="package-label">
+                                    <div class="package-header">
+                                        <h6 class="package-name">Minimum Güvence</h6>
+                                        <div class="package-rating">
+                                            <i class="bi bi-star-fill text-warning"></i>
+                                            <i class="bi bi-star text-warning"></i>
+                                            <i class="bi bi-star text-muted"></i>
+                                        </div>
+                                    </div>
+                                    <div class="package-price">
+                                        <div class="price-amount">11.500₺</div>
+                                        <div class="price-label">Muafiyet</div>
+                                    </div>
+                                    <div class="package-features">
+                                        <div class="feature-item included">
+                                            <i class="bi bi-check-circle text-success"></i>
+                                            <span>3. Şahıs Sorumluluk</span>
+                                        </div>
+                                        <div class="feature-item not-included">
+                                            <i class="bi bi-x-circle text-danger"></i>
+                                            <span>Lastik Cam Far Güvencesi</span>
+                                        </div>
+                                        <div class="feature-item not-included">
+                                            <i class="bi bi-x-circle text-danger"></i>
+                                            <span>Mini Hasar Güvencesi</span>
+                                        </div>
+                                        <div class="feature-item not-included">
+                                            <i class="bi bi-x-circle text-danger"></i>
+                                            <span>Anahtar/Plaka Güvencesi</span>
+                                        </div>
+                                    </div>
+                                    <div class="package-footer">
+                                        <div class="daily-price">+166₺<span>/gün</span></div>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <!-- Gold Güvence -->
+                            <div class="protection-package-card recommended">
+                                <div class="recommended-badge">Önerilen</div>
+                                <input type="radio" name="protectionPackage" id="packageGold" value="gold">
+                                <label for="packageGold" class="package-label">
+                                    <div class="package-header">
+                                        <h6 class="package-name">Gold Güvence</h6>
+                                        <div class="package-rating">
+                                            <i class="bi bi-star-fill text-warning"></i>
+                                            <i class="bi bi-star-fill text-warning"></i>
+                                            <i class="bi bi-star-fill text-warning"></i>
+                                        </div>
+                                    </div>
+                                    <div class="package-price">
+                                        <div class="price-label text-success">Muafiyetsiz</div>
+                                    </div>
+                                    <div class="package-features">
+                                        <div class="feature-item included">
+                                            <i class="bi bi-check-circle text-success"></i>
+                                            <span>Lastik Cam Far Güvencesi</span>
+                                        </div>
+                                        <div class="feature-item included">
+                                            <i class="bi bi-check-circle text-success"></i>
+                                            <span>3. Şahıs Sorumluluk</span>
+                                        </div>
+                                        <div class="feature-item included">
+                                            <i class="bi bi-check-circle text-success"></i>
+                                            <span>Mini Hasar Güvencesi</span>
+                                        </div>
+                                        <div class="feature-item not-included">
+                                            <i class="bi bi-x-circle text-danger"></i>
+                                            <span>Anahtar/Plaka Güvencesi</span>
+                                        </div>
+                                    </div>
+                                    <div class="package-footer">
+                                        <div class="daily-price">+472₺<span>/gün</span></div>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <!-- Full Güvence -->
+                            <div class="protection-package-card">
+                                <input type="radio" name="protectionPackage" id="packageFull" value="full">
+                                <label for="packageFull" class="package-label">
+                                    <div class="package-header">
+                                        <h6 class="package-name">Full Güvence</h6>
+                                        <div class="package-rating">
+                                            <i class="bi bi-star-fill text-warning"></i>
+                                            <i class="bi bi-star-fill text-warning"></i>
+                                            <i class="bi bi-star-fill text-warning"></i>
+                                        </div>
+                                    </div>
+                                    <div class="package-price">
+                                        <div class="price-label text-success">Muafiyetsiz</div>
+                                    </div>
+                                    <div class="package-features">
+                                        <div class="feature-item included">
+                                            <i class="bi bi-check-circle text-success"></i>
+                                            <span>Lastik Cam Far Güvencesi</span>
+                                        </div>
+                                        <div class="feature-item included">
+                                            <i class="bi bi-check-circle text-success"></i>
+                                            <span>3. Şahıs Sorumluluk</span>
+                                        </div>
+                                        <div class="feature-item included">
+                                            <i class="bi bi-check-circle text-success"></i>
+                                            <span>Mini Hasar Güvencesi</span>
+                                        </div>
+                                        <div class="feature-item included">
+                                            <i class="bi bi-check-circle text-success"></i>
+                                            <span>Anahtar/Plaka Güvencesi</span>
+                                        </div>
+                                    </div>
+                                    <div class="package-footer">
+                                        <div class="daily-price">+680₺<span>/gün</span></div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Güvence Paketi Açıklaması -->
+                        <div class="protection-info mt-4">
+                            <div class="alert alert-info">
+                                <i class="bi bi-info-circle me-2"></i>
+                                <strong>Not:</strong> Seçilen güvence paketi günlük kiralama ücretine
+                                eklenir.
+                                Muafiyetsiz paketlerde hasar durumunda ödeme yapmanız gerekmez.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 5: Ek Seçenekler -->
+                <div class="admin-card">
+                    <div class="card-header">
+                        <h6><i class="bi bi-plus-circle text-primary me-2"></i>5. Ek Seçenekler</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <!-- Ek Ekipmanlar -->
+                            <div class="col-12">
+                                <h6 class="mb-3">Ek Ekipmanlar</h6>
+                                <div class="extras-grid">
+                                    <div class="extra-item">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="gps">
+                                            <label class="form-check-label" for="gps">
+                                                <i class="bi bi-geo-alt text-primary"></i>
+                                                <span class="extra-name">GPS Navigasyon</span>
+                                                <span class="extra-price">+15₺/gün</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="extra-item">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="babySeat">
+                                            <label class="form-check-label" for="babySeat">
+                                                <i class="bi bi-person-badge text-primary"></i>
+                                                <span class="extra-name">Bebek Koltuğu</span>
+                                                <span class="extra-price">+20₺/gün</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="extra-item">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="additionalDriver">
+                                            <label class="form-check-label" for="additionalDriver">
+                                                <i class="bi bi-person-plus text-primary"></i>
+                                                <span class="extra-name">Ek Sürücü</span>
+                                                <span class="extra-price">+25₺/gün</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="extra-item">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="insurance">
+                                            <label class="form-check-label" for="insurance">
+                                                <i class="bi bi-shield-check text-primary"></i>
+                                                <span class="extra-name">Tam Kasko</span>
+                                                <span class="extra-price">+50₺/gün</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Özel İstekler -->
+                            <div class="col-12">
+                                <label class="form-label">Özel İstekler / Notlar</label>
+                                <textarea class="form-control" rows="3"
+                                    placeholder="Müşterinin özel istekleri veya rezervasyon notları..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 5: Ödeme Bilgileri -->
+                <div class="admin-card">
+                    <div class="card-header">
+                        <h6><i class="bi bi-credit-card text-primary me-2"></i>5. Ödeme Bilgileri</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Ödeme Yöntemi *</label>
+                                <select class="form-select" required>
+                                    <option value="">Seçiniz</option>
+                                    <option value="credit-card">Kredi Kartı</option>
+                                    <option value="cash">Nakit</option>
+                                    <option value="bank-transfer">Banka Havalesi</option>
+                                    <option value="corporate">Kurumsal Fatura</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Depozit Tutarı *</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" value="2000" required>
+                                    <span class="input-group-text">₺</span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="payment-options">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="depositPaid">
+                                        <label class="form-check-label" for="depositPaid">
+                                            Depozit alındı
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="fullPayment">
+                                        <label class="form-check-label" for="fullPayment">
+                                            Tam ödeme alındı
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sağ Kolon - Özet ve İşlemler -->
+            <div class="col-lg-4">
+                <!-- Rezervasyon Özeti -->
+                <div class="admin-card sticky-top">
+                    <div class="card-header">
+                        <h6><i class="bi bi-receipt text-primary me-2"></i>Rezervasyon Özeti</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="reservation-summary">
+                            <!-- Müşteri Özeti -->
+                            <div class="summary-section">
+                                <h6 class="summary-title">Müşteri</h6>
+                                <div class="summary-content" id="customerSummary">
+                                    @if(selectedCustomer()){
+                                        <ng-container *ngTemplateOutlet="customerCard" />
+                                    }@else {
+                                        <p class="text-muted">Müşteri seçilmedi</p>
+                                    }
+                                </div>
+                            </div>
+
+                            <!-- Tarih Özeti -->
+                            <div class="summary-section">
+                                <h6 class="summary-title">Tarih & Lokasyon</h6>
+                                <div class="summary-content" id="dateSummary">
+                                    <p class="text-muted">Tarih seçilmedi</p>
+                                </div>
+                            </div>
+
+                            <!-- Araç Özeti -->
+                            <div class="summary-section">
+                                <h6 class="summary-title">Araç</h6>
+                                <div class="summary-content" id="vehicleSummary">
+                                    <p class="text-muted">Araç seçilmedi</p>
+                                </div>
+                            </div>
+
+                            <!-- Fiyat Özeti -->
+                            <div class="summary-section">
+                                <h6 class="summary-title">Fiyat Detayı</h6>
+                                <div class="price-summary">
+                                    <div class="price-line">
+                                        <span>Araç Ücreti</span>
+                                        <span id="vehiclePrice">0₺</span>
+                                    </div>
+                                    <div class="price-line">
+                                        <span>Ek Hizmetler</span>
+                                        <span id="extrasPrice">0₺</span>
+                                    </div>
+                                    <div class="price-line discount">
+                                        <span>İndirimler</span>
+                                        <span id="discountPrice">0₺</span>
+                                    </div>
+                                    <hr>
+                                    <div class="price-line total">
+                                        <span>Toplam</span>
+                                        <span id="totalPrice">0₺</span>
+                                    </div>
+                                    <div class="price-line">
+                                        <span>KDV (%20)</span>
+                                        <span id="taxPrice">0₺</span>
+                                    </div>
+                                    <hr>
+                                    <div class="price-line grand-total">
+                                        <span>Genel Toplam</span>
+                                        <span id="grandTotal">0₺</span>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary w-100 mb-2">
+                                        <i class="bi bi-check-circle me-2"></i>Rezervasyon Oluştur
+                                    </button>
+                                    <button type="button" class="btn btn-success w-100 mb-2">
+                                        <i class="bi bi-check-all me-2"></i>Oluştur ve Onayla
+                                    </button>
+                                    <button type="button" class="btn btn-outline-secondary w-100">
+                                        <i class="bi bi-save me-2"></i>Taslak Olarak Kaydet
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hızlı Ayarlar -->
+                <div class="admin-card">
+                    <div class="card-header">
+                        <h6><i class="bi bi-gear text-primary me-2"></i>Hızlı Ayarlar</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="quick-settings">
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="sendEmail" checked>
+                                <label class="form-check-label" for="sendEmail">
+                                    Müşteriye e-posta gönder
+                                </label>
+                            </div>
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="sendSms" checked>
+                                <label class="form-check-label" for="sendSms">
+                                    SMS bildirimi gönder
+                                </label>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="printContract">
+                                <label class="form-check-label" for="printContract">
+                                    Sözleşmeyi yazdır
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group mt-2 d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary">
+                <i class="bi" [ngClass]="pageIcon()"></i>
+                {{btnName()}}
+            </button>
+        </div>
+    </form>
+</blank>
+
+<flexi-popup
+[(isPopupVisible)]="isCustomerPopupVisible"
+[loading]="isCustomerPopupLoading()"
+[showActionButtons]="false"
+height="550px"
+popupTitle="Müşteri Ekle"
+>
+<form #customerForm="ngForm" formValidate class="admin-form" (ngSubmit)="saveCustomer(customerForm)">
+    <div>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Ad *</label>
+          <input type="text" class="form-control" [(ngModel)]="customerPopupData().firstName" name="customerFirstName" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Soyad *</label>
+          <input type="text" class="form-control" [(ngModel)]="customerPopupData().lastName" name="customerLastName" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">TC Kimlik No *</label>
+          <input type="text" class="form-control" [(ngModel)]="customerPopupData().identityNumber" name="customerIdentityNumber" required maxlength="11" minlength="11">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Doğum Tarihi *</label>
+          <input type="date" class="form-control" [(ngModel)]="customerPopupData().dateOfBirth" name="customerDateOfBirth" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Telefon *</label>
+          <input type="text" class="form-control" [(ngModel)]="customerPopupData().phoneNumber" name="customerPhoneNumber" required prefix="+90" mask="(000) 000 00 00">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">E-posta *</label>
+          <input type="email" class="form-control" [(ngModel)]="customerPopupData().email" name="customerEmail" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Ehliyet Veriliş Tarihi *</label>
+          <input type="date" class="form-control" [(ngModel)]="customerPopupData().drivingLicenseIssuanceDate" name="customerDrivingLicenseIssuanceDate" required>
+        </div>
+        <div class="col-md-12">
+          <label class="form-label">Adres *</label>
+          <textarea class="form-control" [(ngModel)]="customerPopupData().fullAddress" name="customerFullAddress" required></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="mt-4 text-end">
+      <button type="submit" class="btn btn-primary">
+        <i class="bi bi-check-circle me-2"></i>{{btnName()}}
+      </button>
+    </div>
+  </form>
+</flexi-popup>
+
+<ng-template #customerCard>
+    <div class="col-12 mt-3" id="selectedCustomer">
+        <div class="selected-customer-card">
+            <div class="customer-avatar">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBRW6kw4PvewS5EGHKY7nNsJiWvrbsVIzZA&s"
+                    alt="Müşteri">
+            </div>
+            <div class="customer-details">
+                <h6>{{this.selectedCustomer()!.fullName}}</h6>
+                <p class="mb-0">📱 +90{{this.selectedCustomer()!.phoneNumber | mask: '(000) 000 00 00'}}</p>
+                <p class="mb-0">✉️ {{this.selectedCustomer()!.email}}</p>
+            </div>
+            <button type="button" class="btn btn-sm btn-outline-danger ms-auto" (click)="clearCustomer()">
+                <i class="bi bi-x-circle"></i>
+            </button>
+        </div>
+    </div>
+</ng-template>
