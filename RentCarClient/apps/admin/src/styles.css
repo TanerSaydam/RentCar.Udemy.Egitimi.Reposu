@@ -6760,7 +6760,7 @@ body {
     animation: fadeInPhoto 0.5s ease-out;
 }
 
-a{
+a {
     cursor: pointer;
 }
 
@@ -6825,10 +6825,14 @@ a{
 }
 
 @keyframes blink {
-    0%, 80%, 100% {
+
+    0%,
+    80%,
+    100% {
         opacity: 0.3;
         transform: scale(1);
     }
+
     40% {
         opacity: 1;
         transform: scale(1.2);
@@ -6841,18 +6845,18 @@ a{
     border-color: var(--primary-color) !important;
 }
 
-.record-info-details{
+.record-info-details {
     display: flex;
     flex-direction: column;
-    gap:5px;
+    gap: 5px;
     font-size: 13px;
 }
 
-.flexi-treeview-caption h2{
+.flexi-treeview-caption h2 {
     font-size: 25px;
 }
 
-.flexi-select-div{
+.flexi-select-div {
     font-size: 15px !important;
 }
 
@@ -6904,4 +6908,12 @@ a{
 .price-tag .currency {
     font-size: 0.8rem;
     opacity: 0.9;
+}
+
+.vehicle-image {
+    width: 150px;
+    height: 90px;
+    object-fit: cover;
+    margin-right: 8px;
+    border-radius: 4px;
 }

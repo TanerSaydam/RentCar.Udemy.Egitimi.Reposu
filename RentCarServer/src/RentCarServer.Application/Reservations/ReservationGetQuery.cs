@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RentCarServer.Application.Behaviors;
 using RentCarServer.Domain.Branches;
 using RentCarServer.Domain.Categories;
 using RentCarServer.Domain.Customers;
@@ -10,6 +11,7 @@ using TS.MediatR;
 using TS.Result;
 
 namespace RentCarServer.Application.Reservations;
+[Permission("reservation:view")]
 public sealed record ReservationGetQuery(
     Guid Id) : IRequest<Result<ReservationDto>>;
 
