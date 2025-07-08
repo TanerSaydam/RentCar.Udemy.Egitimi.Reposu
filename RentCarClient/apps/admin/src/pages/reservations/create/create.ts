@@ -9,7 +9,7 @@ import { CategoryModel } from 'apps/admin/src/models/category.model';
 import { CustomerModel, initialCustomerModel } from 'apps/admin/src/models/customer.model';
 import { ODataModel } from 'apps/admin/src/models/odata.model';
 import { initialReservation, ReservationModel } from 'apps/admin/src/models/reservation.model';
-import { VehicleModel } from 'apps/admin/src/models/vehicle.model';
+import { initialVehicleModel, VehicleModel } from 'apps/admin/src/models/vehicle.model';
 import { BreadcrumbModel, BreadcrumbService } from 'apps/admin/src/services/breadcrumb';
 import { Common } from 'apps/admin/src/services/common';
 import { HttpService } from 'apps/admin/src/services/http';
@@ -80,7 +80,32 @@ export default class Create {
         fullName: customer.fullName,
         fullAddress: customer.fullAddress,
         phoneNumber: customer.phoneNumber,
-        email: customer.email })
+        email: customer.email });
+
+        const vehicle = res.data!.vehicle;
+        this.selectedVehicle.set({
+          ...initialVehicleModel,
+          id: vehicle.id,
+          brand: vehicle.brand,
+          model: vehicle.model,
+          modelYear: vehicle.modelYear,
+          color: vehicle.color,
+          categoryName: vehicle.categoryName,
+          fuelConsumption: vehicle.fuelConsumption,
+          seatCount: vehicle.seatCount,
+          tractionType: vehicle.tractionType,
+          kilometer: vehicle.kilometer,
+          imageUrl: vehicle.imageUrl,
+          dailyPrice: res.data!.vehicleDailyPrice,
+        });
+
+        this.vehicles.set([{...this.selectedVehicle()!}]);
+
+        let totalExtra = 0;
+        res.data!.reservationExtras.forEach(val => {
+          totalExtra += (val.price * res.data!.totalDay)
+        });
+        this.totalExtra.set(totalExtra);
       return res.data;
     }
   });
@@ -176,28 +201,28 @@ export default class Create {
     if (!form.valid) return;
 
     if(!this.data().protectionPackageId){
-      this.#toast.showToast("Uyarı","Güvence paketi seçmelisiniz","warning");
+      this.#toast.showToast("Uyarı","Güvence paketi seçmelisiniz","error");
       return;
     }
 
-    const cartInformation = {...this.data().creditCartInformation};
-    cartInformation.ccv = cartInformation.ccv.toString();
-    this.data.update(prev => ({
-      ...prev,
-      creditCartInformation: {...cartInformation}
-    }));
-
     this.loading.set(true);
     if (!this.id()) {
+      const cartInformation = {...this.data().creditCartInformation};
+      cartInformation.ccv = cartInformation.ccv.toString();
+      this.data.update(prev => ({
+        ...prev,
+        creditCartInformation: {...cartInformation}
+      }));
+
       this.#http.post<string>('/rent/reservations', this.data(), res => {
         this.#toast.showToast("Başarılı", res, "success");
-        this.#router.navigateByUrl("/reservation");
+        this.#router.navigateByUrl("/reservations");
         this.loading.set(false);
       }, () => this.loading.set(false));
     } else {
       this.#http.put<string>('/rent/reservations', this.data(), res => {
         this.#toast.showToast("Başarılı", res, "info");
-        this.#router.navigateByUrl("/reservation");
+        this.#router.navigateByUrl("/reservations");
         this.loading.set(false);
       }, () => this.loading.set(false));
     }

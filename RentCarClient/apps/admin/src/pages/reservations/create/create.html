@@ -105,7 +105,7 @@
                                   name="pickUpTime"
                                   required>
                                     @for(time of timeData(); track time){
-                                        <option>{{time}}</option>
+                                        <option [value]="time + ':00'">{{time}}</option>
                                     }
                                 </select>
                             </div>
@@ -128,7 +128,7 @@
                                   name="deliveryTime"
                                   required>
                                     @for(time of timeData(); track time){
-                                        <option>{{time}}</option>
+                                        <option [value]="time + ':00'">{{time}}</option>
                                     }
                                 </select>
                             </div>
@@ -300,58 +300,60 @@
                     </div>
                 </div>
 
-                <!-- Step 5: Ödeme Bilgileri -->
-                <div class="admin-card">
-                    <div class="card-header">
-                        <h6><i class="bi bi-credit-card text-primary me-2"></i>5. Ödeme Bilgileri</h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="row g-3">
-                             <div class="col-md-12">
-                                <label class="form-label">Kart Sahibi *</label>
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  name="owner"
-                                  [(ngModel)]="data().creditCartInformation.owner"
-                                  required>
-                            </div>
-                            <div class="col-md-12">
-                                <label class="form-label">Kart Numarası *</label>
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  mask="0000 0000 0000 0000"
-                                  placeholder="4444 4444 4444 444"
-                                  name="cartNumber"
-                                  [(ngModel)]="data().creditCartInformation.cartNumber"
-                                  required>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Son Kullanma Tarihi *</label>
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  placeholder="10/20"
-                                  name="expiry"
-                                  [(ngModel)]="data().creditCartInformation.expiry"
-                                  required>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">CCV *</label>
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  placeholder="333"
-                                  maxlength="3"
-                                  minlength="3"
-                                  name="ccv"
-                                  [(ngModel)]="data().creditCartInformation.ccv"
-                                  required>
+                @if(!id()){
+                    <!-- Step 5: Ödeme Bilgileri -->
+                    <div class="admin-card">
+                        <div class="card-header">
+                            <h6><i class="bi bi-credit-card text-primary me-2"></i>5. Ödeme Bilgileri</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-3">
+                                 <div class="col-md-12">
+                                    <label class="form-label">Kart Sahibi *</label>
+                                    <input
+                                      type="text"
+                                      class="form-control"
+                                      name="owner"
+                                      [(ngModel)]="data().creditCartInformation.owner"
+                                      required>
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="form-label">Kart Numarası *</label>
+                                    <input
+                                      type="text"
+                                      class="form-control"
+                                      mask="0000 0000 0000 0000"
+                                      placeholder="4444 4444 4444 444"
+                                      name="cartNumber"
+                                      [(ngModel)]="data().creditCartInformation.cartNumber"
+                                      required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Son Kullanma Tarihi *</label>
+                                    <input
+                                      type="text"
+                                      class="form-control"
+                                      placeholder="10/20"
+                                      name="expiry"
+                                      [(ngModel)]="data().creditCartInformation.expiry"
+                                      required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">CCV *</label>
+                                    <input
+                                      type="text"
+                                      class="form-control"
+                                      placeholder="333"
+                                      maxlength="3"
+                                      minlength="3"
+                                      name="ccv"
+                                      [(ngModel)]="data().creditCartInformation.ccv"
+                                      required>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                }
             </div>
 
             <!-- Sağ Kolon - Özet ve İşlemler -->
