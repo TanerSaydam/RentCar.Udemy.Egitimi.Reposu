@@ -158,81 +158,40 @@
                             <!-- Filtreler -->
                             <div class="vehicle-filters">
                                 <div class="row g-2 mb-3">
-                                    <div class="col-md-3">
-                                        <select class="form-select form-select-sm">
+                                    <div class="col-md-4">
+                                        <select class="form-select form-select-sm" [(ngModel)]="vehicleFilter().categoryName" [ngModelOptions]="{standalone:true}">
                                             <option value="">Tüm Kategoriler</option>
-                                            <option value="ekonomi">Ekonomi</option>
-                                            <option value="kompakt">Kompakt</option>
-                                            <option value="orta">Orta Sınıf</option>
-                                            <option value="lux">Lüks</option>
-                                            <option value="suv">SUV</option>
+                                            @for(category of categoriesData(); track category.id){
+                                                <option>{{category.name}}</option>
+                                            }
                                         </select>
                                     </div>
-                                    <div class="col-md-3">
-                                        <select class="form-select form-select-sm">
+                                    <div class="col-md-4">
+                                        <select class="form-select form-select-sm" [(ngModel)]="vehicleFilter().fuelType" [ngModelOptions]="{standalone:true}">
                                             <option value="">Yakıt Türü</option>
-                                            <option value="benzin">Benzin</option>
-                                            <option value="dizel">Dizel</option>
-                                            <option value="elektrik">Elektrik</option>
-                                            <option value="hibrit">Hibrit</option>
+                                            @for(val of fuelTypeList(); track val){
+                                                <option>{{val}}</option>
+                                            }
                                         </select>
                                     </div>
-                                    <div class="col-md-3">
-                                        <select class="form-select form-select-sm">
+                                    <div class="col-md-4">
+                                        <select class="form-select form-select-sm" [(ngModel)]="vehicleFilter().transmission" [ngModelOptions]="{standalone:true}">
                                             <option value="">Şanzıman</option>
-                                            <option value="manuel">Manuel</option>
-                                            <option value="otomatik">Otomatik</option>
+                                            @for(val of transmissionList(); track val){
+                                                <option>{{val}}</option>
+                                            }
                                         </select>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <button type="button" class="btn btn-sm btn-primary w-100">
-                                            <i class="bi bi-filter"></i> Filtrele
-                                        </button>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Araç Listesi -->
                             <div class="vehicle-list">
-                                @for(vehicle of vehicles(); track vehicle.id){
-                                    <div class="vehicle-card available">
-                                        <input type="radio" name="vehicle" id="vehicle1" class="vehicle-radio">
-                                        <label for="vehicle1" class="vehicle-label">
-                                            <div class="vehicle-image">
-                                                <img [src]="getVehicleImage(vehicle)" [alt]="vehicle.model">
-                                                <span class="availability-badge bg-success">Uygun</span>
-                                            </div>
-                                            <div class="vehicle-info">
-                                                <h6>{{vehicle.model}}</h6>
-                                                <p class="vehicle-plate">{{vehicle.plate}}</p>
-                                                <div class="vehicle-features">
-                                                    <span>
-                                                        <i class="bi bi-fuel-pump"></i>
-                                                        {{vehicle.fuelType}}
-                                                    </span>
-                                                    <span>
-                                                        <i class="bi bi-gear"></i>
-                                                        {{vehicle.transmission}}
-                                                    </span>
-                                                    <span>
-                                                        <i class="bi bi-people"></i>
-                                                        {{vehicle.seatCount}} Kişi
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="vehicle-price">
-                                                <div class="price-per-day">
-                                                    <small>Günlük</small>
-                                                    <strong>{{vehicle.dailyPrice | trCurrency:'₺'}}</strong>
-                                                </div>
-                                                <div class="total-price">
-                                                    <small>Toplam</small>
-                                                    <strong class="text-primary">
-                                                        {{(data().totalDay * vehicle.dailyPrice) | trCurrency:'₺'}}
-                                                    </strong>
-                                                </div>
-                                            </div>
-                                        </label>
+                                @for(vehicle of vehicles()
+                                | vehicle: vehicleFilter().categoryName: vehicleFilter().fuelType: vehicleFilter().transmission;
+                                track vehicle.id){
+                                    <div (click)="selectVehicle(vehicle)">
+                                        <ng-container *ngTemplateOutlet="vehicleCard; context: { item: vehicle, class: '', active: 'show' }"  />
                                     </div>
                                 }
                             </div>
@@ -580,7 +539,11 @@
                             <div class="summary-section">
                                 <h6 class="summary-title">Araç</h6>
                                 <div class="summary-content" id="vehicleSummary">
-                                    <p class="text-muted">Araç seçilmedi</p>
+                                    @if(!selectedVehicle()){
+                                        <p class="text-muted">Araç seçilmedi</p>
+                                    }@else {
+                                        <ng-container *ngTemplateOutlet="vehicleCard; context: { item: selectedVehicle(), class: 'd-flex flex-column' }"  />
+                                    }
                                 </div>
                             </div>
 
@@ -590,7 +553,7 @@
                                 <div class="price-summary">
                                     <div class="price-line">
                                         <span>Araç Ücreti</span>
-                                        <span id="vehiclePrice">0₺</span>
+                                        <span id="vehiclePrice">{{(data().vehicleDailyPrice * data().totalDay) | trCurrency:'₺'}}</span>
                                     </div>
                                     <div class="price-line">
                                         <span>Ek Hizmetler</span>
@@ -603,16 +566,16 @@
                                     <hr>
                                     <div class="price-line total">
                                         <span>Toplam</span>
-                                        <span id="totalPrice">0₺</span>
+                                        <span id="totalPrice">{{data().total | trCurrency: '₺'}}</span>
                                     </div>
                                     <div class="price-line">
                                         <span>KDV (%20)</span>
-                                        <span id="taxPrice">0₺</span>
+                                        <span id="taxPrice">Dahil</span>
                                     </div>
                                     <hr>
                                     <div class="price-line grand-total">
                                         <span>Genel Toplam</span>
-                                        <span id="grandTotal">0₺</span>
+                                        <span id="grandTotal">{{data().total | trCurrency: '₺'}}</span>
                                     </div>
                                 </div>
                                 <div class="form-actions">
@@ -737,6 +700,50 @@ popupTitle="Müşteri Ekle"
             <button type="button" class="btn btn-sm btn-outline-danger ms-auto" (click)="clearCustomer()">
                 <i class="bi bi-x-circle"></i>
             </button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #vehicleCard let-item="item" let-class="class" let-active="active">
+    <div class="vehicle-card available" [ngClass]="active ? (selectedVehicle()?.id === item.id ? 'vehicle-selected' : ''): ''">
+        <input type="radio" name="vehicle" id="vehicle1{{item.id}}" class="vehicle-radio">
+        <label for="vehicle1" class="vehicle-label" [ngClass]="class">
+            <div class="vehicle-image">
+                <img [src]="getVehicleImage(item)" [alt]="item.model">
+                <span class="availability-badge bg-success">Uygun</span>
+            </div>
+            <div class="vehicle-info" [ngClass]="class">
+                <h6>{{item.model}}</h6>
+                <p class="vehicle-plate">{{item.plate}}</p>
+                <div class="vehicle-features">
+                    <span>
+                        <i class="bi bi-fuel-pump"></i>
+                        {{item.fuelType}}
+                    </span>
+                    <span>
+                        <i class="bi bi-gear"></i>
+                        {{item.transmission}}
+                    </span>
+                    <span>
+                        <i class="bi bi-people"></i>
+                        {{item.seatCount}} Kişi
+                    </span>
+                </div>
+            </div>
+        </label>
+        <div class="d-flex w-100 ps-2 pe-2">
+            <div class="vehicle-price w-100 d-flex justify-content-between align-items-end">
+                <div class="price-per-day">
+                    <small>Günlük</small>
+                    <strong>{{item.dailyPrice | trCurrency:'₺'}}</strong>
+                </div>
+                <div class="total-price">
+                    <small>Toplam</small>
+                    <strong class="text-primary">
+                        {{(data().totalDay * item.dailyPrice) | trCurrency:'₺'}}
+                    </strong>
+                </div>
+            </div>
         </div>
     </div>
 </ng-template>

@@ -4157,6 +4157,11 @@ body {
     border-color: #1976d2;
 }
 
+.vehicle-selected {
+    background: #e3f2fd;
+    border-color: #1976d2;
+}
+
 .vehicle-card.available .vehicle-radio:checked+.vehicle-label {
     box-shadow: inset 0 0 0 2px #1976d2;
 }
