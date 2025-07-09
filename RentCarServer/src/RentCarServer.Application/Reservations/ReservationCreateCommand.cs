@@ -10,6 +10,7 @@ using RentCarServer.Domain.Reservations;
 using RentCarServer.Domain.Reservations.ValueObjects;
 using RentCarServer.Domain.Shared;
 using RentCarServer.Domain.Vehicles;
+using RentCarServer.Domain.Vehicles.ValueObjects;
 using TS.MediatR;
 using TS.Result;
 
@@ -155,6 +156,50 @@ internal sealed class ReservationCreateCommandHandler(
         TotalDay totalDay = new(request.TotalDay);
         ReservationHistory history = new("Rezervayon Oluşturuldu", "Online olarak rezervasyon oluşturuldu", DateTimeOffset.Now);
 
+        Form? pickUpForm = await reservationRepository
+            .Where(p => p.VehicleId == vehicleId)
+            .OrderByDescending(p => p.CreatedAt)
+            .Select(s => s.PickUpForm)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        Form deliveryForm;
+
+        if (pickUpForm is null)
+        {
+            var kilometer = await vehicleRepository
+                .Where(p => p.Id == request.VehicleId)
+                .Select(s => s.Kilometer)
+                .FirstAsync(cancellationToken);
+            List<Supplies> supplies = new();
+            List<Damage> damages = new();
+            List<ImageUrl> imageUrls = new();
+            Note formNote = new(string.Empty);
+            pickUpForm = new(
+                kilometer,
+                supplies,
+                imageUrls,
+                damages,
+                formNote);
+        }
+        else
+        {
+            if (pickUpForm.Kilometer.Value == 0)
+            {
+                var kilometer = await vehicleRepository
+                    .Where(p => p.Id == request.VehicleId)
+                    .Select(s => s.Kilometer)
+                    .FirstAsync(cancellationToken);
+                pickUpForm.SetKilometer(kilometer);
+            }
+        }
+
+        deliveryForm = new(
+            pickUpForm.Kilometer,
+            pickUpForm.Supplies.ToList(),
+            pickUpForm.ImageUrls.ToList(),
+            pickUpForm.Damages.ToList(),
+            pickUpForm.Note);
+
         Reservation reservation = Reservation.Create(
             customerId,
             pickUpLocationId,
@@ -172,7 +217,9 @@ internal sealed class ReservationCreateCommandHandler(
             status,
             total,
             totalDay,
-            history
+            history,
+            pickUpForm,
+            deliveryForm
         );
 
         ReservationHistory history2 = new("Ödeme Alındı", "Reservasyonun ödemesi başarıyla alındı", DateTimeOffset.Now);

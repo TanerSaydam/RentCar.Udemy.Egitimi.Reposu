@@ -22,4 +22,8 @@
     <ProjectReference Include="..\RentCarServer.Infrastructure\RentCarServer.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\forms\" />
+  </ItemGroup>
+
 </Project>

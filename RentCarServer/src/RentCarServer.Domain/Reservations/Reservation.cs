@@ -1,6 +1,7 @@
 ﻿using RentCarServer.Domain.Abstractions;
 using RentCarServer.Domain.Reservations.ValueObjects;
 using RentCarServer.Domain.Shared;
+using RentCarServer.Domain.Vehicles.ValueObjects;
 
 namespace RentCarServer.Domain.Reservations;
 public sealed class Reservation : Entity, IAggregate
@@ -25,7 +26,9 @@ public sealed class Reservation : Entity, IAggregate
         Status status,
         Total total,
         TotalDay totalDay,
-        ReservationHistory history)
+        ReservationHistory history,
+        Form pickUpForm,
+        Form deliveryForm)
     {
         SetCustomerId(customerId);
         SetPickUpLocationId(pickUpLocationId);
@@ -40,13 +43,15 @@ public sealed class Reservation : Entity, IAggregate
         SetReservationExtras(reservationExtras);
         SetNote(note);
         SetPaymentInformation(paymentInformation);
-        SetStatus(status);
+        SetReservationStatus(status);
         SetTotalDay(totalDay);
         SetTotal(total);
         SetPickupDateTime();
         SetDeliveryDateTime();
         SetReservationNumber();
         SetHistory(history);
+        SetPickUpForm(pickUpForm);
+        SetDeliveryForm(deliveryForm);
     }
     public ReservationNumber ReservationNumber { get; private set; } = default!;
     public IdentityId CustomerId { get; private set; } = default!;
@@ -68,6 +73,8 @@ public sealed class Reservation : Entity, IAggregate
     public Status Status { get; private set; } = default!;
     public Total Total { get; private set; } = default!;
     public IReadOnlyCollection<ReservationHistory> Histories => _histories;
+    public Form PickUpForm { get; private set; } = default!;
+    public Form DeliveryForm { get; private set; } = default!;
 
     public static Reservation Create(
         IdentityId customerId,
@@ -86,7 +93,9 @@ public sealed class Reservation : Entity, IAggregate
         Status status,
         Total total,
         TotalDay totalDay,
-        ReservationHistory history)
+        ReservationHistory history,
+        Form pickUpForm,
+        Form deliveryForm)
     {
         var reservation = new Reservation(
             customerId,
@@ -105,7 +114,9 @@ public sealed class Reservation : Entity, IAggregate
             status,
             total,
             totalDay,
-            history
+            history,
+            pickUpForm,
+            deliveryForm
         );
 
         return reservation;
@@ -182,7 +193,7 @@ public sealed class Reservation : Entity, IAggregate
         PaymentInformation = paymentInformation;
     }
 
-    public void SetStatus(Status status)
+    public void SetReservationStatus(Status status)
     {
         Status = status;
     }
@@ -217,5 +228,79 @@ public sealed class Reservation : Entity, IAggregate
     {
         _histories.Add(history);
     }
+
+    public void SetPickUpForm(Form pickUpForm)
+    {
+        PickUpForm = pickUpForm;
+    }
+
+    public void SetDeliveryForm(Form deliveryForm)
+    {
+        DeliveryForm = deliveryForm;
+    }
     #endregion
 }
+
+public sealed record Form
+{
+    private readonly List<Supplies> _supplies = new();
+    private readonly List<ImageUrl> _imageUrls = new();
+    private readonly List<Damage> _damages = new();
+    private Form() { }
+    public Form(
+        Kilometer kilometer,
+        List<Supplies> supplies,
+        List<ImageUrl> imageUrls,
+        List<Damage> damages,
+        Note note
+        )
+    {
+        SetKilometer(kilometer);
+        SetSupplies(supplies);
+        SetImageUrls(imageUrls);
+        SetDamages(damages);
+        SetNote(note);
+    }
+
+    public Kilometer Kilometer { get; private set; } = default!;
+    public IReadOnlyCollection<Supplies> Supplies => _supplies;
+    public IReadOnlyCollection<ImageUrl> ImageUrls => _imageUrls;
+    public IReadOnlyCollection<Damage> Damages => _damages;
+    public Note Note { get; private set; } = default!;
+
+    #region Behaviors
+    public void SetKilometer(Kilometer kilometer)
+    {
+        Kilometer = kilometer;
+    }
+
+    public void SetSupplies(List<Supplies> vehicleSupplies)
+    {
+        _supplies.Clear();
+        _supplies.AddRange(vehicleSupplies);
+    }
+
+    public void SetImageUrls(List<ImageUrl> imageUrls)
+    {
+        _imageUrls.Clear();
+        _imageUrls.AddRange(imageUrls);
+    }
+
+    public void SetDamages(List<Damage> vehicleDamages)
+    {
+        _damages.Clear();
+        _damages.AddRange(vehicleDamages);
+    }
+
+    public void SetNote(Note note)
+    {
+        Note = note;
+    }
+    #endregion
+}
+
+public sealed record Supplies(string Value);
+
+public sealed record Damage(
+    string Level,
+    string Description);

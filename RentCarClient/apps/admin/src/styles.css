@@ -5726,12 +5726,12 @@ body {
 }
 
 .selected-damages .major-damage {
-    color: #dc3545;
+    color: #ac3c47;
     font-weight: 600;
 }
 
 .selected-damages .critical-damage {
-    color: #721c24;
+    color: #640912;
     font-weight: 700;
 }
 
