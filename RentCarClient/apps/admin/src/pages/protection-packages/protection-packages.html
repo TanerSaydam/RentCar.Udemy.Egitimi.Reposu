@@ -7,7 +7,7 @@
   [deleteOptions]="{url: '/rent/protection-packages', permission: 'protectionpackage:delete'}"
   [breadcrumbs]="bredcrumbs()"
   captionTitle="Güvence Paketi Listesi"
-  [sort]="{field: 'OrderNumber', dir: ''}"
+  [sort]="{field: 'orderNumber', dir: 'asc'}"
 >
   <flexi-grid-column field="name" title="Paket Adı"/>
   <flexi-grid-column field="price" title="Fiyat" filterType="number" format="c" textAlign="right" symbol="₺"/>

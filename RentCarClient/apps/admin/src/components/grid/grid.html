@@ -11,6 +11,8 @@ language="tr"
 (dataStateChange)="dataStateChange($event)"
 [commandColumnWidth]="commandColumnWidth()"
 [showIndex]="showIndex()"
+[sort]="sort()"
+[filter]="filter()"
 >
     <ng-template flexiGridCaptionCommandTemplate>
         @if(commandTemplateRef() !== undefined){
