@@ -297,7 +297,7 @@
                             </div>
                             <div class="section-content">
                                 <textarea class="form-control delivery-notes" rows="4"
-                                    placeholder="Araç durumu, eksik malzemeler, özel durumlar vb. notlarınızı buraya yazınız..." [(ngModel)]="data().note" name="note"></textarea>
+                                    placeholder="Araç durumu, eksik malzemeler, özel durumlar vb. notlarınızı buraya yazınız..." [(ngModel)]="data().note" name="note" [disabled]="!showButton()"></textarea>
                             </div>
                         </div>
 

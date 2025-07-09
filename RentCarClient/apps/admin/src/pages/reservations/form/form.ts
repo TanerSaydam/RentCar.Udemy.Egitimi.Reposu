@@ -154,7 +154,7 @@ export default class Form {
       return;
     }
 
-    if(!this.customerApproval()){
+    if(!this.customerApproval() && this.type() === "pickup"){
       this.#toast.showToast("Hata", "Formu onaylamalısınız", "error");
       return;
     }
