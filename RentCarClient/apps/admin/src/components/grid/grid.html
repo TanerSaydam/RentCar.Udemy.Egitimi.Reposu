@@ -13,6 +13,8 @@ language="tr"
 [showIndex]="showIndex()"
 [sort]="sort()"
 [filter]="filter()"
+[reorderable]="reorderable()"
+(onReorder)="onReoderMethod($event)"
 >
     <ng-template flexiGridCaptionCommandTemplate>
         @if(commandTemplateRef() !== undefined){
