@@ -101,6 +101,7 @@ app.MapVehicle();
 app.MapCustomer();
 app.MapReservation();
 app.MapReservationForm();
+app.MapDashboard();
 
 app.MapGet("/", () => "Hello World").RequireAuthorization();
 //await app.CreateFirstUser();
