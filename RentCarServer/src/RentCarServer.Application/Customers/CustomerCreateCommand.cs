@@ -2,6 +2,7 @@ using FluentValidation;
 using GenericRepository;
 using RentCarServer.Domain.Customers;
 using RentCarServer.Domain.Shared;
+using RentCarServer.Domain.Users.ValueObjects;
 using TS.MediatR;
 using TS.Result;
 
@@ -51,6 +52,7 @@ internal sealed class CustomerCreateCommandHandler(
         Email email = new(request.Email);
         DrivingLicenseIssuanceDate drivingLicenseIssuanceDate = new(request.DrivingLicenseIssuanceDate);
         FullAddress fullAddress = new(request.FullAddress);
+        Password password = new("123");
 
         Customer customer = new(
             firstName,
@@ -61,6 +63,7 @@ internal sealed class CustomerCreateCommandHandler(
             email,
             drivingLicenseIssuanceDate,
             fullAddress,
+            password,
             request.IsActive
         );
 
