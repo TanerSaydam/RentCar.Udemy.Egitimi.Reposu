@@ -3,8 +3,8 @@ import { FlexiGridModule, FlexiGridReorderModel } from 'flexi-grid';
 import Grid from '../../components/grid/grid';
 import { BreadcrumbModel } from '../../services/breadcrumb';
 import { Common } from '../../services/common';
-import { ProtectionPackageModel } from '../../models/protection-package.model';
-import { HttpService } from '../../services/http';
+import { ProtectionPackageModel } from '@shared/lib/models/protection-package.model';
+import { HttpService } from '@shared/lib/services/http';
 
 @Component({
   imports: [

@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, Component, computed, effect, inject, signal, V
 import { ActivatedRoute } from '@angular/router';
 import { httpResource } from '@angular/common/http';
 import Blank from 'apps/admin/src/components/blank/blank';
-import { ReservationModel, initialReservation } from 'apps/admin/src/models/reservation.model';
-import { Result } from 'apps/admin/src/models/result.model';
+import { ReservationModel, initialReservation } from '@shared/lib/models/reservation.model';
+import { Result } from '@shared/lib/models/result.model';
 import { BreadcrumbModel, BreadcrumbService } from 'apps/admin/src/services/breadcrumb';
 import { TrCurrencyPipe } from 'tr-currency';
 import { DatePipe, NgClass } from '@angular/common';

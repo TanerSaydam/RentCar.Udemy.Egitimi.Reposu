@@ -1,7 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { DecodeModel, initialDecode } from '../models/decode.model';
+import { DecodeModel, initialDecode } from '@shared/lib/models/decode.model';
 import { Router } from '@angular/router';
-import { setThrowInvalidWriteToSignalError } from '@angular/core/primitives/signals';
 
 @Injectable({
   providedIn: 'root'

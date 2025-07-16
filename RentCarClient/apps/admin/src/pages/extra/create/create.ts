@@ -7,9 +7,9 @@ import { NgClass } from '@angular/common';
 import { NgxMaskDirective } from 'ngx-mask';
 import { lastValueFrom } from 'rxjs';
 import Blank from 'apps/admin/src/components/blank/blank';
-import { ExtraModel, initialExtraModel } from 'apps/admin/src/models/extra.model';
+import { ExtraModel, initialExtraModel } from '@shared/lib/models/extra.model';
 import { BreadcrumbModel, BreadcrumbService } from 'apps/admin/src/services/breadcrumb';
-import { HttpService } from 'apps/admin/src/services/http';
+import { HttpService } from '@shared/lib/services/http';
 
 @Component({
   imports: [

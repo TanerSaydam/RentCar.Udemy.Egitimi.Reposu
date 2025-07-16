@@ -3,7 +3,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormValidateDirective } from 'form-validate-angular';
 import { FlexiToastService } from 'flexi-toast';
-import { HttpService } from 'apps/admin/src/services/http';
+import { HttpService } from '@shared/lib/services/http';
 
 @Component({
   imports: [

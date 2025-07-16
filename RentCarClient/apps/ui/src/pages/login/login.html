@@ -1,0 +1,191 @@
+<!-- Main Auth Section -->
+    <section class="auth-section">
+        <div class="container-fluid h-100">
+            <div class="row h-100">
+                <!-- Left Side - Form -->
+                <div class="col-lg-6 auth-form-section">
+                    <div class="auth-container">
+                        <div class="auth-header-content">
+                            <h1 class="auth-title">Hoş Geldiniz!</h1>
+                            <p class="auth-subtitle">Hesabınıza giriş yapın veya yeni hesap oluşturun</p>
+                        </div>
+
+                        <!-- Tab Navigation -->
+                        <div class="auth-tabs">
+                            <button class="auth-tab active" routerLink="/login">
+                                <i class="bi bi-box-arrow-in-right me-2"></i>Giriş Yap
+                            </button>
+                            <button class="auth-tab" routerLink="/register">
+                                <i class="bi bi-person-plus me-2"></i>Kayıt Ol
+                            </button>
+                        </div>
+
+                        <!-- Login Form -->
+                        <div class="auth-form-container" id="loginForm">
+                            <form class="auth-form">
+                                <div class="form-group">
+                                    <label for="loginEmail" class="form-label">E-posta Adresi</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="bi bi-envelope"></i>
+                                        </span>
+                                        <input type="email" class="form-control" id="loginEmail"
+                                            placeholder="E-posta adresinizi girin" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="loginPassword" class="form-label">Şifre</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="bi bi-lock"></i>
+                                        </span>
+                                        <input type="password" class="form-control" id="loginPassword"
+                                            placeholder="Şifrenizi girin" required>
+                                        <button type="button" class="input-group-text password-toggle">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="form-options">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="rememberMe">
+                                        <label class="form-check-label" for="rememberMe">
+                                            Beni hatırla
+                                        </label>
+                                    </div>
+                                    <a href="#" class="forgot-password" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal">Şifremi unuttum</a>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary btn-auth">
+                                    <i class="bi bi-box-arrow-in-right me-2"></i>Giriş Yap
+                                </button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Right Side - Benefits -->
+                <div class="col-lg-6 auth-benefits-section">
+                    <div class="benefits-container">
+                        <div class="benefits-content">
+                            <h2 class="benefits-title">RentCar'a Üye Olmanın Avantajları</h2>
+                            <p class="benefits-subtitle">Hesap oluşturarak özel ayrıcalıklara sahip olun</p>
+
+                            <div class="benefits-list">
+                                <div class="benefit-item">
+                                    <div class="benefit-icon">
+                                        <i class="bi bi-lightning-charge-fill"></i>
+                                    </div>
+                                    <div class="benefit-content">
+                                        <h5>Hızlı Rezervasyon</h5>
+                                        <p>Kayıtlı bilgilerinizle saniyeler içinde rezervasyon yapın</p>
+                                    </div>
+                                </div>
+
+                                <div class="benefit-item">
+                                    <div class="benefit-icon">
+                                        <i class="bi bi-percent"></i>
+                                    </div>
+                                    <div class="benefit-content">
+                                        <h5>Özel İndirimler</h5>
+                                        <p>Sadece üyelere özel kampanya ve indirimlerden yararlanın</p>
+                                    </div>
+                                </div>
+
+                                <div class="benefit-item">
+                                    <div class="benefit-icon">
+                                        <i class="bi bi-clock-history"></i>
+                                    </div>
+                                    <div class="benefit-content">
+                                        <h5>Rezervasyon Geçmişi</h5>
+                                        <p>Tüm kiralama geçmişinizi görüntüleyin ve tekrar rezervasyon yapın</p>
+                                    </div>
+                                </div>
+
+                                <div class="benefit-item">
+                                    <div class="benefit-icon">
+                                        <i class="bi bi-star-fill"></i>
+                                    </div>
+                                    <div class="benefit-content">
+                                        <h5>Sadakat Puanları</h5>
+                                        <p>Her kiralamada puan kazanın ve gelecek rezervasyonlarda kullanın</p>
+                                    </div>
+                                </div>
+
+                                <div class="benefit-item">
+                                    <div class="benefit-icon">
+                                        <i class="bi bi-headset"></i>
+                                    </div>
+                                    <div class="benefit-content">
+                                        <h5>Öncelikli Destek</h5>
+                                        <p>7/24 müşteri hizmetlerinden öncelikli destek alın</p>
+                                    </div>
+                                </div>
+
+                                <div class="benefit-item">
+                                    <div class="benefit-icon">
+                                        <i class="bi bi-bell-fill"></i>
+                                    </div>
+                                    <div class="benefit-content">
+                                        <h5>Akıllı Bildirimler</h5>
+                                        <p>Rezervasyon hatırlatmaları ve özel teklifler hakkında bildirim alın</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Stats -->
+                            <div class="auth-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number">50K+</div>
+                                    <div class="stat-label">Mutlu Müşteri</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">1000+</div>
+                                    <div class="stat-label">Araç Filosu</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">25</div>
+                                    <div class="stat-label">Şehir</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">7/24</div>
+                                    <div class="stat-label">Destek</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Testimonial -->
+                        <div class="testimonial-section">
+                            <div class="testimonial-card">
+                                <div class="testimonial-content">
+                                    <i class="bi bi-quote quote-icon"></i>
+                                    <p>"RentCar ile rezervasyon yapmak çok kolay! Üye olduktan sonra her şey çok daha
+                                        hızlı. Kesinlikle tavsiye ederim."</p>
+                                </div>
+                                <div class="testimonial-author">
+                                    <div class="author-avatar">
+                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBRW6kw4PvewS5EGHKY7nNsJiWvrbsVIzZA&s"
+                                            alt="Ahmet Yılmaz">
+                                    </div>
+                                    <div class="author-info">
+                                        <div class="author-name">Ahmet Yılmaz</div>
+                                        <div class="author-title">Verified Customer</div>
+                                        <div class="author-rating">
+                                            <i class="bi bi-star-fill"></i>
+                                            <i class="bi bi-star-fill"></i>
+                                            <i class="bi bi-star-fill"></i>
+                                            <i class="bi bi-star-fill"></i>
+                                            <i class="bi bi-star-fill"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>

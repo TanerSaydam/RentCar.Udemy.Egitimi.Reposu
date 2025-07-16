@@ -4,11 +4,11 @@ import { ChangeDetectionStrategy, Component, computed, ElementRef, inject, linke
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import Loading from 'apps/admin/src/components/loading/loading';
-import { FormModel, initialForm } from 'apps/admin/src/models/form.model';
-import { Result } from 'apps/admin/src/models/result.model';
+import { FormModel, initialForm } from '@shared/lib/models/form.model';
+import { Result } from '@shared/lib/models/result.model';
 import { NgxMaskPipe } from 'ngx-mask';
 import { FlexiGridModule } from "flexi-grid";
-import { HttpService } from 'apps/admin/src/services/http';
+import { HttpService } from '@shared/lib/services/http';
 import { FlexiToastService } from 'flexi-toast';
 
 @Component({

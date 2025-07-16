@@ -5,9 +5,9 @@ import { FlexiToastService } from 'flexi-toast';
 import { FormValidateDirective } from 'form-validate-angular';
 import { NgClass } from '@angular/common';
 import Blank from 'apps/admin/src/components/blank/blank';
-import { ProtectionPackageModel, initialProtectionPackageModel } from 'apps/admin/src/models/protection-package.model';
+import { ProtectionPackageModel, initialProtectionPackageModel } from '@shared/lib/models/protection-package.model';
 import { BreadcrumbModel, BreadcrumbService } from 'apps/admin/src/services/breadcrumb';
-import { HttpService } from 'apps/admin/src/services/http';
+import { HttpService } from '@shared/lib/services/http';
 import { lastValueFrom } from 'rxjs';
 import { NgxMaskDirective } from 'ngx-mask';
 

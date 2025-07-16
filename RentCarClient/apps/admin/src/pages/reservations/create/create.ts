@@ -4,15 +4,15 @@ import { ChangeDetectionStrategy, Component, computed, effect, inject, linkedSig
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Blank from 'apps/admin/src/components/blank/blank';
-import { BranchModel } from 'apps/admin/src/models/branch.model';
-import { CategoryModel } from 'apps/admin/src/models/category.model';
-import { CustomerModel, initialCustomerModel } from 'apps/admin/src/models/customer.model';
-import { ODataModel } from 'apps/admin/src/models/odata.model';
-import { initialReservation, ReservationModel } from 'apps/admin/src/models/reservation.model';
-import { initialVehicleModel, VehicleModel } from 'apps/admin/src/models/vehicle.model';
+import { BranchModel } from '@shared/lib/models/branch.model';
+import { CategoryModel } from '@shared/lib/models/category.model';
+import { CustomerModel, initialCustomerModel } from '@shared/lib/models/customer.model';
+import { ODataModel } from '@shared/lib/models/odata.model';
+import { initialReservation, ReservationModel } from '@shared/lib/models/reservation.model';
+import { initialVehicleModel, VehicleModel } from '@shared/lib/models/vehicle.model';
 import { BreadcrumbModel, BreadcrumbService } from 'apps/admin/src/services/breadcrumb';
 import { Common } from 'apps/admin/src/services/common';
-import { HttpService } from 'apps/admin/src/services/http';
+import { HttpService } from '@shared/lib/services/http';
 import { FlexiGridModule, FlexiGridService, StateModel } from 'flexi-grid';
 import { FlexiPopupModule } from 'flexi-popup';
 import { FlexiSelectModule } from 'flexi-select';
@@ -23,8 +23,8 @@ import { lastValueFrom } from 'rxjs';
 import { TrCurrencyPipe } from 'tr-currency';
 import { fuelTypeList, transmissionList } from '../../vehicles/create/create';
 import { VehiclePipe } from 'apps/admin/src/pipes/vehicle-pipe';
-import { ProtectionPackageModel } from 'apps/admin/src/models/protection-package.model';
-import { ExtraModel } from 'apps/admin/src/models/extra.model';
+import { ProtectionPackageModel } from '@shared/lib/models/protection-package.model';
+import { ExtraModel } from '@shared/lib/models/extra.model';
 
 @Component({
   imports: [

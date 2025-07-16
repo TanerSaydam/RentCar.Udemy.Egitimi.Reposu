@@ -4,9 +4,9 @@ import { ChangeDetectionStrategy, Component, computed, effect, inject, linkedSig
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Blank from 'apps/admin/src/components/blank/blank';
-import { BranchModel, initialBranch } from 'apps/admin/src/models/branch.model';
+import { BranchModel, initialBranch } from '@shared/lib/models/branch.model';
 import { BreadcrumbModel, BreadcrumbService } from 'apps/admin/src/services/breadcrumb';
-import { HttpService } from 'apps/admin/src/services/http';
+import { HttpService } from '@shared/lib/services/http';
 import { FlexiSelectModule } from 'flexi-select';
 import { FlexiToastService } from 'flexi-toast';
 import { FormValidateDirective } from 'form-validate-angular';

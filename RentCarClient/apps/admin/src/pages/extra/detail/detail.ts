@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, Component, computed, effect, inject, signal, V
 import { ActivatedRoute } from '@angular/router';
 import { httpResource } from '@angular/common/http';
 import Blank from 'apps/admin/src/components/blank/blank';
-import { ExtraModel, initialExtraModel } from 'apps/admin/src/models/extra.model';
-import { Result } from 'apps/admin/src/models/result.model';
+import { ExtraModel, initialExtraModel } from '@shared/lib/models/extra.model';
+import { Result } from '@shared/lib/models/result.model';
 import { BreadcrumbModel, BreadcrumbService } from 'apps/admin/src/services/breadcrumb';
 import { TrCurrencyPipe } from 'tr-currency';
 

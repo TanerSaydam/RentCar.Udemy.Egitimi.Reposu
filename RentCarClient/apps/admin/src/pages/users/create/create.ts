@@ -4,13 +4,13 @@ import { ChangeDetectionStrategy, Component, computed, inject, linkedSignal, res
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Blank from 'apps/admin/src/components/blank/blank';
-import { BranchModel } from 'apps/admin/src/models/branch.model';
-import { ODataModel } from 'apps/admin/src/models/odata.model';
-import { RoleModel } from 'apps/admin/src/models/role.model';
-import { UserModel, initialUser } from 'apps/admin/src/models/user.model';
+import { BranchModel } from '@shared/lib/models/branch.model';
+import { ODataModel } from '@shared/lib/models/odata.model';
+import { RoleModel } from '@shared/lib/models/role.model';
+import { UserModel, initialUser } from '@shared/lib/models/user.model';
 import { BreadcrumbModel, BreadcrumbService } from 'apps/admin/src/services/breadcrumb';
 import { Common } from 'apps/admin/src/services/common';
-import { HttpService } from 'apps/admin/src/services/http';
+import { HttpService } from '@shared/lib/services/http';
 import { FlexiSelectModule } from 'flexi-select';
 import { FlexiToastService } from 'flexi-toast';
 import { FormValidateDirective } from 'form-validate-angular';

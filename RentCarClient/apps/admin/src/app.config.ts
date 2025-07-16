@@ -7,9 +7,9 @@ import {
 import { provideRouter } from '@angular/router';
 import { appRoutes } from './app.routes';
 import { HttpContextToken, provideHttpClient, withInterceptors } from '@angular/common/http';
-import { httpInterceptor } from './interceptors/http-interceptor';
-import { authInterceptor } from './interceptors/auth-interceptor';
-import { errorInterceptor } from './interceptors/error-interceptor';
+import { httpInterceptor } from '@shared/lib/interceptors/http-interceptor';
+import { authInterceptor } from '@shared/lib/interceptors/auth-interceptor';
+import { errorInterceptor } from '@shared/lib/interceptors/error-interceptor';
 import { provideNgxMask } from 'ngx-mask';
 import localeTr from '@angular/common/locales/tr'
 import { registerLocaleData } from '@angular/common';
@@ -31,4 +31,4 @@ export const appConfig: ApplicationConfig = {
   ],
 };
 
-export const SKIP_ERROR_HANDLER = new HttpContextToken<boolean>(() => false);
+

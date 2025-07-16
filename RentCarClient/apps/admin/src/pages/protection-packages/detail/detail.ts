@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, Component, computed, effect, inject, resource,
 import { ActivatedRoute } from '@angular/router';
 import { httpResource } from '@angular/common/http';
 import Blank from 'apps/admin/src/components/blank/blank';
-import { ProtectionPackageModel, initialProtectionPackageModel } from 'apps/admin/src/models/protection-package.model';
+import { ProtectionPackageModel, initialProtectionPackageModel } from '@shared/lib/models/protection-package.model';
 import { BreadcrumbModel, BreadcrumbService } from 'apps/admin/src/services/breadcrumb';
-import { Result } from 'apps/admin/src/models/result.model';
+import { Result } from '@shared/lib/models/result.model';
 import { TrCurrencyPipe } from 'tr-currency';
 
 @Component({

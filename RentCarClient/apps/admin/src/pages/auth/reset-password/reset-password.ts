@@ -4,7 +4,7 @@ import { ChangeDetectionStrategy, Component, computed, ElementRef, inject, signa
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import Loading from 'apps/admin/src/components/loading/loading';
-import { HttpService } from 'apps/admin/src/services/http';
+import { HttpService } from '@shared/lib/services/http';
 import { FlexiToastService } from 'flexi-toast';
 
 @Component({

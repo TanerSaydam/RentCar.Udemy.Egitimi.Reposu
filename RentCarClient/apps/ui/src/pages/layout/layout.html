@@ -1,0 +1,87 @@
+<!-- Header -->
+<header class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #2c3e50;">
+    <div class="container">
+        <a class="navbar-brand fw-bold fs-3" routerLink="/">
+            <i class="bi bi-car-front-fill text-primary"></i>
+            RentCar
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-light" routerLink="/"><i class="bi bi-house-fill"></i> Ana Sayfa</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" routerLink="/contact"><i class="bi bi-telephone-fill"></i> İletişim</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" routerLink="/login"><i class="bi bi-person-fill"></i> Giriş Yap</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+<router-outlet />
+
+<!-- Footer -->
+<footer class="footer bg-dark text-light py-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <h5 class="mb-3">
+                    <i class="bi bi-car-front-fill text-primary"></i>
+                    RentCar
+                </h5>
+                <p class="text-muted">
+                    Türkiye'nin en güvenilir araç kiralama platformu.
+                    Hayalinizdeki seyahati gerçekleştirin.
+                </p>
+                <div class="social-links">
+                    <a href="#" class="text-light me-3"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="text-light me-3"><i class="bi bi-twitter"></i></a>
+                    <a href="#" class="text-light me-3"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="text-light"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <h6 class="mb-3">Hızlı Bağlantılar</h6>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-muted">Ana Sayfa</a></li>
+                    <li><a href="#" class="text-muted">Araç Kiralama</a></li>
+                    <li><a href="#" class="text-muted">Hakkımızda</a></li>
+                    <li><a href="#" class="text-muted">İletişim</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-3">
+                <h6 class="mb-3">Hizmetler</h6>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-muted">Günlük Kiralama</a></li>
+                    <li><a href="#" class="text-muted">Aylık Kiralama</a></li>
+                    <li><a href="#" class="text-muted">Kurumsal Çözümler</a></li>
+                    <li><a href="#" class="text-muted">Güvence Paketleri</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-3">
+                <h6 class="mb-3">İletişim</h6>
+                <ul class="list-unstyled text-muted">
+                    <li><i class="bi bi-telephone"></i> +90 352 123 45 67</li>
+                    <li><i class="bi bi-envelope"></i> inforentcar.com</li>
+                    <li><i class="bi bi-geo-alt"></i> Kayseri, Türkiye</li>
+                </ul>
+            </div>
+        </div>
+        <hr class="my-4">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <p class="text-muted mb-0">&copy; 2025 RentCar. Tüm hakları saklıdır.</p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <a href="#" class="text-muted me-3">Gizlilik Politikası</a>
+                <a href="#" class="text-muted">Kullanım Şartları</a>
+            </div>
+        </div>
+    </div>
+</footer>

@@ -193,12 +193,16 @@
                                         <div class="summary-stats">
                                             <div class="stat-item">
                                                 <i class="bi bi-images text-primary"></i>
-                                                <span class="stat-number" id="totalPhotos">{{data().imageUrls.length + + (data().files?.length ?? 0)}}</span>
+                                                <span class="stat-number" id="totalPhotos">
+                                                    {{data().imageUrls.length + + (data().files?.length ?? 0)}}
+                                                </span>
                                                 <span class="stat-label">Toplam Fotoğraf</span>
                                             </div>
                                             <div class="stat-item">
                                                 <i class="bi bi-cloud-arrow-up text-success"></i>
-                                                <span class="stat-number" id="uploadedPhotos">{{data().imageUrls.length + (data().files?.length ?? 0)}}</span>
+                                                <span class="stat-number" id="uploadedPhotos">
+                                                    {{data().imageUrls.length + (data().files?.length ?? 0)}}
+                                                </span>
                                                 <span class="stat-label">Yüklendi</span>
                                             </div>
                                         </div>

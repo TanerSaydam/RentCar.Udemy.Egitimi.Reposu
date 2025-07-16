@@ -3,8 +3,8 @@ import { httpResource } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, computed, effect, inject, signal, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import Blank from 'apps/admin/src/components/blank/blank';
-import { CustomerModel, initialCustomerModel } from 'apps/admin/src/models/customer.model';
-import { Result } from 'apps/admin/src/models/result.model';
+import { CustomerModel, initialCustomerModel } from '@shared/lib/models/customer.model';
+import { Result } from '@shared/lib/models/result.model';
 import { BreadcrumbModel, BreadcrumbService } from 'apps/admin/src/services/breadcrumb';
 
 @Component({
